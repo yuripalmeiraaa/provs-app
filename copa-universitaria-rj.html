@@ -1,0 +1,682 @@
+<title>Copa Universitária RJ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: uma rolagem contínua, seções em faixas alternadas, tipografia condensada de ginásio sobre fundo de quadra à noite. */
+:root{
+  --bg:#0A1424; --bg2:#0F1D33; --fg:#F2F5F9; --muted:#9FB0C6; --line:#243652;
+  --accent:#FF6B1A; --accent-ink:#0A1424; --court:#14509F; --court-line:#E8EEF7; --card:#12233D;
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"DM Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F5F7FA; --bg2:#E8EEF6; --fg:#0A1424; --muted:#4B5C75; --line:#CBD6E4;
+  --accent:#E24F05; --accent-ink:#FFFFFF; --court:#14509F; --court-line:#FFFFFF; --card:#FFFFFF; color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#F5F7FA; --bg2:#E8EEF6; --fg:#0A1424; --muted:#4B5C75; --line:#CBD6E4;
+  --accent:#E24F05; --accent-ink:#FFFFFF; --court:#14509F; --court-line:#FFFFFF; --card:#FFFFFF; color-scheme:light}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:400 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:.005em;margin:0;text-wrap:balance}
+h2{font-size:clamp(2.4rem,6vw,4.6rem)}
+h3{font-size:1.6rem;line-height:1}
+p{margin:0;text-wrap:pretty}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+svg{display:block}
+.ico{width:1.5em;height:1.5em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.band{padding-block:clamp(64px,10vw,128px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band.alt{background:var(--bg2)}
+.wrap{max-width:1120px;margin-inline:auto;display:flex;flex-direction:column;gap:clamp(32px,5vw,56px)}
+.eyebrow{font:500 .78rem/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.head{display:flex;flex-direction:column;gap:16px;max-width:820px}
+.lead{font-size:1.2rem;color:var(--muted);max-width:62ch}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.card p{color:var(--muted);font-size:.98rem}
+.card .ico{color:var(--accent);width:2rem;height:2rem}
+.big{font:900 clamp(3rem,7vw,5.2rem)/.9 var(--f-display);color:var(--fg)}
+.big small{font-size:.45em;color:var(--accent);margin-right:.1em}
+.mono{font-family:var(--f-mono)}
+.note{font:400 .8rem/1.5 var(--f-mono);color:var(--muted)}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.nav-in{max-width:1120px;margin:auto;display:flex;align-items:center;gap:20px;height:58px}
+.brand{display:flex;align-items:center;gap:10px;font:800 1.2rem/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em;text-decoration:none;white-space:nowrap}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0 0 0 auto;padding:0;font-size:.88rem}
+.nav ul a{text-decoration:none;color:var(--muted)} .nav ul a:hover{color:var(--fg)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);font:700 .95rem/1 var(--f-body);padding:14px 22px;border-radius:4px;text-decoration:none;border:0;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.btn:hover{filter:brightness(1.08)}
+.theme{background:none;border:1px solid var(--line);color:var(--fg);width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;background:var(--accent);width:0}
+@media(max-width:820px){.nav ul{display:none}.theme{margin-left:auto}}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding-block:clamp(56px,9vw,112px) 0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero-in{max-width:1120px;margin:auto;display:flex;flex-direction:column;gap:32px}
+.hero h1{font-size:clamp(3.6rem,13.5vw,10.5rem);line-height:.84;letter-spacing:-.005em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .tag{font-size:clamp(1.15rem,2.4vw,1.55rem);max-width:30ch;color:var(--fg)}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.hero-court{margin-top:24px;margin-inline:-16px;color:var(--court-line)}
+.hero-court svg{width:100%;height:auto;max-height:420px}
+.statbar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--bg2)}
+.statbar>div{padding:22px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.statbar>div:last-child{border:0}
+.statbar b{font:900 clamp(2.4rem,6vw,4rem)/1 var(--f-display)}
+.statbar span{font:500 .72rem/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:640px){.statbar{grid-template-columns:repeat(2,1fr)}.statbar>div:nth-child(2){border-right:0}.statbar>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* MANIFESTO */
+.manifesto{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,5vw,72px);align-items:start}
+@media(max-width:820px){.manifesto{grid-template-columns:1fr}}
+.prose{display:flex;flex-direction:column;gap:20px;font-size:1.12rem;max-width:62ch}
+.prose strong{color:var(--accent);font-weight:600}
+.forty{display:grid;gap:0;border-top:1px solid var(--line)}
+.forty div{display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.7rem;line-height:1}
+.forty .ico{color:var(--accent);width:2.2rem;height:2.2rem}
+.forty small{display:block;font:400 .85rem/1.4 var(--f-body);text-transform:none;color:var(--muted);margin-top:4px}
+.crowd{width:100%;height:auto;color:var(--line)}
+.pull{font:800 clamp(2.2rem,5.5vw,4rem)/1 var(--f-display);text-transform:uppercase;text-wrap:balance}
+.pull span{color:var(--accent)}
+
+/* MUNDO */
+.dots{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;max-width:420px}
+.dots i{aspect-ratio:1;background:var(--accent);border-radius:50%;opacity:.9}
+.dots i.o{background:var(--line)}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .72rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border:1px solid var(--line);border-radius:99px;color:var(--muted)}
+.flag{font:500 .72rem/1 var(--f-mono);letter-spacing:.14em;color:var(--muted)}
+.thread{border-left:4px solid var(--accent);padding-left:24px;max-width:760px}
+
+/* FORMATO */
+.court-big{background:var(--court);border-radius:6px;padding:clamp(12px,3vw,28px);color:var(--court-line)}
+.court-big svg{width:100%;height:auto}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel h3{font-size:1.4rem}
+.chart svg{width:100%;height:auto;overflow:visible}
+.chart text{font-family:var(--f-mono);fill:var(--muted);font-size:11px}
+.chart .val{fill:var(--fg);font-weight:500;font-size:13px}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font:400 .78rem var(--f-mono);color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+.scroll-x{overflow-x:auto}
+.bracket{min-width:640px}
+.bracket text{font-family:var(--f-body);font-size:13px;fill:var(--fg)}
+.bracket .box{fill:var(--bg2);stroke:var(--line)}
+.bracket .ln{stroke:var(--line);stroke-width:2;fill:none}
+.bracket .lab{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;fill:var(--muted);text-transform:uppercase}
+.sat{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:700px){.sat{grid-template-columns:1fr 1fr}}
+.sat div{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.sat div.last{border-color:var(--accent)}
+.sat b{font:800 1.5rem/1 var(--f-display);text-transform:uppercase}
+.sat span{font:400 .78rem/1.4 var(--f-mono);color:var(--muted)}
+.sat em{font:900 2.6rem/1 var(--f-display);font-style:normal;color:var(--accent)}
+
+/* FLOW */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+@media(max-width:820px){.flow{grid-template-columns:1fr}}
+.step{padding:28px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;gap:12px;margin:0 -1px -1px 0}
+.step .ico{color:var(--accent);width:2.2rem;height:2.2rem}
+.step ul{margin:0;padding-left:18px;color:var(--muted);font-size:.96rem;display:flex;flex-direction:column;gap:4px}
+.step .when{font:500 .75rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+
+/* TABS */
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font:700 .95rem var(--f-body);padding:12px 20px;border-radius:99px;border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tabpanel{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:start}
+.tabpanel[hidden]{display:none}
+@media(max-width:820px){.tabpanel{grid-template-columns:1fr}}
+.tabpanel h3{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.checks li{display:flex;gap:12px;align-items:flex-start}
+.checks .ico{color:var(--accent);margin-top:2px;width:1.3em;height:1.3em}
+
+/* ROADMAP */
+.road{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;padding-top:36px}
+.road::before{content:"";position:absolute;left:0;right:0;top:12px;height:2px;background:linear-gradient(90deg,var(--accent) 0 25%,var(--line) 25% 100%)}
+.road>div{position:relative;padding:0 20px 0 0;display:flex;flex-direction:column;gap:8px}
+.road>div::before{content:"";position:absolute;top:-30px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--line)}
+.road>div:first-child::before{background:var(--accent);border-color:var(--accent)}
+.road b{font:800 1.5rem/1 var(--f-display);text-transform:uppercase}
+.road p{font-size:.95rem;color:var(--muted)}
+@media(max-width:820px){.road{grid-template-columns:1fr;gap:28px;padding:0 0 0 32px}.road::before{left:6px;right:auto;top:6px;bottom:6px;width:2px;height:auto;background:var(--line)}
+ .road>div::before{left:-32px;top:6px}}
+
+/* FINAL */
+.final{background:var(--court);color:#fff;text-align:left}
+.final .eyebrow{color:#FFB48A}
+.final h2 span{color:var(--accent)}
+.final .lead{color:#D6E2F4}
+.final .btn.ghost{color:#fff;border-color:rgba(255,255,255,.5)}
+footer{padding:28px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));background:var(--bg);border-top:1px solid var(--line)}
+footer div{max-width:1120px;margin:auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font:400 .85rem var(--f-mono)}
+</style>
+
+<!-- ICONS -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6L8.2 10.3z"/><path d="M12 7.5V2.6M15.8 10.3l4.6-1.5M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3L3.6 8.8"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4v1.5A3.5 3.5 0 007.5 11M17 6h3v1.5a3.5 3.5 0 01-3.5 3.5M12 14v4M8 21h8M9 18h6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.5 2 4.5 4.5"/></symbol>
+<symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 10v4h3l8 4V6L6 10z"/><path d="M18 9a4 4 0 010 6M7 14l1.5 6h3L10.5 16"/></symbol>
+<symbol id="i-cam" viewBox="0 0 24 24"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.6"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.7l1-1"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+<symbol id="i-uni" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5M22 9v6"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5a7 7 0 00-14 0C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M6 16v-5M11 16V7M16 16v-8M21 16v-3"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.800-8-10.500A4.500 4.500 0 0112 7a4.500 4.500 0 018 2.500C20 15.200 12 20 12 20z"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.200"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.500v5l4.500-2.500z"/></symbol>
+<symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3c-.5 1.800-2 3-4 3S8.500 4.800 8 3z"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h13l-3 4.500 3 4.500H5"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v9h14v-9M12 8v13M12 8c-3 0-5-1-4.500-3s3.500-1.500 4.500 3zM12 8c3 0 5-1 4.500-3S13 3.500 12 8z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.500"/><path d="M7.500 12.500l3 3 6-6.500"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+<symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.500 1.500M17.500 17.500L19 19M5 19l1.500-1.500M17.500 6.500L19 5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-seed" viewBox="0 0 24 24"><path d="M12 21v-9M12 12C12 7 8 5 4 5c0 5 3 7 8 7zM12 14c0-4 3-6 8-6 0 4-3 6-8 6z"/></symbol>
+</defs>
+</svg>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#topo" aria-label="Copa Universitária RJ, início">
+      <svg width="28" height="28" viewBox="0 0 24 24" class="ico" style="color:var(--accent);width:28px;height:28px"><use href="#i-ball"/></svg>
+      Copa Universitária RJ
+    </a>
+    <ul>
+      <li><a href="#paixao">A paixão</a></li>
+      <li><a href="#mundo">No mundo</a></li>
+      <li><a href="#formato">Formato</a></li>
+      <li><a href="#patrocinio">Patrocínio</a></li>
+      <li><a href="#para-voce">Para você</a></li>
+      <li><a href="#visao">Visão</a></li>
+    </ul>
+    <button class="theme" id="theme" aria-label="Alternar tema claro e escuro" title="Alternar tema">
+      <svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px"><use href="#i-sun"/></svg>
+    </button>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main id="topo">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-in">
+    <span class="eyebrow">Futsal masculino e feminino · Rio de Janeiro · 1ª edição</span>
+    <h1>Copa<br>Universitária <em>RJ</em></h1>
+    <p class="tag">A paixão já existe. Falta dar a ela o espaço que merece.</p>
+    <div class="cta-row">
+      <a class="btn" href="#para-voce">Ver a proposta para o meu perfil <svg class="ico" viewBox="0 0 24 24" style="width:1.2em;height:1.2em"><use href="#i-arrow"/></svg></a>
+      <a class="btn ghost" href="#formato">Como funciona</a>
+    </div>
+    <div class="hero-court" aria-hidden="true">
+      <svg viewBox="0 0 800 330" fill="none">
+        <rect x="0" y="0" width="800" height="330" fill="var(--court)" opacity=".92"/>
+        <g stroke="currentColor" stroke-width="3" opacity=".85">
+          <rect x="40" y="40" width="720" height="250"/>
+          <path d="M400 40v250"/>
+          <circle cx="400" cy="165" r="48"/>
+          <path d="M40 90a70 70 0 0170 75 70 70 0 01-70 75" transform="translate(0 0)" opacity="0"/>
+          <path d="M40 80a75 75 0 0175 75v20a75 75 0 01-75 75"/>
+          <path d="M760 80a75 75 0 00-75 75v20a75 75 0 0075 75"/>
+        </g>
+        <g fill="currentColor" opacity=".9"><circle cx="400" cy="165" r="4"/><circle cx="150" cy="165" r="3.500"/><circle cx="650" cy="165" r="3.500"/></g>
+        <g stroke="currentColor" stroke-width="5" opacity=".95"><path d="M28 135v60M772 135v60"/></g>
+        <!-- bola -->
+        <g transform="translate(520 120)">
+          <circle r="34" fill="#fff" stroke="#0A1424" stroke-width="3"/>
+          <path d="M0-15l14 10-5 16H-9l-5-16z" fill="#0A1424"/>
+          <path d="M0-15v-17M14-5l17-6M9 11l11 15M-9 11l-11 15M-14-5l-17-6" stroke="#0A1424" stroke-width="3"/>
+        </g>
+        <path d="M120 250c120-110 240-130 360-110" stroke="#FF6B1A" stroke-width="4" stroke-dasharray="3 12" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+  <div class="statbar" style="margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))">
+    <div><b>8</b><span>Universidades</span></div>
+    <div><b>16</b><span>Equipes · 8M + 8F</span></div>
+    <div><b>32</b><span>Partidas</span></div>
+    <div><b>5</b><span>Sábados de jogo</span></div>
+  </div>
+</section>
+
+<!-- PAIXÃO -->
+<section class="band" id="paixao">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 1 · A paixão</span>
+      <h2>Tem coisa que só quem vive o esporte universitário entende.</h2>
+    </div>
+    <div class="manifesto">
+      <div class="prose">
+        <p>É difícil explicar para quem nunca viveu. A ansiedade antes de entrar em quadra. O barulho da torcida. O orgulho de vestir a camisa da faculdade. A resenha depois do jogo, ganhando ou perdendo.</p>
+        <p>Tem gente que passa a semana inteira esperando por <strong>aqueles 40 minutos</strong>. Gente que trabalha, estuda, pega ônibus, chega cansada em casa, mas ainda encontra energia para treinar porque sabe que, no fim de semana, vai representar sua universidade.</p>
+        <p>E não é só sobre quem joga. É sobre os amigos que vão assistir, a turma que se junta para torcer, as bandeiras, os cantos, a rivalidade entre faculdades e as histórias que continuam sendo lembradas anos depois.</p>
+        <p class="pull" style="margin-top:8px">Não é só <span>um jogo.</span></p>
+      </div>
+      <div class="forty">
+        <div><svg class="ico"><use href="#i-wave"/></svg><span>Antes<small>A ansiedade de entrar em quadra</small></span></div>
+        <div><svg class="ico"><use href="#i-mega"/></svg><span>Durante<small>O barulho da torcida e a camisa da faculdade</small></span></div>
+        <div><svg class="ico"><use href="#i-flag"/></svg><span>Nas arquibancadas<small>Bandeiras, cantos e rivalidades</small></span></div>
+        <div><svg class="ico"><use href="#i-heart"/></svg><span>Depois<small>A resenha, ganhando ou perdendo</small></span></div>
+      </div>
+    </div>
+    <svg class="crowd" id="crowd" viewBox="0 0 1000 150" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <p class="lead">E é justamente por acreditar nisso que queremos criar a Copa Universitária RJ.</p>
+  </div>
+</section>
+
+<!-- MUNDO -->
+<section class="band alt" id="mundo">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 2 · Referências</span>
+      <h2>Em outros lugares do mundo, essa paixão já ganhou o espaço que merece.</h2>
+      <p class="lead">Países diferentes, esportes diferentes, realidades diferentes. Em todos, alguém entendeu que o esporte universitário tinha valor e decidiu investir nele.</p>
+    </div>
+    <div class="grid g3">
+      <article class="card">
+        <span class="flag">ESTADOS UNIDOS · NCAA</span>
+        <div class="big"><small>US$</small>900 mi</div>
+        <p>por ano em direitos de mídia e marketing ligados ao principal campeonato masculino de basquete universitário. Universidades têm torcidas apaixonadas, rivalidades históricas e campeonatos que mobilizam comunidades inteiras.</p>
+        <div class="tagrow"><span class="chip">Basquete</span><span class="chip">Mídia</span><span class="chip">Marketing</span></div>
+      </article>
+      <article class="card">
+        <span class="flag">REINO UNIDO · BUCS</span>
+        <div class="big">+6 mil<small style="margin-left:.15em">equipes</small></div>
+        <p>A British Universities &amp; Colleges Sport organiza competições com cerca de 150 universidades e dezenas de modalidades.</p>
+        <div class="dots" id="dots" role="img" aria-label="Cerca de 150 universidades participantes"></div>
+        <span class="note">1 ponto laranja = 1 universidade (aprox. 150)</span>
+      </article>
+      <article class="card">
+        <span class="flag">JAPÃO · HAKONE EKIDEN</span>
+        <div class="big">Milhões<small style="margin-left:.15em">assistem</small></div>
+        <p>Uma corrida universitária que virou tradição nacional. Atrai emissoras, marcas esportivas e torcedores que esperam o ano inteiro por aquele momento.</p>
+        <div class="tagrow"><span class="chip">Corrida</span><span class="chip">TV</span><span class="chip">Marcas</span></div>
+      </article>
+    </div>
+    <div class="thread">
+      <p class="pull">O esporte universitário não precisa ser tratado como algo <span>pequeno</span> só porque é praticado por estudantes.</p>
+      <p class="lead" style="margin-top:20px">Não vamos reproduzir a estrutura desses países no Rio. Existe uma ideia por trás desses exemplos que vale a pena trazer para cá. Nesses lugares, o valor está nas pessoas que as competições movimentam, nas histórias que criam, nas instituições que fortalecem e nas comunidades que aproximam, e não só nos futuros atletas profissionais.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RIO -->
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 3 · O Rio</span>
+      <h2>E por que não podemos construir algo assim no Rio?</h2>
+      <p class="lead">O Rio de Janeiro respira esporte. Temos universidades, atletas, torcidas, rivalidades e jovens que dedicam parte da vida a representar suas faculdades.</p>
+    </div>
+    <div class="grid g4">
+      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>Universidades</h3><p>Instituições com identidade, história e orgulho próprio.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-shirt"/></svg><h3>Atletas</h3><p>Estudantes que treinam depois de um dia de trabalho e estudo.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-flag"/></svg><h3>Torcidas</h3><p>Bandeiras, cantos e gente querendo fazer barulho na arquibancada.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-bolt"/></svg><h3>Rivalidades</h3><p>Aquele clássico que rende conversa a semana inteira.</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="prose">
+        <p>Queremos criar uma competição que os alunos tenham orgulho de disputar. Que faça a galera querer sair de casa para assistir, levar os amigos, vestir a camisa da faculdade e fazer barulho.</p>
+        <p>Queremos que uma <strong>semifinal seja assunto durante a semana</strong>. Que uma final tenha <strong>clima de final</strong>. Que os atletas se sintam valorizados e que a torcida tenha orgulho de fazer parte daquele momento.</p>
+      </div>
+      <div class="card" style="justify-content:center">
+        <span class="eyebrow">Nosso ponto de partida</span>
+        <p style="color:var(--fg);font-size:1.3rem;line-height:1.4">Não queremos inventar essa paixão. Ela já existe. Queremos dar a ela a <b style="color:var(--accent)">estrutura</b>, a <b style="color:var(--accent)">visibilidade</b> e o <b style="color:var(--accent)">reconhecimento</b> que merece.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATO -->
+<section class="band alt" id="formato">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 4 · O projeto</span>
+      <h2>O que é a Copa Universitária RJ?</h2>
+      <p class="lead">Uma competição de futsal masculino e feminino reunindo universidades do Rio de Janeiro. A primeira edição foi pensada para começar de forma organizada e sustentável.</p>
+    </div>
+
+    <div class="court-big" aria-hidden="true">
+      <svg viewBox="0 0 800 300" fill="none">
+        <g stroke="currentColor" stroke-width="3">
+          <rect x="20" y="20" width="760" height="260"/><path d="M400 20v260"/><circle cx="400" cy="150" r="46"/>
+          <path d="M20 70a75 75 0 0175 75v10a75 75 0 01-75 75"/><path d="M780 70a75 75 0 00-75 75v10a75 75 0 0075 75"/>
+        </g>
+        <g fill="currentColor" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" text-anchor="middle">
+          <text x="210" y="165" font-size="84">8 + 8</text>
+          <text x="590" y="165" font-size="84">32 jogos</text>
+        </g>
+        <g fill="currentColor" font-family="DM Mono, monospace" font-size="13" text-anchor="middle" letter-spacing="2">
+          <text x="210" y="195">EQUIPES MASC. + FEM.</text><text x="590" y="195">EM CINCO SÁBADOS</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>8 universidades</h3><p>Participantes da primeira edição.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-users"/></svg><h3>16 equipes</h3><p>8 masculinas e 8 femininas.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-pin"/></svg><h3>1 ginásio fixo</h3><p>Um ponto de encontro para as universidades.</p></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel chart">
+        <h3>Partidas por sábado</h3>
+        <p class="note">Distribuição sugerida, a confirmar com o calendário final. Soma: 32 partidas.</p>
+        <svg viewBox="0 0 520 280" role="img" aria-label="Gráfico de barras: 8 partidas nos sábados 1 a 3, 4 nos sábados 4 e 5">
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="40" x2="510" y1="240" y2="240"/><line x1="40" x2="510" y1="150" y2="150" stroke-dasharray="3 5"/><line x1="40" x2="510" y1="60" y2="60" stroke-dasharray="3 5"/>
+          </g>
+          <text x="30" y="244" text-anchor="end">0</text><text x="30" y="154" text-anchor="end">4</text><text x="30" y="64" text-anchor="end">8</text>
+          <!-- escala: 8 jogos = 180px (60..240); 22.5px por jogo. masculino na base, feminino acima -->
+          <g>
+            <rect x="62"  y="150" width="56" height="90" fill="var(--accent)"/><rect x="62"  y="60" width="56" height="90" fill="var(--court)"/>
+            <rect x="152" y="150" width="56" height="90" fill="var(--accent)"/><rect x="152" y="60" width="56" height="90" fill="var(--court)"/>
+            <rect x="242" y="150" width="56" height="90" fill="var(--accent)"/><rect x="242" y="60" width="56" height="90" fill="var(--court)"/>
+            <rect x="332" y="195" width="56" height="45" fill="var(--accent)"/><rect x="332" y="150" width="56" height="45" fill="var(--court)"/>
+            <rect x="422" y="195" width="56" height="45" fill="var(--accent)"/><rect x="422" y="150" width="56" height="45" fill="var(--court)"/>
+          </g>
+          <g class="val" text-anchor="middle">
+            <text class="val" x="90" y="52">8</text><text class="val" x="180" y="52">8</text><text class="val" x="270" y="52">8</text><text class="val" x="360" y="142">4</text><text class="val" x="450" y="142">4</text>
+          </g>
+          <g text-anchor="middle"><text x="90" y="262">Sáb 1</text><text x="180" y="262">Sáb 2</text><text x="270" y="262">Sáb 3</text><text x="360" y="262">Sáb 4</text><text x="450" y="262">Sáb 5</text></g>
+        </svg>
+        <div class="legend"><span><i style="background:var(--accent)"></i>Masculino</span><span><i style="background:var(--court)"></i>Feminino</span></div>
+      </div>
+
+      <div class="panel chart">
+        <h3>Por fase da competição</h3>
+        <p class="note">Os 32 jogos divididos entre fase de grupos, semifinais e finais.</p>
+        <svg viewBox="0 0 320 220" role="img" aria-label="Rosca: 24 jogos de fase de grupos, 4 de semifinais, 4 de finais">
+          <g transform="translate(110 110) rotate(-90)" fill="none" stroke-width="30">
+            <circle r="70" stroke="var(--accent)" stroke-dasharray="329.9 439.8"/>
+            <circle r="70" stroke="var(--court)" stroke-dasharray="55 439.8" stroke-dashoffset="-329.9"/>
+            <circle r="70" stroke="var(--muted)" stroke-dasharray="54.9 439.8" stroke-dashoffset="-384.9"/>
+          </g>
+          <text x="110" y="108" text-anchor="middle" class="val" style="font-size:30px;font-family:var(--f-display);font-weight:900">32</text>
+          <text x="110" y="126" text-anchor="middle">partidas</text>
+          <g>
+            <rect x="215" y="62" width="10" height="10" fill="var(--accent)"/><text x="231" y="71">Grupos · 24</text>
+            <rect x="215" y="92" width="10" height="10" fill="var(--court)"/><text x="231" y="101">Semifinais · 4</text>
+            <rect x="215" y="122" width="10" height="10" fill="var(--muted)"/><text x="231" y="131">Finais · 4</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Como a competição se desenrola</h3>
+      <p class="note">Estrutura sugerida para cada naipe: 2 grupos de 4 equipes, semifinais cruzadas e final. Ela se repete no masculino e no feminino.</p>
+      <div class="scroll-x">
+      <svg class="bracket" viewBox="0 0 760 300" role="img" aria-label="Chaveamento com dois grupos, semifinais e final">
+        <text class="lab" x="10" y="16">FASE DE GRUPOS</text><text class="lab" x="300" y="16">SEMIFINAIS</text><text class="lab" x="560" y="16">FINAL</text>
+        <rect class="box" x="10" y="40" width="180" height="90" rx="4"/><text x="28" y="72" style="font-weight:600">Grupo A</text><text x="28" y="94" fill="var(--muted)" style="fill:var(--muted)">4 equipes · 6 jogos</text><text x="28" y="114" style="fill:var(--muted)">1º e 2º avançam</text>
+        <rect class="box" x="10" y="170" width="180" height="90" rx="4"/><text x="28" y="202" style="font-weight:600">Grupo B</text><text x="28" y="224" style="fill:var(--muted)">4 equipes · 6 jogos</text><text x="28" y="244" style="fill:var(--muted)">1º e 2º avançam</text>
+        <path class="ln" d="M190 70h50v20h40M190 230h50v-20h40"/>
+        <rect class="box" x="280" y="62" width="180" height="56" rx="4"/><text x="296" y="86" style="font-weight:600">Semifinal 1</text><text x="296" y="106" style="fill:var(--muted)">1º A × 2º B</text>
+        <rect class="box" x="280" y="182" width="180" height="56" rx="4"/><text x="296" y="206" style="font-weight:600">Semifinal 2</text><text x="296" y="226" style="fill:var(--muted)">1º B × 2º A</text>
+        <path class="ln" d="M460 90h50v60h40M460 210h50v-60"/>
+        <rect x="550" y="115" width="200" height="70" rx="4" fill="var(--accent)"/>
+        <text x="568" y="143" style="fill:var(--accent-ink);font-weight:700;font-size:15px">GRANDE FINAL</text><text x="568" y="166" style="fill:var(--accent-ink)">Premiação e experiência</text>
+      </svg>
+      </div>
+    </div>
+
+    <div class="sat">
+      <div><span>Sábado 1</span><em>8</em><span>Fase de grupos · rodada 1</span></div>
+      <div><span>Sábado 2</span><em>8</em><span>Fase de grupos · rodada 2</span></div>
+      <div><span>Sábado 3</span><em>8</em><span>Fase de grupos · rodada 3</span></div>
+      <div><span>Sábado 4</span><em>4</em><span>Semifinais</span></div>
+      <div class="last"><span>Sábado 5</span><em>4</em><span>Finais, premiação e festa</span></div>
+    </div>
+
+    <div class="grid g2" style="margin-top:8px">
+      <div class="card"><svg class="ico"><use href="#i-play"/></svg><h3>Mais do que o jogo</h3><p>Cobertura nas redes sociais, entrevistas, melhores momentos e conteúdos com atletas e torcidas.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-cam"/></svg><h3>Quem está dentro e fora da quadra</h3><p>A preparação dos times, os bastidores, as provocações entre faculdades e as comemorações. O esporte fica mais interessante quando a gente conhece quem está jogando.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PATROCÍNIO -->
+<section class="band" id="patrocinio">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 5 · Parceria</span>
+      <h2>Por que uma empresa deveria apoiar esse projeto?</h2>
+      <p class="lead">Patrocinar a Copa Universitária RJ não é colocar um logotipo em uma placa. É ajudar a fazer o campeonato acontecer e participar da história de quem vai disputar a primeira final. Uma empresa investe porque acredita, mas também espera resultados. Queremos oferecer os dois.</p>
+    </div>
+    <div class="grid g2">
+      <article class="card"><svg class="ico"><use href="#i-users"/></svg><h3>Uma marca mais próxima do público universitário</h3><p>A universidade é a fase do primeiro estágio, do primeiro emprego, da primeira conta bancária, de novos hábitos de consumo e de decisões que acompanham a pessoa por anos. Estar presente aqui é criar relacionamento com jovens consumidores e futuros profissionais. E existe uma diferença enorme entre aparecer em um anúncio e fazer parte de algo de que as pessoas realmente gostam.</p></article>
+      <article class="card"><svg class="ico"><use href="#i-play"/></svg><h3>Visibilidade que não acaba quando o jogo termina</h3><p>Um gol bonito vira vídeo. Uma defesa vira destaque. Uma comemoração vira story. Uma rivalidade vira assunto no grupo da faculdade. Vamos produzir conteúdo antes, durante e depois, com espaço para o patrocinador nas redes do campeonato, nos materiais oficiais e, mediante acordos, nos canais das atléticas.</p></article>
+      <article class="card"><svg class="ico"><use href="#i-link"/></svg><h3>Mais do que aparecer, participar</h3><p>Queremos que as empresas conversem com o público, em ações que façam sentido para o patrocinador e sejam interessantes para quem participa.</p></article>
+      <article class="card"><svg class="ico"><use href="#i-heart"/></svg><h3>Associar a marca a algo que faz bem</h3><p>Incentivar jovens a continuar praticando atividade física, trabalhando em equipe, convivendo com pessoas diferentes e encontrando no esporte um lugar de pertencimento. Muitos treinam depois de um dia inteiro de trabalho e estudo, sem estrutura profissional.</p></article>
+    </div>
+
+    <div class="head" style="margin-top:24px"><h3 style="font-size:2.2rem">Cada marca, uma forma de entrar em quadra</h3></div>
+    <div class="grid g4">
+      <div class="card"><svg class="ico"><use href="#i-gift"/></svg><h3>Bebidas</h3><p>Produtos para atletas e torcedores.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>Formaturas</h3><p>Ação especial com as turmas.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-bolt"/></svg><h3>Academias</h3><p>Conteúdos sobre preparação física.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-tag"/></svg><h3>Fintechs</h3><p>Benefícios exclusivos para estudantes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ENTREGAS -->
+<section class="band alt">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 6 · Entregas</span>
+      <h2>O que podemos entregar aos patrocinadores?</h2>
+      <p class="lead">Pacotes comerciais que combinam visibilidade, relacionamento e experiências. As entregas serão definidas em contrato, considerando a cota adquirida, os espaços disponíveis e as autorizações necessárias.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><svg class="ico"><use href="#i-tag"/></svg><h3>Presença de marca</h3><p>Logotipo em materiais oficiais, placas de quadra, backdrop de entrevistas, premiações e comunicação do evento.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-play"/></svg><h3>Conteúdo digital</h3><p>Inserções em publicações, vídeos, entrevistas, melhores momentos e campanhas especiais.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-gift"/></svg><h3>Ativações presenciais</h3><p>Espaços para experiências, distribuição de produtos, ações promocionais e contato com os torcedores.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-trophy"/></svg><h3>Naming rights</h3><p>Possibilidade de associar o nome de uma empresa à competição ou a uma premiação.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>Relacionamento com universidades</h3><p>Ações em parceria com atléticas e comunidades acadêmicas.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-star"/></svg><h3>Projetos personalizados</h3><p>Campanhas criadas de acordo com o público e os objetivos comerciais de cada patrocinador.</p></div>
+    </div>
+
+    <div class="head" style="margin-top:24px">
+      <span class="eyebrow">Jornada da marca</span>
+      <h3 style="font-size:2.2rem">A marca acompanha toda a história da competição</h3>
+    </div>
+    <div class="flow">
+      <div class="step"><span class="when">Antes</span><svg class="ico"><use href="#i-mega"/></svg><h3>Expectativa</h3><ul><li>Apresentação dos times e atletas</li><li>Preparação e bastidores</li><li>Provocações entre faculdades</li></ul></div>
+      <div class="step"><span class="when">Durante</span><svg class="ico"><use href="#i-ball"/></svg><h3>Jogo</h3><ul><li>Placas de quadra e backdrop</li><li>Ativações para a torcida</li><li>Cobertura em tempo real nas redes</li></ul></div>
+      <div class="step"><span class="when">Depois</span><svg class="ico"><use href="#i-cam"/></svg><h3>Repercussão</h3><ul><li>Melhores momentos e entrevistas</li><li>Comemorações e premiação</li><li>Relatório de entregas</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA VOCÊ -->
+<section class="band" id="para-voce">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 7 · Para quem é</span>
+      <h2>O que a Copa significa para cada um</h2>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Escolha seu perfil">
+      <button class="tab" role="tab" id="t-inv" aria-controls="p-inv" aria-selected="true">Investidores</button>
+      <button class="tab" role="tab" id="t-atl" aria-controls="p-atl" aria-selected="false">Atléticas</button>
+      <button class="tab" role="tab" id="t-uni" aria-controls="p-uni" aria-selected="false">Universidades</button>
+      <button class="tab" role="tab" id="t-mar" aria-controls="p-mar" aria-selected="false">Marcas</button>
+    </div>
+
+    <div class="tabpanel" role="tabpanel" id="p-inv" aria-labelledby="t-inv">
+      <div><h3>Um projeto novo, com plano claro e escala controlada</h3>
+        <p class="lead">Começamos com formato enxuto para validar o modelo antes de crescer.</p></div>
+      <ul class="checks">
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Primeira edição sustentável:</b> 8 universidades, 16 equipes, 32 partidas e um ginásio fixo.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Validação antes de promessa:</b> a edição inaugural mede público, formato e resultados.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Prestação de contas:</b> relatório com entregas, resultados de comunicação e participação do público.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Caminho de crescimento:</b> mais universidades, outras modalidades e eventos maiores.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Referências reais:</b> NCAA, BUCS e Hakone Ekiden mostram que o esporte universitário gera valor.</span></li>
+      </ul>
+    </div>
+
+    <div class="tabpanel" id="p-atl" role="tabpanel" aria-labelledby="t-atl" hidden>
+      <div><h3>Sua atlética no centro da competição</h3>
+        <p class="lead">A Copa existe porque a torcida, a camisa e a rivalidade já existem.</p></div>
+      <ul class="checks">
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Palco de verdade:</b> um ginásio fixo, cinco sábados de competição e clima de final.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Visibilidade para atletas e torcida:</b> entrevistas, melhores momentos e conteúdos com quem vive a atlética.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Masculino e feminino:</b> 8 equipes de cada, com a mesma importância na competição.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Parcerias com marcas:</b> ações com patrocinadores em parceria com as atléticas, mediante acordo.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Calendário para se preparar:</b> a tradição que queremos criar é a de se organizar meses antes.</span></li>
+      </ul>
+    </div>
+
+    <div class="tabpanel" id="p-uni" role="tabpanel" aria-labelledby="t-uni" hidden>
+      <div><h3>Orgulho de representar sua instituição</h3>
+        <p class="lead">Competições aproximam comunidades e fortalecem instituições, como mostram os exemplos internacionais.</p></div>
+      <ul class="checks">
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Identidade e pertencimento:</b> estudantes vestem a camisa e criam histórias que duram anos.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Presença no Rio:</b> sua universidade entre as 8 da primeira edição.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Esporte e vida acadêmica:</b> incentivo à atividade física, trabalho em equipe e convivência.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Comunidade acadêmica unida:</b> alunos que querem saber quando começa o campeonato.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Cobertura de conteúdo:</b> a história da sua universidade contada dentro e fora de quadra.</span></li>
+      </ul>
+    </div>
+
+    <div class="tabpanel" id="p-mar" role="tabpanel" aria-labelledby="t-mar" hidden>
+      <div><h3>Fazer parte de algo de que o público gosta</h3>
+        <p class="lead">Chegue ao jovem na fase em que ele forma hábitos e relacionamentos de consumo.</p></div>
+      <ul class="checks">
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Público universitário:</b> primeiro estágio, primeiro emprego, primeira conta bancária.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Presença antes, durante e depois:</b> placas, backdrop, conteúdo digital e materiais oficiais.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Ativações sob medida:</b> bebidas, formaturas, academias, fintechs e outras ideias.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Naming rights e projetos personalizados:</b> conforme a cota e os objetivos comerciais.</span></li>
+        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Relatório pós-evento:</b> entregas realizadas, resultados de comunicação e participação do público.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPARÊNCIA -->
+<section class="band alt">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 8 · Transparência</span>
+      <h2>Estamos começando pequeno. E fazemos questão de dizer isso.</h2>
+      <p class="lead">Não vamos prometer ginásios lotados ou milhões de visualizações sem dados para sustentar. Estamos construindo um projeto do zero.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card"><svg class="ico"><use href="#i-seed"/></svg><h3>Validar o formato</h3><p>A primeira edição testa a estrutura da competição.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-users"/></svg><h3>Conhecer o público</h3><p>Entender quem vai, quem acompanha e o que engaja.</p></div>
+      <div class="card"><svg class="ico"><use href="#i-chart"/></svg><h3>Medir resultados</h3><p>Mostrar que há espaço para uma competição organizada e contínua.</p></div>
+    </div>
+    <div class="panel">
+      <h3>O relatório que cada patrocinador recebe</h3>
+      <div class="grid g3">
+        <div style="display:flex;gap:12px"><svg class="ico" style="color:var(--accent)"><use href="#i-doc"/></svg><span>Entregas realizadas, conforme o contrato</span></div>
+        <div style="display:flex;gap:12px"><svg class="ico" style="color:var(--accent)"><use href="#i-play"/></svg><span>Resultados de comunicação disponíveis</span></div>
+        <div style="display:flex;gap:12px"><svg class="ico" style="color:var(--accent)"><use href="#i-users"/></svg><span>Indicadores de participação do público</span></div>
+      </div>
+      <p class="note">Queremos que as empresas tenham motivos concretos para continuar conosco nas próximas edições.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISÃO -->
+<section class="band" id="visao">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow">Capítulo 9 · Visão</span>
+      <h2>Nosso sonho vai além de uma primeira edição.</h2>
+      <p class="lead">Imagine uma competição que faça parte do calendário das universidades do Rio. Alunos chegando à faculdade e já querendo saber quando começa o campeonato.</p>
+    </div>
+    <div class="road">
+      <div><b>1ª edição</b><p>8 universidades, 16 equipes, a primeira bola rolando e as primeiras marcas a bordo.</p></div>
+      <div><b>Consolidação</b><p>Atléticas se preparando meses antes e torcidas organizando suas festas.</p></div>
+      <div><b>Crescimento</b><p>Mais universidades, outras modalidades e eventos ainda maiores.</p></div>
+      <div><b>Tradição</b><p>Finais reunindo estudantes de várias instituições e marcas criando campanhas para o período.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONVITE -->
+<section class="band final" id="convite">
+  <div class="wrap">
+    <span class="eyebrow">Capítulo 10 · Convite</span>
+    <h2 style="max-width:14ch">Um convite para fazer parte dessa história.</h2>
+    <div class="prose" style="color:#E4EDF9">
+      <p>A gente ainda não sabe quem vai ganhar a primeira Copa Universitária RJ. Não sabe qual jogador vai marcar o gol mais bonito, qual goleiro vai decidir uma semifinal ou qual torcida vai fazer mais barulho.</p>
+      <p>Mas sabemos o que queremos construir: um campeonato que os atletas queiram disputar, que os estudantes queiram acompanhar, que as universidades tenham orgulho de participar e que as empresas tenham orgulho de apoiar.</p>
+    </div>
+    <p class="pull" style="max-width:20ch">Sua marca pode ser só mais uma. Ou pode ser uma das que <span>ajudaram essa competição a nascer.</span></p>
+    <p class="lead">A gente quer construir algo que dure. E quer fazer isso com quem acredita que o esporte universitário merece mais.</p>
+    <div class="cta-row">
+      <a class="btn" href="#para-voce">Rever a proposta <svg class="ico" viewBox="0 0 24 24" style="width:1.2em;height:1.2em"><use href="#i-arrow"/></svg></a>
+      <a class="btn ghost" href="#topo">Voltar ao topo</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div><span><b>COPA UNIVERSITÁRIA RJ</b></span><span>A paixão já existe. Falta dar a ela o espaço que merece.</span></div>
+</footer>
+
+<script>
+(function(){
+  /* torcida: silhuetas geradas */
+  var c=document.getElementById('crowd'),ns='http://www.w3.org/2000/svg',s=7;
+  function rnd(){s=(s*16807)%2147483647;return s/2147483647}
+  var out='';
+  for(var row=0;row<3;row++){
+    for(var x=(row%2)*12;x<1000;x+=26){
+      var h=70+row*26+rnd()*14, y=h; 
+      out+='<circle cx="'+(x+rnd()*6)+'" cy="'+(y-26)+'" r="8" fill="currentColor" opacity="'+(0.45+row*0.25)+'"/>'+
+           '<path d="M'+(x-11)+' '+(y+90)+'v-48a11 11 0 0122 0v48z" fill="currentColor" opacity="'+(0.45+row*0.25)+'"/>';
+      if(rnd()>.9) out+='<path d="M'+(x+9)+' '+(y+10)+'l-2-48" stroke="var(--accent)" stroke-width="2.500"/><path d="M'+(x+7)+' '+(y-38)+'l22 6-22 8z" fill="var(--accent)"/>';
+    }
+  }
+  c.innerHTML=out;
+  /* pontos BUCS */
+  var d=document.getElementById('dots'),o='';
+  for(var i=0;i<150;i++)o+='<i></i>';
+  d.innerHTML=o;
+  /* abas */
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function pick(t){tabs.forEach(function(b){var on=b===t;b.setAttribute('aria-selected',on);document.getElementById(b.getAttribute('aria-controls')).hidden=!on})}
+  tabs.forEach(function(t,i){t.addEventListener('click',function(){pick(t)});
+    t.addEventListener('keydown',function(e){var n=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(n){var x=tabs[(i+n+tabs.length)%tabs.length];x.focus();pick(x)}})});
+  /* progresso */
+  var p=document.getElementById('progress');
+  function prog(){var h=document.documentElement.scrollHeight-innerHeight;p.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%'}
+  addEventListener('scroll',prog,{passive:true});prog();
+  /* tema */
+  var r=document.documentElement;
+  try{var sv=localStorage.getItem('copa-theme');if(sv)r.setAttribute('data-theme',sv)}catch(e){}
+  document.getElementById('theme').addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+    var nx=cur==='dark'?'light':'dark';r.setAttribute('data-theme',nx);
+    try{localStorage.setItem('copa-theme',nx)}catch(e){}
+  });
+})();
+</script>
