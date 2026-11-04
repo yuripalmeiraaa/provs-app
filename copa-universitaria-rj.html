@@ -4,14 +4,19 @@
 <style>
 /* Layout: cartaz de ginásio. Faixas cheias de cor (azul atlética, preto, branco), tipografia expandida itálica, camisas numeradas de 1 a 9 como capítulos. */
 :root{
-  --ink:#0A0B1E; --royal:#2340FF; --royal-deep:#121C8F; --sun:#FFD21F; --paper:#F3F5FA; --chalk:#FFFFFF; --coral:#FF4D3D;
-  --text-on-paper:#14162B; --muted-paper:#4B5069; --line-paper:#D5DAEA; --muted-dark:#B7C0F7; --line-dark:rgba(255,255,255,.2);
+  --ink:#0A0B1E; --royal:#1D35E6; --royal-deep:#121C8F; --sun:#FFD21F; --paper:#F3F5FA; --chalk:#FFFFFF; --coral:#FF4D3D; --coral-ink:#C9271A;
+  --text-on-paper:#14162B; --muted-paper:#4B5069; --line-paper:#D5DAEA; --muted-dark:#DCE2FF; --line-dark:rgba(255,255,255,.2);
   --f-display:"Archivo","Arial Black",Impact,sans-serif;
   --f-serif:"Instrument Serif",Georgia,"Times New Roman",serif;
   --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
+::selection{background:var(--sun);color:var(--ink)}
+html{scrollbar-color:var(--royal) var(--ink);caret-color:var(--royal)}
+a{text-underline-offset:.2em;text-decoration-thickness:2px}
+button{font-family:inherit}
+
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--text-on-paper);font:400 18px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 p{margin:0;text-wrap:pretty}
@@ -20,7 +25,8 @@ h2{font-size:clamp(2rem,5.6vw,4.6rem)}
 h3{font-size:clamp(1.3rem,2.2vw,1.8rem);line-height:1}
 a{color:inherit}
 svg{display:block}
-:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;box-shadow:0 0 0 6px var(--ink)}
+.on-paper :focus-visible,.on-white :focus-visible{outline-color:var(--royal);box-shadow:0 0 0 6px var(--chalk)}
 .serif{font-family:var(--f-serif);font-style:italic;font-weight:400}
 
 .band{position:relative;padding-block:clamp(72px,11vw,150px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -44,7 +50,7 @@ svg{display:block}
 .on-ink .num,.on-royal .num,.on-deep .num{-webkit-text-stroke-color:var(--sun)}
 
 .btn{display:inline-flex;align-items:center;gap:12px;background:var(--sun);color:var(--ink);font:800 .95rem/1 var(--f-display);font-stretch:112%;text-transform:uppercase;letter-spacing:.04em;padding:18px 26px;border:0;border-radius:99px;text-decoration:none;cursor:pointer;transition:transform .25s,box-shadow .25s}
-.btn:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.btn:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 14px 28px -8px rgba(10,11,30,.45)}
 .btn{white-space:nowrap}
 .btn.line{background:transparent;color:inherit;border:2px solid currentColor}
 
@@ -130,7 +136,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .world .body{padding:clamp(24px,4vw,52px);display:flex;flex-direction:column;gap:18px;justify-content:center}
 .world .where{font:800 .78rem var(--f-display);font-stretch:112%;letter-spacing:.2em;text-transform:uppercase;color:var(--royal)}
 .world .stat{font:900 italic clamp(3rem,7vw,6rem)/.85 var(--f-display);font-stretch:125%}
-.world .stat small{font-size:.38em;color:var(--coral);margin-right:.2em}
+.world .stat small{font-size:.38em;color:var(--coral-ink);margin-right:.2em}
 .world p{color:var(--muted-paper);font-size:1rem}
 @media(min-width:900px){.world{position:sticky;top:84px}.world:nth-child(2){top:104px}.world:nth-child(3){top:124px}}
 @media(max-width:900px){.world{grid-template-columns:1fr}.world:nth-child(even) .ph{order:0}}
@@ -143,18 +149,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .rio-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px)}
 .rio-text>*{min-width:0}
 @media(max-width:900px){.rio-text{grid-template-columns:1fr}}
-.hook{font:900 italic clamp(1.6rem,3vw,2.5rem)/1.08 var(--f-display);font-stretch:125%;text-transform:uppercase}
+.hook{font:900 italic clamp(1.5rem,2.8vw,2.3rem)/1.18 var(--f-display);font-stretch:112%}
 .hook mark{background:var(--sun);color:var(--ink);padding:0 .15em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .skyline{position:absolute;left:0;right:0;bottom:0;width:100%;height:clamp(110px,18vw,260px);pointer-events:none}
 .band.rio{padding-bottom:clamp(170px,24vw,320px)}
 
 /* 4 */
-.numbers{display:grid;grid-template-columns:repeat(5,1fr);border-block:3px solid var(--ink)}
-.numbers div{padding:26px 14px;border-right:3px solid var(--ink);display:flex;flex-direction:column;gap:4px}
-.numbers div:last-child{border:0}
-.numbers b{font:900 italic clamp(3rem,6.5vw,5.6rem)/.9 var(--f-display);font-stretch:125%;color:var(--royal)}
-.numbers span{font:700 .72rem var(--f-display);font-stretch:108%;letter-spacing:.14em;text-transform:uppercase}
-@media(max-width:820px){.numbers{grid-template-columns:repeat(2,1fr)}.numbers div{border-bottom:3px solid var(--ink)}.numbers div:nth-child(2n){border-right:0}.numbers div:last-child{grid-column:1/-1;border-bottom:0}}
+.count{font:900 italic clamp(1.8rem,4.4vw,3.8rem)/1.05 var(--f-display);font-stretch:125%;display:flex;flex-wrap:wrap;gap:.1em .5em;font-variant-numeric:tabular-nums}
+.count span{white-space:nowrap}
+.count b{color:var(--royal);font-weight:900}
 .court-fig{background:var(--royal);border-radius:20px;padding:clamp(12px,3vw,32px);color:#fff}
 .court-fig svg{width:100%;height:auto}
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:24px}
@@ -201,7 +204,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ideas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 @media(max-width:900px){.ideas{grid-template-columns:1fr 1fr}}
 .idea{border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;min-height:210px;justify-content:space-between;min-width:0}
-.idea:nth-child(1){background:var(--royal);color:#fff} .idea:nth-child(2){background:var(--sun)} .idea:nth-child(3){background:var(--ink);color:#fff} .idea:nth-child(4){background:var(--coral);color:#fff}
+.idea:nth-child(1){background:var(--royal);color:#fff} .idea:nth-child(2){background:var(--sun)} .idea:nth-child(3){background:var(--ink);color:#fff} .idea:nth-child(4){background:var(--coral);color:var(--ink)}
 .idea svg{width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .idea p{font-size:.95rem;line-height:1.4}
 
@@ -269,8 +272,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .final{overflow:hidden}
 .final .huge{font-size:clamp(2.2rem,8.2vw,7.4rem);line-height:.88;transform:skewX(-4deg);transform-origin:left}
 .final .huge span{color:var(--sun)}
-.final .ball{position:absolute;right:max(16px,5vw);top:6%;width:clamp(80px,12vw,170px);animation:bounce 2.4s cubic-bezier(.4,0,.6,1) infinite alternate}
-@keyframes bounce{from{transform:translateY(0) rotate(0)}to{transform:translateY(60px) rotate(180deg)}}
+.ball3d{position:absolute;right:max(16px,4vw);top:clamp(24px,6%,80px);width:clamp(120px,22vw,300px);aspect-ratio:1;touch-action:pan-y;cursor:grab;z-index:2}
+.ball3d canvas,.ball3d svg{width:100%;height:100%;display:block}
+@media(max-width:700px){.ball3d{top:auto;bottom:24px;right:16px;width:120px;opacity:.95}}
 footer{background:var(--ink);color:#fff;padding:32px max(16px,env(safe-area-inset-right,0px)) 44px max(16px,env(safe-area-inset-left,0px))}
 footer div{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transform:uppercase}
@@ -293,7 +297,7 @@ body.editing [data-ed]:hover{outline-color:var(--sun)}
 body.editing [data-ed]:focus{outline:2px solid var(--sun);background:rgba(255,210,31,.14)}
 .editfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;display:none}
 .editfab.on{display:block}
-.editfab button{font:800 .85rem/1 var(--f-display);font-stretch:112%;text-transform:uppercase;letter-spacing:.06em;padding:15px 20px;border-radius:99px;border:0;background:var(--sun);color:var(--ink);cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.editfab button{font:800 .85rem/1 var(--f-display);font-stretch:112%;text-transform:uppercase;letter-spacing:.06em;padding:15px 20px;border-radius:99px;border:0;background:var(--sun);color:var(--ink);cursor:pointer;box-shadow:0 14px 28px -8px rgba(10,11,30,.5)}
 .editbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--ink);color:#fff;display:none;align-items:center;gap:10px;flex-wrap:wrap;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:3px solid var(--sun)}
 body.editing .editbar{display:flex}
 body.editing .editfab{display:none}
@@ -331,7 +335,6 @@ body.editing{padding-bottom:90px}
   <div class="dots-bg"></div>
   <div class="hero-in">
     <div class="hero-title">
-      <p class="kicker">Futsal masculino e feminino · Rio de Janeiro · 1ª edição</p>
       <h1><span class="ln"><span>Copa</span></span><span class="ln"><span>Universitária <i class="rj">RJ</i></span></span></h1>
     </div>
     <div>
@@ -351,7 +354,7 @@ body.editing{padding-bottom:90px}
           <rect width="800" height="1000" fill="#121C8F"/>
           <g fill="url(#beam)"><path d="M120 0h110L90 640H-90z"/><path d="M420 0h110L520 640H300z"/><path d="M700 0h110L1000 640H760z"/></g>
           <g id="heroCrowd"></g>
-          <path d="M0 640h800v360H0z" fill="#2340FF"/>
+          <path d="M0 640h800v360H0z" fill="#1D35E6"/>
           <g stroke="#fff" stroke-width="5" fill="none" opacity=".85"><path d="M0 740h800"/><ellipse cx="400" cy="860" rx="250" ry="62"/><path d="M400 740v230"/></g>
           <g transform="translate(420 380)">
             <rect x="0" y="0" width="340" height="260" fill="url(#net)"/>
@@ -392,21 +395,21 @@ body.editing{padding-bottom:90px}
   <div class="wrap">
     <div class="shirt rv"><span class="num">1</span><h2>Tem coisa que só quem vive o esporte universitário entende.</h2></div>
     <div class="split">
-      <div class="prose rv">
+      <div class="prose">
         <p class="lead">É difícil explicar para quem nunca viveu.</p>
         <p>A ansiedade antes de entrar em quadra. O barulho da torcida. O orgulho de vestir a camisa da faculdade. A resenha depois do jogo, ganhando ou perdendo.</p>
         <p>Tem gente que passa a semana inteira esperando por aqueles 40 minutos. Gente que trabalha, estuda, pega ônibus, chega cansada em casa, mas ainda encontra energia para treinar porque sabe que, no fim de semana, vai representar sua universidade.</p>
         <p>E não é só sobre quem joga. É sobre os amigos que vão assistir. A turma que se junta para torcer. As bandeiras, os cantos, a rivalidade entre faculdades e as histórias que continuam sendo lembradas anos depois.</p>
         <p class="pull">Não é só <em>um jogo.</em></p>
       </div>
-      <aside class="board rv" aria-label="Placar ilustrativo">
+      <aside class="board" aria-label="Placar ilustrativo">
         <div class="row"><small>Atlética A</small><small>Atlética B</small></div>
         <div class="row"><span class="sc" id="sa">3</span><span class="sc" style="color:#fff">×</span><span class="sc" id="sb">2</span></div>
         <div class="clock" id="clock">40:00</div>
         <small style="text-align:center">40 minutos que a semana inteira esperou</small>
       </aside>
     </div>
-    <div class="moments rv">
+    <div class="moments">
       <div><b>Antes</b><span>A ansiedade de entrar em quadra</span></div>
       <div><b>Durante</b><span>O barulho da torcida e a camisa da faculdade</span></div>
       <div><b>Na arquibancada</b><span>Bandeiras, cantos e rivalidades</span></div>
@@ -421,7 +424,7 @@ body.editing{padding-bottom:90px}
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
           <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#F3F5FA"/>
-            <g stroke="#2340FF" stroke-width="4" fill="none"><rect x="30" y="60" width="340" height="380"/><path d="M30 250h340"/><circle cx="200" cy="250" r="50"/><path d="M130 60v50h140V60M130 440v-50h140v50"/></g>
+            <g stroke="#1D35E6" stroke-width="4" fill="none"><rect x="30" y="60" width="340" height="380"/><path d="M30 250h340"/><circle cx="200" cy="250" r="50"/><path d="M130 60v50h140V60M130 440v-50h140v50"/></g>
             <g stroke="#0A0B1E" stroke-width="6" stroke-linecap="round"><path d="M110 150l22 22M132 150l-22 22M270 190l22 22M292 190l-22 22M180 330l22 22M202 330l-22 22"/></g>
             <g fill="none" stroke="#FF4D3D" stroke-width="5"><circle cx="270" cy="150" r="13"/><circle cx="130" cy="260" r="13"/><circle cx="260" cy="340" r="13"/></g>
             <path d="M118 182c40 40 70 20 90 70M280 224c-10 40-40 60-90 90" stroke="#0A0B1E" stroke-width="4" stroke-dasharray="3 10" fill="none" stroke-linecap="round"/>
@@ -430,7 +433,7 @@ body.editing{padding-bottom:90px}
         </div><figcaption>A preparação</figcaption></figure>
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#2340FF"/>
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#1D35E6"/>
             <g id="conf"></g>
             <g fill="#FFD21F"><path d="M120 120h160c0 80-30 130-80 150-50-20-80-70-80-150z"/><path d="M120 140h-50c0 50 20 80 60 90M280 140h50c0 50-20 80-60 90" fill="none" stroke="#FFD21F" stroke-width="14"/><rect x="185" y="270" width="30" height="60"/><rect x="140" y="330" width="120" height="26" rx="6"/><rect x="120" y="356" width="160" height="40" rx="6" fill="#0A0B1E"/></g>
             <text x="200" y="384" text-anchor="middle" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#FFD21F">CAMPEÃ</text>
@@ -438,7 +441,7 @@ body.editing{padding-bottom:90px}
           <span hidden data-slot="comemoracao" data-alt="Equipe comemorando o título"></span>
         </div><figcaption>A taça</figcaption></figure>
     </div>
-    <p class="lead rv"><b>Quem vive o esporte universitário sabe: não é só um jogo.</b> E é justamente por acreditar nisso que queremos criar a Copa Universitária RJ.</p>
+    <p class="lead"><b>Quem vive o esporte universitário sabe: não é só um jogo.</b> E é justamente por acreditar nisso que queremos criar a Copa Universitária RJ.</p>
   </div>
 </section>
 
@@ -474,7 +477,7 @@ body.editing{padding-bottom:90px}
             <rect width="600" height="440" fill="#121C8F"/>
             <g id="bucsdots"></g>
             <g transform="translate(300 220)">
-              <circle r="150" fill="#2340FF"/>
+              <circle r="150" fill="#1D35E6"/>
               <g stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <g transform="translate(-70 -50)"><circle r="34"/><path d="M0-14l13 9-5 15H-8l-5-15z"/></g>
                 <g transform="translate(60 -54) rotate(-30)"><ellipse rx="40" ry="24"/><path d="M-16 0h32M-6-6v12M4-6v12"/></g>
@@ -498,7 +501,7 @@ body.editing{padding-bottom:90px}
           <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
             <rect width="600" height="440" fill="#FFD21F"/>
             <circle cx="410" cy="120" r="64" fill="#FF4D3D"/>
-            <path d="M-20 330L220 110l40 24 30-26 20 22 40-28L620 330z" fill="#2340FF"/>
+            <path d="M-20 330L220 110l40 24 30-26 20 22 40-28L620 330z" fill="#1D35E6"/>
             <path d="M200 140l20-30 40 24 30-26 20 22 40-28 24 30-44 20-30-20-30 22-30-20z" fill="#fff"/>
             <path d="M-20 330h640v120H-20z" fill="#0A0B1E"/>
             <path d="M-20 372c200-30 360-30 640 0" stroke="#FFD21F" stroke-width="5" stroke-dasharray="22 16" fill="none"/>
@@ -516,12 +519,12 @@ body.editing{padding-bottom:90px}
     </div>
 
     <div class="common">
-      <div class="prose rv">
+      <div class="prose">
         <p class="lead">São países diferentes, esportes diferentes e realidades diferentes. Mas existe algo em comum entre eles.</p>
         <p>Em todos esses lugares, alguém entendeu que o esporte universitário tinha valor. E decidiu investir nele. Não apenas porque aqueles estudantes poderiam se tornar atletas profissionais, mas porque as competições movimentam pessoas, criam histórias, fortalecem instituições e aproximam comunidades.</p>
         <p class="muted">Não estamos dizendo que vamos reproduzir a estrutura desses países no Rio de Janeiro. Estamos dizendo que existe uma ideia por trás desses exemplos que vale a pena trazer para cá.</p>
       </div>
-      <p class="pull rv" style="align-self:center">O esporte universitário não precisa ser tratado como algo <em>pequeno</em> só porque é praticado por estudantes.</p>
+      <p class="pull" style="align-self:center">O esporte universitário não precisa ser tratado como algo <em>pequeno</em> só porque é praticado por estudantes.</p>
     </div>
   </div>
 </section>
@@ -531,7 +534,7 @@ body.editing{padding-bottom:90px}
   <div class="wrap">
     <div class="shirt rv"><span class="num">3</span><h2>E por que não podemos construir algo assim no Rio?</h2></div>
     <div class="rio-text">
-      <div class="prose rv">
+      <div class="prose">
         <p class="lead">O Rio de Janeiro respira esporte. Temos universidades, atletas, torcidas, rivalidades e jovens que dedicam parte da vida a representar suas faculdades.</p>
         <p>O que queremos é dar mais espaço para tudo isso. Criar uma competição que os alunos tenham orgulho de disputar. Que faça a galera querer sair de casa para assistir. Que dê vontade de levar os amigos, vestir a camisa da faculdade e fazer barulho na arquibancada.</p>
       </div>
@@ -556,7 +559,7 @@ body.editing{padding-bottom:90px}
 <!-- GALERIA (preenchida pelo modo de edição) -->
 <section class="band on-paper" id="galeria" hidden>
   <div class="wrap">
-    <div class="shirt rv"><span class="num">★</span><h2 data-keep>Dentro e fora da quadra</h2></div>
+    <div class="shirt rv"><h2>Dentro e fora da quadra</h2></div>
     <div class="gal" id="galGrid"></div>
     <div id="galAdd" hidden><button class="btn" type="button" id="galBtn">Adicionar fotos</button></div>
   </div>
@@ -566,57 +569,57 @@ body.editing{padding-bottom:90px}
 <section class="band on-paper" id="projeto">
   <div class="wrap">
     <div class="shirt rv"><span class="num">4</span><h2>O que é a Copa Universitária RJ?</h2></div>
-    <p class="lead rv">Uma competição de futsal masculino e feminino reunindo universidades do Rio de Janeiro. A primeira edição foi pensada para começar de forma organizada e sustentável.</p>
+    <p class="lead">Uma competição de futsal masculino e feminino reunindo universidades do Rio de Janeiro. A primeira edição foi pensada para começar de forma organizada e sustentável.</p>
 
-    <div class="numbers rv">
-      <div><b data-count="8">8</b><span>Universidades</span></div>
-      <div><b data-count="16">16</b><span>Equipes (8 masc. + 8 fem.)</span></div>
-      <div><b data-count="32">32</b><span>Partidas</span></div>
-      <div><b data-count="5">5</b><span>Sábados de competição</span></div>
-      <div><b>1</b><span>Ginásio fixo</span></div>
-    </div>
+    <p class="count">
+      <span><b data-count="8">8</b> universidades.</span>
+      <span><b data-count="16">16</b> equipes.</span>
+      <span><b data-count="32">32</b> partidas.</span>
+      <span><b data-count="5">5</b> sábados.</span>
+      <span><b>1</b> ginásio.</span>
+    </p>
 
-    <div class="court-fig rv" aria-hidden="true">
+    <div class="court-fig" aria-hidden="true">
       <svg viewBox="0 0 800 300" fill="none"><g stroke="currentColor" stroke-width="3"><rect x="20" y="20" width="760" height="260"/><path d="M400 20v260"/><circle cx="400" cy="150" r="46"/><path d="M20 70a75 75 0 0175 75v10a75 75 0 01-75 75"/><path d="M780 70a75 75 0 00-75 75v10a75 75 0 0075 75"/></g>
         <g fill="currentColor" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" text-anchor="middle"><text x="210" y="165" font-size="72">GRUPOS</text><text x="590" y="165" font-size="72">FINAL</text></g>
         <circle cx="400" cy="150" r="7" fill="#FFD21F"/></svg>
     </div>
 
     <div class="charts">
-      <div class="panel chart rv">
+      <div class="panel chart">
         <h3>Partidas por sábado</h3>
         <p class="note">Distribuição sugerida, a confirmar no calendário oficial. Total: 32 partidas.</p>
         <svg viewBox="0 0 520 290" role="img" aria-label="Partidas por sábado: 8, 8, 8, 4 e 4">
           <g stroke="#D5DAEA"><line x1="40" x2="510" y1="240" y2="240" stroke="#14162B"/><line x1="40" x2="510" y1="150" y2="150" stroke-dasharray="3 5"/><line x1="40" x2="510" y1="60" y2="60" stroke-dasharray="3 5"/></g>
           <text x="30" y="244" text-anchor="end">0</text><text x="30" y="154" text-anchor="end">4</text><text x="30" y="64" text-anchor="end">8</text>
-          <rect class="bar-m" x="62" y="150" width="56" height="90" fill="#2340FF"/><rect class="bar-f" x="62" y="60" width="56" height="90" fill="#FF4D3D"/>
-          <rect class="bar-m" x="152" y="150" width="56" height="90" fill="#2340FF"/><rect class="bar-f" x="152" y="60" width="56" height="90" fill="#FF4D3D"/>
-          <rect class="bar-m" x="242" y="150" width="56" height="90" fill="#2340FF"/><rect class="bar-f" x="242" y="60" width="56" height="90" fill="#FF4D3D"/>
-          <rect class="bar-m" x="332" y="195" width="56" height="45" fill="#2340FF"/><rect class="bar-f" x="332" y="150" width="56" height="45" fill="#FF4D3D"/>
-          <rect class="bar-m" x="422" y="195" width="56" height="45" fill="#2340FF"/><rect class="bar-f" x="422" y="150" width="56" height="45" fill="#FF4D3D"/>
+          <rect class="bar-m" x="62" y="150" width="56" height="90" fill="#1D35E6"/><rect class="bar-f" x="62" y="60" width="56" height="90" fill="#FF4D3D"/>
+          <rect class="bar-m" x="152" y="150" width="56" height="90" fill="#1D35E6"/><rect class="bar-f" x="152" y="60" width="56" height="90" fill="#FF4D3D"/>
+          <rect class="bar-m" x="242" y="150" width="56" height="90" fill="#1D35E6"/><rect class="bar-f" x="242" y="60" width="56" height="90" fill="#FF4D3D"/>
+          <rect class="bar-m" x="332" y="195" width="56" height="45" fill="#1D35E6"/><rect class="bar-f" x="332" y="150" width="56" height="45" fill="#FF4D3D"/>
+          <rect class="bar-m" x="422" y="195" width="56" height="45" fill="#1D35E6"/><rect class="bar-f" x="422" y="150" width="56" height="45" fill="#FF4D3D"/>
           <g text-anchor="middle"><text class="v" x="90" y="50">8</text><text class="v" x="180" y="50">8</text><text class="v" x="270" y="50">8</text><text class="v" x="360" y="140">4</text><text class="v" x="450" y="140">4</text>
           <text x="90" y="262">Sáb 1</text><text x="180" y="262">Sáb 2</text><text x="270" y="262">Sáb 3</text><text x="360" y="262">Sáb 4</text><text x="450" y="262">Sáb 5</text></g>
         </svg>
-        <div class="legend"><span><i style="background:#2340FF"></i>Masculino</span><span><i style="background:#FF4D3D"></i>Feminino</span></div>
+        <div class="legend"><span><i style="background:#1D35E6"></i>Masculino</span><span><i style="background:#FF4D3D"></i>Feminino</span></div>
       </div>
-      <div class="panel chart rv">
+      <div class="panel chart">
         <h3>Partidas por fase</h3>
         <p class="note">24 na fase de grupos, 4 nas semifinais e 4 nas finais.</p>
         <svg viewBox="0 0 340 230" role="img" aria-label="Rosca: 24 jogos de grupos, 4 de semifinais, 4 de finais">
           <g transform="translate(110 115) rotate(-90)" fill="none" stroke-width="34">
-            <circle r="76" stroke="#2340FF" stroke-dasharray="358.2 477.5"/>
+            <circle r="76" stroke="#1D35E6" stroke-dasharray="358.2 477.5"/>
             <circle r="76" stroke="#FFD21F" stroke-dasharray="59.7 477.5" stroke-dashoffset="-358.2"/>
             <circle r="76" stroke="#0A0B1E" stroke-dasharray="59.6 477.5" stroke-dashoffset="-417.9"/>
           </g>
           <text x="110" y="112" text-anchor="middle" class="v" style="font-size:42px">32</text><text x="110" y="132" text-anchor="middle">partidas</text>
-          <rect x="226" y="72" width="12" height="12" rx="3" fill="#2340FF"/><text x="246" y="83">Grupos · 24</text>
+          <rect x="226" y="72" width="12" height="12" rx="3" fill="#1D35E6"/><text x="246" y="83">Grupos · 24</text>
           <rect x="226" y="104" width="12" height="12" rx="3" fill="#FFD21F"/><text x="246" y="115">Semifinais · 4</text>
           <rect x="226" y="136" width="12" height="12" rx="3" fill="#0A0B1E"/><text x="246" y="147">Finais · 4</text>
         </svg>
       </div>
     </div>
 
-    <div class="panel rv">
+    <div class="panel">
       <h3>O caminho até a final</h3>
       <p class="note">Estrutura sugerida para cada naipe: 2 grupos de 4 equipes, semifinais cruzadas e final. Vale para o masculino e para o feminino.</p>
       <div class="scroll-x">
@@ -628,7 +631,7 @@ body.editing{padding-bottom:90px}
           <rect class="bx" x="280" y="76" width="180" height="60" rx="10"/><text x="296" y="102">Semifinal 1</text><text class="sm" x="296" y="122">1º A × 2º B</text>
           <rect class="bx" x="280" y="166" width="180" height="60" rx="10"/><text x="296" y="192">Semifinal 2</text><text class="sm" x="296" y="212">1º B × 2º A</text>
           <path class="ln" d="M460 106h45v45h45M460 196h45v-45"/>
-          <rect x="550" y="116" width="200" height="70" rx="10" fill="#2340FF"/>
+          <rect x="550" y="116" width="200" height="70" rx="10" fill="#1D35E6"/>
           <text x="570" y="146" style="fill:#FFD21F;font-weight:800;font-size:16px">GRANDE FINAL</text><text x="570" y="168" style="fill:#fff;font-size:13px">Premiação e experiência</text>
         </svg>
       </div>
@@ -643,8 +646,8 @@ body.editing{padding-bottom:90px}
     </div>
 
     <div class="content-pair">
-      <div class="prose rv"><h3>Mais do que o apito final</h3><p>Cobertura nas redes sociais, entrevistas, melhores momentos e conteúdos com atletas e torcidas. O projeto não termina quando o árbitro apita.</p></div>
-      <div class="prose rv"><h3>Dentro e fora da quadra</h3><p>Queremos contar as histórias de quem está dentro e fora da quadra. Mostrar a preparação dos times, os bastidores, as provocações entre as faculdades e as comemorações. O esporte fica ainda mais interessante quando a gente conhece quem está jogando.</p></div>
+      <div class="prose"><h3>Mais do que o apito final</h3><p>Cobertura nas redes sociais, entrevistas, melhores momentos e conteúdos com atletas e torcidas. O projeto não termina quando o árbitro apita.</p></div>
+      <div class="prose"><h3>Dentro e fora da quadra</h3><p>Queremos contar as histórias de quem está dentro e fora da quadra. Mostrar a preparação dos times, os bastidores, as provocações entre as faculdades e as comemorações. O esporte fica ainda mais interessante quando a gente conhece quem está jogando.</p></div>
     </div>
   </div>
 </section>
@@ -653,22 +656,22 @@ body.editing{padding-bottom:90px}
 <section class="band on-white" id="apoiar">
   <div class="wrap">
     <div class="shirt rv"><span class="num">5</span><h2>Por que uma empresa deveria apoiar esse projeto?</h2></div>
-    <div class="prose rv">
+    <div class="prose">
       <p class="lead">Nenhuma competição acontece sozinha. Por trás de cada partida existe uma quadra, arbitragem, estrutura, equipe de organização, divulgação e muita gente trabalhando.</p>
       <p>Patrocinar a Copa Universitária RJ não é simplesmente colocar um logotipo em uma placa. É ajudar a fazer o campeonato acontecer. É participar da história daquele estudante que vai disputar sua primeira final, da torcida que vai passar a semana falando do clássico, da equipe que vai levantar o troféu e guardar aquela foto para sempre.</p>
       <p class="serif" style="font-size:1.7rem;line-height:1.15">Uma empresa investe porque acredita em um projeto, mas também porque espera resultados. Queremos oferecer os dois.</p>
     </div>
     <div class="reasons">
-      <div class="reason rv"><span class="n">A</span><h3>Uma marca mais próxima do público universitário</h3><p>A universidade é uma fase em que muita coisa acontece pela primeira vez: o primeiro estágio, o primeiro emprego, a primeira conta bancária, novas amizades, novos hábitos de consumo e decisões que podem acompanhar uma pessoa por muitos anos. Estar presente aqui é criar relacionamento com jovens consumidores e futuros profissionais. Existe uma diferença enorme entre aparecer em um anúncio e fazer parte de algo de que as pessoas realmente gostam.</p></div>
-      <div class="reason rv"><span class="n">B</span><h3>Visibilidade que não acaba quando o jogo termina</h3><p>Um gol bonito vira vídeo. Uma defesa vira destaque. Uma comemoração vira story. Uma rivalidade vira assunto no grupo da faculdade. Vamos produzir conteúdo antes, durante e depois da competição, com espaço para os patrocinadores nas redes do campeonato, nos materiais oficiais e, mediante acordos, nos canais das atléticas participantes. A marca acompanha toda a história.</p></div>
-      <div class="reason rv"><span class="n">C</span><h3>Mais do que aparecer, participar</h3><p>Queremos que as empresas tenham espaço para conversar com o público. Cada uma tem uma maneira diferente de se conectar com essa comunidade, e nosso objetivo é construir ações que façam sentido para o patrocinador e sejam interessantes para quem participa.</p></div>
-      <div class="reason rv"><span class="n">D</span><h3>Associar a marca a algo que faz bem</h3><p>Apoiar o esporte universitário é incentivar jovens a continuarem praticando atividade física, trabalhando em equipe, convivendo com pessoas diferentes e encontrando no esporte um espaço de pertencimento. É ajudar quem muitas vezes treina depois de um dia inteiro de trabalho e estudo, sem qualquer estrutura profissional.</p></div>
+      <div class="reason"><span class="n">A</span><h3>Uma marca mais próxima do público universitário</h3><p>A universidade é uma fase em que muita coisa acontece pela primeira vez: o primeiro estágio, o primeiro emprego, a primeira conta bancária, novas amizades, novos hábitos de consumo e decisões que podem acompanhar uma pessoa por muitos anos. Estar presente aqui é criar relacionamento com jovens consumidores e futuros profissionais. Existe uma diferença enorme entre aparecer em um anúncio e fazer parte de algo de que as pessoas realmente gostam.</p></div>
+      <div class="reason"><span class="n">B</span><h3>Visibilidade que não acaba quando o jogo termina</h3><p>Um gol bonito vira vídeo. Uma defesa vira destaque. Uma comemoração vira story. Uma rivalidade vira assunto no grupo da faculdade. Vamos produzir conteúdo antes, durante e depois da competição, com espaço para os patrocinadores nas redes do campeonato, nos materiais oficiais e, mediante acordos, nos canais das atléticas participantes. A marca acompanha toda a história.</p></div>
+      <div class="reason"><span class="n">C</span><h3>Mais do que aparecer, participar</h3><p>Queremos que as empresas tenham espaço para conversar com o público. Cada uma tem uma maneira diferente de se conectar com essa comunidade, e nosso objetivo é construir ações que façam sentido para o patrocinador e sejam interessantes para quem participa.</p></div>
+      <div class="reason"><span class="n">D</span><h3>Associar a marca a algo que faz bem</h3><p>Apoiar o esporte universitário é incentivar jovens a continuarem praticando atividade física, trabalhando em equipe, convivendo com pessoas diferentes e encontrando no esporte um espaço de pertencimento. É ajudar quem muitas vezes treina depois de um dia inteiro de trabalho e estudo, sem qualquer estrutura profissional.</p></div>
     </div>
     <div class="ideas">
-      <div class="idea rv"><svg viewBox="0 0 48 48"><path d="M16 6h16l-2 8c6 3 8 8 8 14 0 8-6 14-14 14S10 36 10 28c0-6 2-11 8-14z"/><path d="M14 24h20"/></svg><div><h3>Bebidas</h3><p>Produtos para atletas e torcedores.</p></div></div>
-      <div class="idea rv"><svg viewBox="0 0 48 48"><path d="M4 18L24 8l20 10-20 10z"/><path d="M12 23v10c0 3 6 7 12 7s12-4 12-7V23M44 18v12"/></svg><div><h3>Formaturas</h3><p>Uma ação especial com as turmas.</p></div></div>
-      <div class="idea rv"><svg viewBox="0 0 48 48"><path d="M4 18v12M10 12v24M38 12v24M44 18v12M10 24h28"/></svg><div><h3>Academias</h3><p>Conteúdos sobre preparação física.</p></div></div>
-      <div class="idea rv"><svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="4"/><path d="M6 20h36M12 30h10"/></svg><div><h3>Fintechs</h3><p>Benefícios exclusivos para estudantes.</p></div></div>
+      <div class="idea"><svg viewBox="0 0 48 48"><path d="M16 6h16l-2 8c6 3 8 8 8 14 0 8-6 14-14 14S10 36 10 28c0-6 2-11 8-14z"/><path d="M14 24h20"/></svg><div><h3>Bebidas</h3><p>Produtos para atletas e torcedores.</p></div></div>
+      <div class="idea"><svg viewBox="0 0 48 48"><path d="M4 18L24 8l20 10-20 10z"/><path d="M12 23v10c0 3 6 7 12 7s12-4 12-7V23M44 18v12"/></svg><div><h3>Formaturas</h3><p>Uma ação especial com as turmas.</p></div></div>
+      <div class="idea"><svg viewBox="0 0 48 48"><path d="M4 18v12M10 12v24M38 12v24M44 18v12M10 24h28"/></svg><div><h3>Academias</h3><p>Conteúdos sobre preparação física.</p></div></div>
+      <div class="idea"><svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="4"/><path d="M6 20h36M12 30h10"/></svg><div><h3>Fintechs</h3><p>Benefícios exclusivos para estudantes.</p></div></div>
     </div>
   </div>
 </section>
@@ -677,17 +680,17 @@ body.editing{padding-bottom:90px}
 <section class="band on-deep" id="entregas">
   <div class="wrap">
     <div class="shirt rv"><span class="num">6</span><h2>O que podemos entregar aos patrocinadores?</h2></div>
-    <p class="lead rv">Pacotes comerciais que combinam visibilidade, relacionamento e experiências. As entregas serão definidas em contrato, considerando a cota adquirida, os espaços disponíveis e as autorizações necessárias.</p>
+    <p class="lead">Pacotes comerciais que combinam visibilidade, relacionamento e experiências. As entregas serão definidas em contrato, considerando a cota adquirida, os espaços disponíveis e as autorizações necessárias.</p>
     <div class="lineup">
-      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>1</b></div><div><h3>Presença de marca</h3><p>Logotipo em materiais oficiais, placas de quadra, backdrop de entrevistas, premiações e comunicação do evento.</p></div></div>
-      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>2</b></div><div><h3>Conteúdo digital</h3><p>Inserções em publicações, vídeos, entrevistas, melhores momentos e campanhas especiais.</p></div></div>
-      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>3</b></div><div><h3>Ativações presenciais</h3><p>Espaços para experiências, distribuição de produtos, ações promocionais e contato com os torcedores.</p></div></div>
-      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>4</b></div><div><h3>Naming rights</h3><p>Possibilidade de associar o nome de uma empresa à competição ou a uma premiação.</p></div></div>
-      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>5</b></div><div><h3>Relacionamento com universidades</h3><p>Ações em parceria com atléticas e comunidades acadêmicas.</p></div></div>
-      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>6</b></div><div><h3>Projetos personalizados</h3><p>Campanhas criadas de acordo com o público e os objetivos comerciais de cada patrocinador.</p></div></div>
+      <div class="player"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>1</b></div><div><h3>Presença de marca</h3><p>Logotipo em materiais oficiais, placas de quadra, backdrop de entrevistas, premiações e comunicação do evento.</p></div></div>
+      <div class="player"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>2</b></div><div><h3>Conteúdo digital</h3><p>Inserções em publicações, vídeos, entrevistas, melhores momentos e campanhas especiais.</p></div></div>
+      <div class="player"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>3</b></div><div><h3>Ativações presenciais</h3><p>Espaços para experiências, distribuição de produtos, ações promocionais e contato com os torcedores.</p></div></div>
+      <div class="player"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>4</b></div><div><h3>Naming rights</h3><p>Possibilidade de associar o nome de uma empresa à competição ou a uma premiação.</p></div></div>
+      <div class="player"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>5</b></div><div><h3>Relacionamento com universidades</h3><p>Ações em parceria com atléticas e comunidades acadêmicas.</p></div></div>
+      <div class="player"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>6</b></div><div><h3>Projetos personalizados</h3><p>Campanhas criadas de acordo com o público e os objetivos comerciais de cada patrocinador.</p></div></div>
     </div>
-    <p class="serif rv" style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;max-width:34ch">Queremos que cada empresa consiga enxergar não apenas onde sua marca vai aparecer, mas o que ela poderá conquistar com essa presença.</p>
-    <div class="halves rv">
+    <p class="serif" style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;max-width:34ch">Queremos que cada empresa consiga enxergar não apenas onde sua marca vai aparecer, mas o que ela poderá conquistar com essa presença.</p>
+    <div class="halves">
       <div class="half"><small>Primeiro tempo · Antes</small><h3>Expectativa</h3><ul><li>Apresentação dos times e atletas</li><li>Preparação e bastidores</li><li>Provocações entre as faculdades</li></ul></div>
       <div class="half"><small>Segundo tempo · Durante</small><h3>Jogo</h3><ul><li>Placas de quadra e backdrop</li><li>Ativações para a torcida</li><li>Entrevistas e conteúdo em tempo real</li></ul></div>
       <div class="half"><small>Prorrogação · Depois</small><h3>Repercussão</h3><ul><li>Melhores momentos</li><li>Comemorações e premiação</li><li>Relatório de entregas</li></ul></div>
@@ -699,10 +702,9 @@ body.editing{padding-bottom:90px}
 <section class="band on-paper" id="intervalo">
   <div class="wrap">
     <div class="rv" style="display:grid;gap:16px">
-      <p class="kicker" style="color:var(--royal)">Intervalo</p>
-      <h2>O que a Copa significa para cada um</h2>
+      <h2>Intervalo: o que a Copa significa para cada um</h2>
     </div>
-    <div class="tabs rv" role="tablist" aria-label="Escolha seu perfil">
+    <div class="tabs" role="tablist" aria-label="Escolha seu perfil">
       <button class="tab" role="tab" id="t-inv" aria-controls="p-inv" aria-selected="true">Investidores</button>
       <button class="tab" role="tab" id="t-atl" aria-controls="p-atl" aria-selected="false">Atléticas</button>
       <button class="tab" role="tab" id="t-uni" aria-controls="p-uni" aria-selected="false">Universidades</button>
@@ -755,21 +757,21 @@ body.editing{padding-bottom:90px}
 <section class="band on-white" id="pequeno">
   <div class="wrap">
     <div class="shirt rv"><span class="num">7</span><h2>Estamos começando pequeno. E fazemos questão de dizer isso.</h2></div>
-    <div class="vs rv" aria-label="Zero promessas sem dados contra três coisas que vamos validar">
-      <div class="side"><div class="big" style="color:var(--coral)">0</div><small>Promessas sem dados</small></div>
+    <div class="vs" aria-label="Zero promessas sem dados contra três coisas que vamos validar">
+      <div class="side"><div class="big" style="color:var(--coral-ink)">0</div><small>Promessas sem dados</small></div>
       <span class="x">×</span>
       <div class="side"><div class="big" style="color:var(--royal)">3</div><small>Coisas que vamos validar</small></div>
     </div>
-    <div class="prose rv">
+    <div class="prose">
       <p class="lead">Não vamos prometer ginásios lotados ou milhões de visualizações sem ter dados para sustentar essas promessas. Estamos construindo um projeto do zero.</p>
       <p>Nossa primeira edição será uma oportunidade de <b>validar o formato</b>, <b>conhecer melhor o público</b>, <b>medir os resultados</b> e mostrar que existe espaço para uma competição universitária com organização e continuidade.</p>
     </div>
-    <div class="report rv">
+    <div class="report">
       <div><b>Entregas</b><span>O que foi realizado, conforme o contrato.</span></div>
       <div><b>Comunicação</b><span>Os resultados de comunicação disponíveis.</span></div>
       <div><b>Público</b><span>Os indicadores de participação.</span></div>
     </div>
-    <p class="serif rv" style="font-size:1.7rem;line-height:1.15">Os patrocinadores recebem um relatório com tudo isso. Queremos que tenham motivos concretos para continuar conosco nas próximas edições.</p>
+    <p class="serif" style="font-size:1.7rem;line-height:1.15">Os patrocinadores recebem um relatório com tudo isso. Queremos que tenham motivos concretos para continuar conosco nas próximas edições.</p>
   </div>
 </section>
 
@@ -777,14 +779,14 @@ body.editing{padding-bottom:90px}
 <section class="band on-deep" id="visao">
   <div class="wrap">
     <div class="shirt rv"><span class="num">8</span><h2>Nosso sonho vai além de uma primeira edição.</h2></div>
-    <div class="dream rv">
+    <div class="dream">
       <p>Os alunos chegando à faculdade e já querendo saber quando começa o campeonato.</p>
       <p>As atléticas se preparando meses antes.</p>
       <p>As torcidas organizando suas festas.</p>
       <p>As finais reunindo estudantes de diferentes instituições.</p>
       <p>As marcas criando campanhas e ações especiais para aquele período do ano.</p>
     </div>
-    <div class="road rv">
+    <div class="road">
       <div class="stop"><b>Com a primeira bola rolando</b><p>Oito universidades. Dezesseis equipes.</p></div>
       <div class="stop"><b>No calendário</b><p>Uma competição que faz parte do ano das universidades do Rio.</p></div>
       <div class="stop"><b>Maior</b><p>Talvez mais modalidades, mais universidades e eventos ainda maiores.</p></div>
@@ -795,16 +797,16 @@ body.editing{padding-bottom:90px}
 
 <!-- 9 CONVITE -->
 <section class="band on-royal final" id="convite">
-  <svg class="ball" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#fff"/><path d="M50 28l19 14-7 22H38l-7-22z" fill="#0A0B1E"/><path d="M50 28V6M69 42l22-7M62 64l14 19M38 64L24 83M31 42L9 35" stroke="#0A0B1E" stroke-width="3"/></svg>
+  <div class="ball3d" id="ball3d" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#fff"/><path d="M50 28l19 14-7 22H38l-7-22z" fill="#0A0B1E"/><path d="M50 28V6M69 42l22-7M62 64l14 19M38 64L24 83M31 42L9 35" stroke="#0A0B1E" stroke-width="3"/></svg></div>
   <div class="wrap">
-    <div class="shirt rv"><span class="num">9</span><p class="tag" style="color:var(--sun)">Um convite</p></div>
-    <h2 class="huge rv">Faça parte <span>dessa história.</span></h2>
-    <div class="prose rv">
+    <div class="shirt rv"><span class="num">9</span></div>
+    <h2 class="huge">Faça parte <span>dessa história.</span></h2>
+    <div class="prose">
       <p class="lead">A gente ainda não sabe quem vai ganhar a primeira Copa Universitária RJ. Não sabe qual jogador vai marcar o gol mais bonito. Qual goleiro vai decidir uma semifinal. Ou qual torcida vai fazer mais barulho.</p>
       <p>Mas sabemos o que queremos construir. Um campeonato que os atletas queiram disputar. Que os estudantes queiram acompanhar. Que as universidades tenham orgulho de participar. E que as empresas tenham orgulho de apoiar.</p>
     </div>
-    <p class="pull rv" style="max-width:20ch;font-size:clamp(1.9rem,4.6vw,3.8rem)">Sua marca pode ser apenas mais uma. Ou pode ser uma das que <em style="color:var(--sun)">ajudaram essa competição a nascer.</em></p>
-    <p class="lead rv">A gente quer construir algo que dure. E quer fazer isso com quem acredita que o esporte universitário merece mais.</p>
+    <p class="pull" style="max-width:20ch;font-size:clamp(1.9rem,4.6vw,3.8rem)">Sua marca pode ser apenas mais uma. Ou pode ser uma das que <em style="color:var(--sun)">ajudaram essa competição a nascer.</em></p>
+    <p class="lead">A gente quer construir algo que dure. E quer fazer isso com quem acredita que o esporte universitário merece mais.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#intervalo">Rever a proposta</a><a class="btn line" href="#topo">Voltar ao início</a></div>
   </div>
 </section>
@@ -838,7 +840,7 @@ body.editing{padding-bottom:90px}
   /* torcida com bandeiras */
   n=[];
   for(r=0;r<4;r++)for(x=-10+(r%2)*28;x<430;x+=56){
-    y=250+r*62+rnd()*8;c=['#2340FF','#0A0B1E','#FF4D3D','#121C8F'][(r+Math.floor(x/56)+4)%4];
+    y=250+r*62+rnd()*8;c=['#1D35E6','#0A0B1E','#FF4D3D','#121C8F'][(r+Math.floor(x/56)+4)%4];
     n.push(mk('circle',{cx:x,cy:y-34,r:18,fill:c}));
     n.push(mk('path',{d:'M'+(x-28)+' '+(y+90)+'v-52a28 28 0 0156 0v52z',fill:c}));
     if(rnd()>.55){var a=rnd()>.5?1:-1;n.push(mk('path',{d:'M'+(x+a*20)+' '+(y+4)+'l'+(a*10)+' -80',stroke:c,'stroke-width':9,'stroke-linecap':'round'}));}
@@ -1040,5 +1042,42 @@ body.editing{padding-bottom:90px}
     var d=snap.exists?snap.data():{};
     state={texts:(d&&d.texts)||{},photos:(d&&d.photos)||{},gallery:Array.isArray(d&&d.gallery)?d.gallery.slice():[]};
     applyTexts();applyPhotos();renderGallery()},function(){});
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* Bola 3D feita em código: icosaedro projetado na esfera, pentágonos escuros nos 12 vértices */
+(function(){
+  var box=document.getElementById('ball3d');if(!box||!window.THREE)return;
+  try{
+    var T=THREE,size=box.clientWidth||200;
+    var R=new T.WebGLRenderer({antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio||1,2));R.setSize(size,size);
+    var S=new T.Scene(),C=new T.PerspectiveCamera(32,1,.1,20);C.position.z=4.6;
+    S.add(new T.HemisphereLight(0xffffff,0x1d35e6,.85));
+    var L=new T.DirectionalLight(0xffffff,.9);L.position.set(3,4,5);S.add(L);
+    var g=new T.IcosahedronGeometry(1,6).toNonIndexed(),pos=g.attributes.position,n=pos.count;
+    var k=(1+Math.sqrt(5))/2,V=[[-1,k,0],[1,k,0],[-1,-k,0],[1,-k,0],[0,-1,k],[0,1,k],[0,-1,-k],[0,1,-k],[k,0,-1],[k,0,1],[-k,0,-1],[-k,0,1]].map(function(v){return new T.Vector3(v[0],v[1],v[2]).normalize()});
+    var col=new Float32Array(n*3),nor=new Float32Array(n*3),c=new T.Vector3(),p=new T.Vector3();
+    for(var i=0;i<n;i+=3){
+      c.set(0,0,0);for(var j=0;j<3;j++){c.x+=pos.getX(i+j);c.y+=pos.getY(i+j);c.z+=pos.getZ(i+j)}c.normalize();
+      var d=-1;V.forEach(function(v){d=Math.max(d,v.dot(c))});
+      var dark=d>.947,rgb=dark?[.04,.043,.12]:[.97,.97,1];
+      for(var m=0;m<3;m++){var q=i+m;col[q*3]=rgb[0];col[q*3+1]=rgb[1];col[q*3+2]=rgb[2];
+        p.set(pos.getX(q),pos.getY(q),pos.getZ(q)).normalize();nor[q*3]=p.x;nor[q*3+1]=p.y;nor[q*3+2]=p.z}
+    }
+    g.setAttribute('color',new T.BufferAttribute(col,3));g.setAttribute('normal',new T.BufferAttribute(nor,3));
+    var ball=new T.Mesh(g,new T.MeshStandardMaterial({vertexColors:true,roughness:.5,metalness:0}));
+    ball.rotation.set(.35,.4,.1);S.add(ball);
+    box.innerHTML='';box.appendChild(R.domElement);
+    var spin=.006,drag=false,lx=0,ly=0,on=true;
+    function frame(){if(on){ball.rotation.y+=spin;spin+=(.006-spin)*.03}R.render(S,C);if(on&&!still)requestAnimationFrame(frame)}
+    var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    box.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;ly=e.clientY;box.style.cursor='grabbing';box.setPointerCapture(e.pointerId)});
+    box.addEventListener('pointermove',function(e){if(!drag)return;ball.rotation.y+=(e.clientX-lx)*.012;ball.rotation.x+=(e.clientY-ly)*.012;spin=(e.clientX-lx)*.004;lx=e.clientX;ly=e.clientY;if(still)R.render(S,C)});
+    box.addEventListener('pointerup',function(){drag=false;box.style.cursor='grab'});
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){var v=es[0].isIntersecting;if(v&&!on){on=true;if(!still)frame()}else if(!v){on=false}},{threshold:0}).observe(box);
+    frame();
+  }catch(e){}
 })();
 </script>
