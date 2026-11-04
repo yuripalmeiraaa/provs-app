@@ -1,682 +1,862 @@
 <title>Copa Universitária RJ</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;700&display=swap">
 <style>
-/* Layout: uma rolagem contínua, seções em faixas alternadas, tipografia condensada de ginásio sobre fundo de quadra à noite. */
+/* Layout: cartaz de ginásio. Faixas cheias de cor (azul atlética, preto, branco), tipografia expandida itálica, camisas numeradas de 1 a 9 como capítulos. */
 :root{
-  --bg:#0A1424; --bg2:#0F1D33; --fg:#F2F5F9; --muted:#9FB0C6; --line:#243652;
-  --accent:#FF6B1A; --accent-ink:#0A1424; --court:#14509F; --court-line:#E8EEF7; --card:#12233D;
-  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
-  --f-body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"DM Mono",ui-monospace,Menlo,monospace;
-  color-scheme:dark;
+  --ink:#0A0B1E; --royal:#2340FF; --royal-deep:#121C8F; --sun:#FFD21F; --paper:#F3F5FA; --chalk:#FFFFFF; --coral:#FF4D3D;
+  --text-on-paper:#14162B; --muted-paper:#4B5069; --line-paper:#D5DAEA; --muted-dark:#B7C0F7; --line-dark:rgba(255,255,255,.2);
+  --f-display:"Archivo","Arial Black",Impact,sans-serif;
+  --f-serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
-  --bg:#F5F7FA; --bg2:#E8EEF6; --fg:#0A1424; --muted:#4B5C75; --line:#CBD6E4;
-  --accent:#E24F05; --accent-ink:#FFFFFF; --court:#14509F; --court-line:#FFFFFF; --card:#FFFFFF; color-scheme:light}}
-:root[data-theme="light"]{
-  --bg:#F5F7FA; --bg2:#E8EEF6; --fg:#0A1424; --muted:#4B5C75; --line:#CBD6E4;
-  --accent:#E24F05; --accent-ink:#FFFFFF; --court:#14509F; --court-line:#FFFFFF; --card:#FFFFFF; color-scheme:light}
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--fg);font:400 17px/1.65 var(--f-body);-webkit-font-smoothing:antialiased}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
-h1,h2,h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;line-height:.95;letter-spacing:.005em;margin:0;text-wrap:balance}
-h2{font-size:clamp(2.4rem,6vw,4.6rem)}
-h3{font-size:1.6rem;line-height:1}
+body{background:var(--paper);color:var(--text-on-paper);font:400 18px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 p{margin:0;text-wrap:pretty}
+h1,h2,h3{margin:0;font-family:var(--f-display);font-stretch:125%;font-weight:900;font-style:italic;text-transform:uppercase;line-height:.92;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:clamp(2rem,5.6vw,4.6rem)}
+h3{font-size:clamp(1.3rem,2.2vw,1.8rem);line-height:1}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 svg{display:block}
-.ico{width:1.5em;height:1.5em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.serif{font-family:var(--f-serif);font-style:italic;font-weight:400}
 
-.band{padding-block:clamp(64px,10vw,128px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.band.alt{background:var(--bg2)}
-.wrap{max-width:1120px;margin-inline:auto;display:flex;flex-direction:column;gap:clamp(32px,5vw,56px)}
-.eyebrow{font:500 .78rem/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-.head{display:flex;flex-direction:column;gap:16px;max-width:820px}
-.lead{font-size:1.2rem;color:var(--muted);max-width:62ch}
-.grid{display:grid;gap:20px}
-.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
-.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
-.card p{color:var(--muted);font-size:.98rem}
-.card .ico{color:var(--accent);width:2rem;height:2rem}
-.big{font:900 clamp(3rem,7vw,5.2rem)/.9 var(--f-display);color:var(--fg)}
-.big small{font-size:.45em;color:var(--accent);margin-right:.1em}
-.mono{font-family:var(--f-mono)}
-.note{font:400 .8rem/1.5 var(--f-mono);color:var(--muted)}
+.band{position:relative;padding-block:clamp(72px,11vw,150px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1180px;margin-inline:auto;display:flex;flex-direction:column;gap:clamp(40px,6vw,80px);position:relative}
+.on-paper{background:var(--paper);color:var(--text-on-paper)}
+.on-white{background:var(--chalk);color:var(--text-on-paper)}
+.on-ink{background:var(--ink);color:#fff}
+.on-royal{background:var(--royal);color:#fff}
+.on-deep{background:var(--royal-deep);color:#fff}
+.muted{color:var(--muted-paper)} .on-ink .muted,.on-royal .muted,.on-deep .muted{color:var(--muted-dark)}
+.lead{font-size:clamp(1.15rem,1.6vw,1.4rem);line-height:1.5;max-width:60ch}
+.prose{display:flex;flex-direction:column;gap:1.1em;max-width:60ch}
+.prose b{font-weight:700}
+.kicker{font:700 .78rem/1.3 var(--f-display);font-stretch:110%;letter-spacing:.2em;text-transform:uppercase;color:var(--sun)}
+
+.shirt{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.shirt .num{font:900 italic clamp(6rem,17vw,13rem)/.74 var(--f-display);font-stretch:125%;color:transparent;-webkit-text-stroke:2px currentColor;opacity:.9}
+.shirt .tag{font:700 .8rem/1.2 var(--f-display);font-stretch:110%;text-transform:uppercase;letter-spacing:.2em;padding:0 0 8px}
+.shirt h2{flex:1 1 420px}
+.on-paper .num,.on-white .num{-webkit-text-stroke-color:var(--royal)}
+.on-ink .num,.on-royal .num,.on-deep .num{-webkit-text-stroke-color:var(--sun)}
+
+.btn{display:inline-flex;align-items:center;gap:12px;background:var(--sun);color:var(--ink);font:800 .95rem/1 var(--f-display);font-stretch:112%;text-transform:uppercase;letter-spacing:.04em;padding:18px 26px;border:0;border-radius:99px;text-decoration:none;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.btn{white-space:nowrap}
+.btn.line{background:transparent;color:inherit;border:2px solid currentColor}
 
 /* NAV */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
-.nav-in{max-width:1120px;margin:auto;display:flex;align-items:center;gap:20px;height:58px}
-.brand{display:flex;align-items:center;gap:10px;font:800 1.2rem/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em;text-decoration:none;white-space:nowrap}
-.nav ul{display:flex;gap:22px;list-style:none;margin:0 0 0 auto;padding:0;font-size:.88rem}
-.nav ul a{text-decoration:none;color:var(--muted)} .nav ul a:hover{color:var(--fg)}
-.btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--accent-ink);font:700 .95rem/1 var(--f-body);padding:14px 22px;border-radius:4px;text-decoration:none;border:0;cursor:pointer}
-.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
-.btn:hover{filter:brightness(1.08)}
-.theme{background:none;border:1px solid var(--line);color:var(--fg);width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
-.progress{position:absolute;left:0;bottom:-1px;height:3px;background:var(--accent);width:0}
-@media(max-width:820px){.nav ul{display:none}.theme{margin-left:auto}}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:var(--ink);color:#fff;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:50;background:var(--ink)}
+.nav-in{max-width:1180px;margin:auto;height:60px;display:flex;align-items:center;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:900 italic 1.05rem/1 var(--f-display);font-stretch:125%;text-transform:uppercase;white-space:nowrap}
+.brand i{width:22px;height:22px;border-radius:50%;background:var(--sun);display:block;box-shadow:inset -5px -4px 0 rgba(0,0,0,.18)}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0;font:700 .78rem var(--f-display);font-stretch:105%;text-transform:uppercase;letter-spacing:.14em}
+.nav ul a{text-decoration:none;opacity:.7} .nav ul a:hover{opacity:1;color:var(--sun)}
+.nav .btn{padding:11px 18px;font-size:.78rem}
+.bar{position:absolute;left:0;bottom:0;height:4px;background:var(--sun);width:0}
+@media(max-width:1000px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+@media(max-width:560px){.brand{font-size:.8rem}.nav .btn{display:none}.hero h1{font-size:8.6vw}.hero .btn{white-space:normal;text-align:center;justify-content:center}.hero .cta{flex-direction:column}}
 
 /* HERO */
-.hero{position:relative;overflow:hidden;padding-block:clamp(56px,9vw,112px) 0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.hero-in{max-width:1120px;margin:auto;display:flex;flex-direction:column;gap:32px}
-.hero h1{font-size:clamp(3.6rem,13.5vw,10.5rem);line-height:.84;letter-spacing:-.005em}
-.hero h1 em{font-style:normal;color:var(--accent)}
-.hero .tag{font-size:clamp(1.15rem,2.4vw,1.55rem);max-width:30ch;color:var(--fg)}
-.cta-row{display:flex;gap:12px;flex-wrap:wrap}
-.hero-court{margin-top:24px;margin-inline:-16px;color:var(--court-line)}
-.hero-court svg{width:100%;height:auto;max-height:420px}
-.statbar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--bg2)}
-.statbar>div{padding:22px 16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
-.statbar>div:last-child{border:0}
-.statbar b{font:900 clamp(2.4rem,6vw,4rem)/1 var(--f-display)}
-.statbar span{font:500 .72rem/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:640px){.statbar{grid-template-columns:repeat(2,1fr)}.statbar>div:nth-child(2){border-right:0}.statbar>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.hero{background:var(--royal);color:#fff;position:relative;overflow:hidden;padding-top:clamp(40px,6vw,80px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.dots-bg{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.16) 1.5px,transparent 2px);background-size:16px 16px;-webkit-mask-image:linear-gradient(120deg,#000 0,transparent 60%);mask-image:linear-gradient(120deg,#000 0,transparent 60%)}
+.hero-in{max-width:1180px;margin:auto;position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,56px);align-items:center;padding-bottom:clamp(48px,6vw,80px)}
+.hero-in>*{min-width:0}
+@media(max-width:900px){.hero-in{grid-template-columns:1fr}}
+.hero .kicker{margin:0 0 22px}
+.hero-title{grid-column:1/-1}
+.hero h1{font-size:clamp(1.9rem,7.6vw,6.8rem);font-stretch:112%;line-height:.88;transform:skewX(-4deg);transform-origin:left}
+.hero h1 .ln{display:block;overflow:hidden;padding-block:.04em}
+.hero h1 .ln span{display:block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .ln:nth-child(2) span{animation-delay:.14s}
+.hero h1 .rj{color:var(--sun);font-style:italic}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.hero .tagline{font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.1;margin-top:28px;max-width:20ch;animation:fade 1s .5s both}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.stage{position:relative;margin-bottom:26px}
+.ph{position:relative;overflow:hidden;background:var(--royal-deep);aspect-ratio:4/5}
+.ph>svg,.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero .ph{clip-path:polygon(8% 0,100% 0,100% 92%,92% 100%,0 100%,0 8%);aspect-ratio:1/1;margin:0 auto;width:100%}
+.badge-wrap{position:absolute;right:-6px;bottom:-26px;width:clamp(100px,14vw,160px);aspect-ratio:1;display:grid;place-items:center}
+.badge{position:absolute;inset:0;width:100%;height:100%;animation:spin 22s linear infinite}
+.badge text{font:800 11px var(--f-display);letter-spacing:.2em;fill:var(--ink)}
+.badge circle{fill:var(--sun)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge-wrap b{position:relative;font:900 italic 2.4rem/1 var(--f-display);font-stretch:125%;color:var(--ink)}
 
-/* MANIFESTO */
-.manifesto{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,5vw,72px);align-items:start}
-@media(max-width:820px){.manifesto{grid-template-columns:1fr}}
-.prose{display:flex;flex-direction:column;gap:20px;font-size:1.12rem;max-width:62ch}
-.prose strong{color:var(--accent);font-weight:600}
-.forty{display:grid;gap:0;border-top:1px solid var(--line)}
-.forty div{display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:1.7rem;line-height:1}
-.forty .ico{color:var(--accent);width:2.2rem;height:2.2rem}
-.forty small{display:block;font:400 .85rem/1.4 var(--f-body);text-transform:none;color:var(--muted);margin-top:4px}
-.crowd{width:100%;height:auto;color:var(--line)}
-.pull{font:800 clamp(2.2rem,5.5vw,4rem)/1 var(--f-display);text-transform:uppercase;text-wrap:balance}
-.pull span{color:var(--accent)}
+.ticker{background:var(--sun);color:var(--ink);overflow:hidden;white-space:nowrap;border-block:3px solid var(--ink)}
+.ticker-in{display:inline-flex;animation:marq 28s linear infinite}
+.ticker span{font:900 italic clamp(1.2rem,2.6vw,1.9rem)/1 var(--f-display);font-stretch:125%;text-transform:uppercase;padding:16px 28px;display:inline-flex;align-items:center;gap:28px}
+.ticker span::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--ink);box-shadow:inset -4px -3px 0 rgba(255,255,255,.35)}
+@keyframes marq{to{transform:translateX(-50%)}}
 
-/* MUNDO */
-.dots{display:grid;grid-template-columns:repeat(30,1fr);gap:3px;max-width:420px}
-.dots i{aspect-ratio:1;background:var(--accent);border-radius:50%;opacity:.9}
-.dots i.o{background:var(--line)}
-.tagrow{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:500 .72rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border:1px solid var(--line);border-radius:99px;color:var(--muted)}
-.flag{font:500 .72rem/1 var(--f-mono);letter-spacing:.14em;color:var(--muted)}
-.thread{border-left:4px solid var(--accent);padding-left:24px;max-width:760px}
+/* 1 */
+.split{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(32px,6vw,88px);align-items:start}
+.split>*{min-width:0}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.pull{font-family:var(--f-display);font-weight:900;font-style:italic;font-stretch:125%;text-transform:uppercase;font-size:clamp(2.2rem,6vw,5rem);line-height:.92;text-wrap:balance}
+.pull em{font-family:var(--f-serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:0}
+.board{background:var(--ink);color:var(--sun);border-radius:16px;padding:22px;display:grid;gap:12px;position:sticky;top:90px;border:4px solid #1c1e3a}
+.board .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.board small{font:700 .7rem var(--f-display);font-stretch:110%;letter-spacing:.2em;color:#9fa6d8;text-transform:uppercase}
+.board .sc{font:900 italic clamp(3.6rem,8vw,6rem)/1 var(--f-display);font-stretch:125%;font-variant-numeric:tabular-nums}
+.board .clock{font:900 clamp(1.8rem,3.4vw,2.6rem)/1 var(--f-display);font-stretch:110%;font-variant-numeric:tabular-nums;color:#fff;text-align:center;border-top:2px dashed #2b2e55;padding-top:14px}
+.moments{display:grid;grid-template-columns:repeat(4,1fr);border-block:2px solid var(--ink)}
+.moments div{padding:22px 18px;border-right:2px solid var(--ink);display:flex;flex-direction:column;gap:6px}
+.moments div:last-child{border:0}
+.moments b{font:900 italic 1.3rem/1 var(--f-display);font-stretch:125%;text-transform:uppercase;color:var(--royal)}
+.moments span{font-size:.95rem;line-height:1.4}
+@media(max-width:760px){.moments{grid-template-columns:1fr 1fr}.moments div:nth-child(2){border-right:0}.moments div:nth-child(-n+2){border-bottom:2px solid var(--ink)}}
+.mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.4vw,32px);align-items:start;padding-bottom:30px}
+@media(max-width:760px){.mosaic{grid-template-columns:1fr;max-width:420px;margin-inline:auto;width:100%}}
+.mosaic figure{margin:0;position:relative;transition:transform .35s}
+.mosaic figure:nth-child(1){transform:rotate(-1.6deg)} .mosaic figure:nth-child(2){transform:rotate(1.4deg) translateY(28px)} .mosaic figure:nth-child(3){transform:rotate(-.8deg)}
+.mosaic figure:hover{transform:rotate(0) scale(1.03)}
+.tape{position:absolute;top:-12px;left:50%;width:90px;height:26px;background:rgba(255,210,31,.88);transform:translateX(-50%) rotate(-3deg);z-index:3}
+.mosaic figcaption{font:700 .8rem var(--f-display);font-stretch:110%;text-transform:uppercase;letter-spacing:.14em;margin-top:10px}
+.mosaic .ph{border:8px solid #fff;box-shadow:0 14px 28px rgba(10,11,30,.18);aspect-ratio:4/5}
 
-/* FORMATO */
-.court-big{background:var(--court);border-radius:6px;padding:clamp(12px,3vw,28px);color:var(--court-line)}
-.court-big svg{width:100%;height:auto}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:14px;min-width:0}
-.panel h3{font-size:1.4rem}
+/* 2 */
+.worlds{display:flex;flex-direction:column;gap:28px}
+.world{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;background:var(--chalk);color:var(--text-on-paper);min-height:420px}
+.world>*{min-width:0}
+.world:nth-child(even) .ph{order:2}
+.world .ph{aspect-ratio:auto;min-height:340px}
+.world .body{padding:clamp(24px,4vw,52px);display:flex;flex-direction:column;gap:18px;justify-content:center}
+.world .where{font:800 .78rem var(--f-display);font-stretch:112%;letter-spacing:.2em;text-transform:uppercase;color:var(--royal)}
+.world .stat{font:900 italic clamp(3rem,7vw,6rem)/.85 var(--f-display);font-stretch:125%}
+.world .stat small{font-size:.38em;color:var(--coral);margin-right:.2em}
+.world p{color:var(--muted-paper);font-size:1rem}
+@media(min-width:900px){.world{position:sticky;top:84px}.world:nth-child(2){top:104px}.world:nth-child(3){top:124px}}
+@media(max-width:900px){.world{grid-template-columns:1fr}.world:nth-child(even) .ph{order:0}}
+.common{border-top:2px solid var(--line-dark);padding-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:36px}
+.common>*{min-width:0}
+@media(max-width:900px){.common{grid-template-columns:1fr}}
+.common .pull{font-size:clamp(1.9rem,4vw,3.4rem);color:var(--sun)}
+
+/* 3 */
+.rio-text{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,72px)}
+.rio-text>*{min-width:0}
+@media(max-width:900px){.rio-text{grid-template-columns:1fr}}
+.hook{font:900 italic clamp(1.6rem,3vw,2.5rem)/1.08 var(--f-display);font-stretch:125%;text-transform:uppercase}
+.hook mark{background:var(--sun);color:var(--ink);padding:0 .15em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.skyline{position:absolute;left:0;right:0;bottom:0;width:100%;height:clamp(110px,18vw,260px);pointer-events:none}
+.band.rio{padding-bottom:clamp(170px,24vw,320px)}
+
+/* 4 */
+.numbers{display:grid;grid-template-columns:repeat(5,1fr);border-block:3px solid var(--ink)}
+.numbers div{padding:26px 14px;border-right:3px solid var(--ink);display:flex;flex-direction:column;gap:4px}
+.numbers div:last-child{border:0}
+.numbers b{font:900 italic clamp(3rem,6.5vw,5.6rem)/.9 var(--f-display);font-stretch:125%;color:var(--royal)}
+.numbers span{font:700 .72rem var(--f-display);font-stretch:108%;letter-spacing:.14em;text-transform:uppercase}
+@media(max-width:820px){.numbers{grid-template-columns:repeat(2,1fr)}.numbers div{border-bottom:3px solid var(--ink)}.numbers div:nth-child(2n){border-right:0}.numbers div:last-child{grid-column:1/-1;border-bottom:0}}
+.court-fig{background:var(--royal);border-radius:20px;padding:clamp(12px,3vw,32px);color:#fff}
+.court-fig svg{width:100%;height:auto}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.charts>*{min-width:0}
+@media(max-width:900px){.charts{grid-template-columns:1fr}}
+.panel{background:var(--chalk);border-radius:20px;padding:clamp(20px,3vw,34px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.panel .note{font-size:.85rem;color:var(--muted-paper)}
 .chart svg{width:100%;height:auto;overflow:visible}
-.chart text{font-family:var(--f-mono);fill:var(--muted);font-size:11px}
-.chart .val{fill:var(--fg);font-weight:500;font-size:13px}
-.legend{display:flex;gap:18px;flex-wrap:wrap;font:400 .78rem var(--f-mono);color:var(--muted)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+.chart text{font:600 12px var(--f-body);fill:var(--muted-paper)}
+.chart .v{fill:var(--text-on-paper);font:900 italic 17px var(--f-display)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.85rem}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.bar-m,.bar-f{transform-box:fill-box;transform-origin:bottom;animation:grow 1s cubic-bezier(.2,.8,.2,1) both}
+.bar-f{animation-delay:.12s}
+@keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+@supports (animation-timeline:view()){.bar-m,.bar-f{animation:grow linear both;animation-timeline:view();animation-range:entry 10% cover 40%}}
 .scroll-x{overflow-x:auto}
-.bracket{min-width:640px}
-.bracket text{font-family:var(--f-body);font-size:13px;fill:var(--fg)}
-.bracket .box{fill:var(--bg2);stroke:var(--line)}
-.bracket .ln{stroke:var(--line);stroke-width:2;fill:none}
-.bracket .lab{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;fill:var(--muted);text-transform:uppercase}
-.sat{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-@media(max-width:700px){.sat{grid-template-columns:1fr 1fr}}
-.sat div{border:1px solid var(--line);background:var(--card);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px}
-.sat div.last{border-color:var(--accent)}
-.sat b{font:800 1.5rem/1 var(--f-display);text-transform:uppercase}
-.sat span{font:400 .78rem/1.4 var(--f-mono);color:var(--muted)}
-.sat em{font:900 2.6rem/1 var(--f-display);font-style:normal;color:var(--accent)}
+.bracket{min-width:660px;width:100%;height:auto}
+.bracket text{font:600 14px var(--f-body);fill:var(--text-on-paper)}
+.bracket .sm{fill:var(--muted-paper);font-weight:400;font-size:12.5px}
+.bracket .cap{font:800 11px var(--f-display);letter-spacing:.2em;fill:var(--royal)}
+.bracket .bx{fill:var(--paper);stroke:var(--line-paper);stroke-width:2}
+.bracket .ln{stroke:var(--royal);stroke-width:3;fill:none}
+.tickets{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+@media(max-width:900px){.tickets{grid-template-columns:repeat(2,1fr)}}
+.ticket{background:var(--ink);color:#fff;padding:22px 18px 18px;display:flex;flex-direction:column;gap:6px;border-radius:10px;min-width:0}
+.ticket small{font:700 .68rem var(--f-display);font-stretch:112%;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-dark)}
+.ticket b{font:900 italic 3.2rem/.9 var(--f-display);font-stretch:125%;color:var(--sun)}
+.ticket span{font-size:.88rem;line-height:1.35}
+.ticket.final{background:var(--royal)}
+.ticket hr{border:0;border-top:2px dashed rgba(255,255,255,.3);margin:10px 0 4px}
+.content-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);border-top:3px solid var(--ink);padding-top:32px}
+.content-pair>*{min-width:0}
+@media(max-width:900px){.content-pair{grid-template-columns:1fr}}
 
-/* FLOW */
-.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
-@media(max-width:820px){.flow{grid-template-columns:1fr}}
-.step{padding:28px;border:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;gap:12px;margin:0 -1px -1px 0}
-.step .ico{color:var(--accent);width:2.2rem;height:2.2rem}
-.step ul{margin:0;padding-left:18px;color:var(--muted);font-size:.96rem;display:flex;flex-direction:column;gap:4px}
-.step .when{font:500 .75rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+/* 5 */
+.reasons{display:flex;flex-direction:column}
+.reason{display:grid;grid-template-columns:70px 1fr 1.3fr;gap:clamp(16px,3vw,40px);padding:34px 0;border-top:2px solid var(--ink);align-items:start;transition:background .3s,padding .3s}
+.reason>*{min-width:0}
+.reason:last-child{border-bottom:2px solid var(--ink)}
+.reason:hover{background:var(--sun);padding-inline:18px}
+.reason .n{font:900 italic 2.8rem/.9 var(--f-display);font-stretch:125%;color:var(--royal)}
+@media(max-width:820px){.reason{grid-template-columns:48px 1fr}.reason p{grid-column:1/-1}}
+.ideas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:900px){.ideas{grid-template-columns:1fr 1fr}}
+.idea{border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:10px;min-height:210px;justify-content:space-between;min-width:0}
+.idea:nth-child(1){background:var(--royal);color:#fff} .idea:nth-child(2){background:var(--sun)} .idea:nth-child(3){background:var(--ink);color:#fff} .idea:nth-child(4){background:var(--coral);color:#fff}
+.idea svg{width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.idea p{font-size:.95rem;line-height:1.4}
 
-/* TABS */
-.tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab{font:700 .95rem var(--f-body);padding:12px 20px;border-radius:99px;border:1.5px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
-.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-.tabpanel{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:start}
+/* 6 */
+.lineup{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(24px,5vw,72px)}
+.lineup>*{min-width:0}
+@media(max-width:900px){.lineup{grid-template-columns:1fr}}
+.player{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:26px 0;border-top:1px solid var(--line-dark)}
+.player>*{min-width:0}
+.player .sh{width:60px;height:64px;position:relative;display:grid;place-items:center}
+.player .sh svg{position:absolute;inset:0;width:100%;height:100%;fill:var(--sun)}
+.player .sh b{position:relative;font:900 italic 1.7rem/1 var(--f-display);font-stretch:125%;color:var(--ink);margin-top:6px}
+.player p{margin-top:8px;color:var(--muted-dark);font-size:1rem}
+.halves{display:grid;grid-template-columns:1fr 1.1fr 1fr;border-radius:20px;overflow:hidden}
+.halves>*{min-width:0}
+@media(max-width:900px){.halves{grid-template-columns:1fr}}
+.half{padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;gap:12px}
+.half:nth-child(1){background:#1f2fb3} .half:nth-child(2){background:var(--sun);color:var(--ink)} .half:nth-child(3){background:var(--ink)}
+.half small{font:800 .75rem var(--f-display);font-stretch:112%;letter-spacing:.2em;text-transform:uppercase}
+.half ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;font-size:.98rem}
+
+/* intervalo */
+.tabs{display:flex;gap:10px;flex-wrap:wrap}
+.tab{font:800 .9rem var(--f-display);font-stretch:112%;text-transform:uppercase;letter-spacing:.06em;padding:15px 24px;border-radius:99px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.tab:hover{transform:translateY(-2px)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--sun)}
+.tabpanel{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,5vw,72px);align-items:start;animation:fade .5s both}
+.tabpanel>*{min-width:0}
 .tabpanel[hidden]{display:none}
-@media(max-width:820px){.tabpanel{grid-template-columns:1fr}}
-.tabpanel h3{font-size:clamp(2rem,4vw,3rem);margin-bottom:14px}
-.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
-.checks li{display:flex;gap:12px;align-items:flex-start}
-.checks .ico{color:var(--accent);margin-top:2px;width:1.3em;height:1.3em}
+@media(max-width:900px){.tabpanel{grid-template-columns:1fr}}
+.tabpanel h3{font-size:clamp(1.8rem,4vw,3.2rem);line-height:.95}
+.tabpanel ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;counter-reset:t}
+.tabpanel li{counter-increment:t;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--line-paper)}
+.tabpanel li::before{content:counter(t);font:900 italic 1.5rem/1 var(--f-display);font-stretch:125%;color:var(--royal)}
+.tabpanel li b{display:block}
 
-/* ROADMAP */
-.road{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;padding-top:36px}
-.road::before{content:"";position:absolute;left:0;right:0;top:12px;height:2px;background:linear-gradient(90deg,var(--accent) 0 25%,var(--line) 25% 100%)}
-.road>div{position:relative;padding:0 20px 0 0;display:flex;flex-direction:column;gap:8px}
-.road>div::before{content:"";position:absolute;top:-30px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--line)}
-.road>div:first-child::before{background:var(--accent);border-color:var(--accent)}
-.road b{font:800 1.5rem/1 var(--f-display);text-transform:uppercase}
-.road p{font-size:.95rem;color:var(--muted)}
-@media(max-width:820px){.road{grid-template-columns:1fr;gap:28px;padding:0 0 0 32px}.road::before{left:6px;right:auto;top:6px;bottom:6px;width:2px;height:auto;background:var(--line)}
- .road>div::before{left:-32px;top:6px}}
+/* 7 */
+.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:clamp(16px,3vw,40px)}
+.vs .side{display:flex;flex-direction:column;gap:6px}
+.vs .big{font:900 italic clamp(5rem,16vw,12rem)/.8 var(--f-display);font-stretch:125%}
+.vs .x{font:900 italic 2rem var(--f-display);color:var(--ink)}
+.vs small{font:800 .78rem var(--f-display);font-stretch:112%;letter-spacing:.18em;text-transform:uppercase}
+@media(max-width:700px){.vs{grid-template-columns:1fr}}
+.report{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);border-radius:20px;overflow:hidden}
+.report div{padding:26px;border-right:2px solid var(--ink);display:flex;flex-direction:column;gap:8px}
+.report div:last-child{border:0}
+.report b{font:900 italic 1.3rem/1 var(--f-display);font-stretch:125%;text-transform:uppercase;color:var(--royal)}
+@media(max-width:760px){.report{grid-template-columns:1fr}.report div{border-right:0;border-bottom:2px solid var(--ink)}.report div:last-child{border:0}}
 
-/* FINAL */
-.final{background:var(--court);color:#fff;text-align:left}
-.final .eyebrow{color:#FFB48A}
-.final h2 span{color:var(--accent)}
-.final .lead{color:#D6E2F4}
-.final .btn.ghost{color:#fff;border-color:rgba(255,255,255,.5)}
-footer{padding:28px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));background:var(--bg);border-top:1px solid var(--line)}
-footer div{max-width:1120px;margin:auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font:400 .85rem var(--f-mono)}
+/* 8 */
+.road{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:56px}
+.road::before{content:"";position:absolute;left:0;right:0;top:20px;height:4px;background:rgba(255,255,255,.25)}
+.road::after{content:"";position:absolute;left:0;top:20px;height:4px;background:var(--sun);width:100%;transform-origin:left;animation:line 1.6s ease-out both}
+@keyframes line{from{transform:scaleX(0)}to{transform:none}}
+@supports (animation-timeline:view()){.road::after{animation:line linear both;animation-timeline:view();animation-range:entry 20% cover 50%}}
+.stop{position:relative;display:flex;flex-direction:column;gap:8px;min-width:0}
+.stop::before{content:"";position:absolute;top:-46px;left:0;width:22px;height:22px;border-radius:50%;background:var(--sun);border:4px solid var(--royal-deep)}
+.stop b{font:900 italic 1.4rem/1 var(--f-display);font-stretch:125%;text-transform:uppercase}
+.stop p{font-size:.98rem}
+@media(max-width:820px){.road{grid-template-columns:1fr;padding:0 0 0 44px}.road::before,.road::after{left:9px;right:auto;top:0;bottom:0;width:4px;height:auto}.road::after{animation:none}.stop::before{top:6px;left:-44px}}
+.dream{display:grid;gap:10px}
+.dream p{font:italic 400 clamp(1.5rem,3.2vw,2.6rem)/1.1 var(--f-serif)}
+
+/* 9 */
+.final{overflow:hidden}
+.final .huge{font-size:clamp(2.2rem,8.2vw,7.4rem);line-height:.88;transform:skewX(-4deg);transform-origin:left}
+.final .huge span{color:var(--sun)}
+.final .ball{position:absolute;right:max(16px,5vw);top:6%;width:clamp(80px,12vw,170px);animation:bounce 2.4s cubic-bezier(.4,0,.6,1) infinite alternate}
+@keyframes bounce{from{transform:translateY(0) rotate(0)}to{transform:translateY(60px) rotate(180deg)}}
+footer{background:var(--ink);color:#fff;padding:32px max(16px,env(safe-area-inset-right,0px)) 44px max(16px,env(safe-area-inset-left,0px))}
+footer div{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transform:uppercase}
+
+/* movimento ao rolar (só onde há suporte; senão tudo já aparece) */
+@supports (animation-timeline:view()){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+  @keyframes rv{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
-
-<!-- ICONS -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-<defs>
-<symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6L8.2 10.3z"/><path d="M12 7.5V2.6M15.8 10.3l4.6-1.5M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3L3.6 8.8"/></symbol>
-<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4v1.5A3.5 3.5 0 007.5 11M17 6h3v1.5a3.5 3.5 0 01-3.5 3.5M12 14v4M8 21h8M9 18h6"/></symbol>
-<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c2.5 0 4.5 2 4.5 4.5"/></symbol>
-<symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 10v4h3l8 4V6L6 10z"/><path d="M18 9a4 4 0 010 6M7 14l1.5 6h3L10.5 16"/></symbol>
-<symbol id="i-cam" viewBox="0 0 24 24"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.6"/></symbol>
-<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.7l1-1"/></symbol>
-<symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
-<symbol id="i-uni" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5M22 9v6"/></symbol>
-<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
-<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5a7 7 0 00-14 0C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
-<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20h18M6 16v-5M11 16V7M16 16v-8M21 16v-3"/></symbol>
-<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-4.800-8-10.500A4.500 4.500 0 0112 7a4.500 4.500 0 018 2.500C20 15.200 12 20 12 20z"/></symbol>
-<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.500" cy="8.500" r="1.200"/></symbol>
-<symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.500v5l4.500-2.500z"/></symbol>
-<symbol id="i-shirt" viewBox="0 0 24 24"><path d="M8 3L3 6l2 4 3-1v12h8V9l3 1 2-4-5-3c-.5 1.800-2 3-4 3S8.500 4.800 8 3z"/></symbol>
-<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h13l-3 4.500 3 4.500H5"/></symbol>
-<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
-<symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4"/><path d="M5 12v9h14v-9M12 8v13M12 8c-3 0-5-1-4.500-3s3.500-1.500 4.500 3zM12 8c3 0 5-1 4.500-3S13 3.500 12 8z"/></symbol>
-<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.500"/><path d="M7.500 12.500l3 3 6-6.500"/></symbol>
-<symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
-<symbol id="i-wave" viewBox="0 0 24 24"><path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/></symbol>
-<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.500 1.500M17.500 17.500L19 19M5 19l1.500-1.500M17.500 6.500L19 5"/></symbol>
-<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-<symbol id="i-seed" viewBox="0 0 24 24"><path d="M12 21v-9M12 12C12 7 8 5 4 5c0 5 3 7 8 7zM12 14c0-4 3-6 8-6 0 4-3 6-8 6z"/></symbol>
-</defs>
-</svg>
 
 <header class="nav">
   <div class="nav-in">
-    <a class="brand" href="#topo" aria-label="Copa Universitária RJ, início">
-      <svg width="28" height="28" viewBox="0 0 24 24" class="ico" style="color:var(--accent);width:28px;height:28px"><use href="#i-ball"/></svg>
-      Copa Universitária RJ
-    </a>
+    <a class="brand" href="#topo"><i></i>Copa Universitária RJ</a>
     <ul>
       <li><a href="#paixao">A paixão</a></li>
       <li><a href="#mundo">No mundo</a></li>
-      <li><a href="#formato">Formato</a></li>
-      <li><a href="#patrocinio">Patrocínio</a></li>
-      <li><a href="#para-voce">Para você</a></li>
-      <li><a href="#visao">Visão</a></li>
+      <li><a href="#rio">No Rio</a></li>
+      <li><a href="#projeto">O projeto</a></li>
+      <li><a href="#apoiar">Apoiar</a></li>
+      <li><a href="#intervalo">Para quem</a></li>
     </ul>
-    <button class="theme" id="theme" aria-label="Alternar tema claro e escuro" title="Alternar tema">
-      <svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px"><use href="#i-sun"/></svg>
-    </button>
+    <a class="btn" href="#convite">Quero participar</a>
   </div>
-  <div class="progress" id="progress"></div>
+  <div class="bar" id="bar"></div>
 </header>
 
 <main id="topo">
-
 <!-- HERO -->
 <section class="hero">
+  <div class="dots-bg"></div>
   <div class="hero-in">
-    <span class="eyebrow">Futsal masculino e feminino · Rio de Janeiro · 1ª edição</span>
-    <h1>Copa<br>Universitária <em>RJ</em></h1>
-    <p class="tag">A paixão já existe. Falta dar a ela o espaço que merece.</p>
-    <div class="cta-row">
-      <a class="btn" href="#para-voce">Ver a proposta para o meu perfil <svg class="ico" viewBox="0 0 24 24" style="width:1.2em;height:1.2em"><use href="#i-arrow"/></svg></a>
-      <a class="btn ghost" href="#formato">Como funciona</a>
+    <div class="hero-title">
+      <p class="kicker">Futsal masculino e feminino · Rio de Janeiro · 1ª edição</p>
+      <h1><span class="ln"><span>Copa</span></span><span class="ln"><span>Universitária <i class="rj">RJ</i></span></span></h1>
     </div>
-    <div class="hero-court" aria-hidden="true">
-      <svg viewBox="0 0 800 330" fill="none">
-        <rect x="0" y="0" width="800" height="330" fill="var(--court)" opacity=".92"/>
-        <g stroke="currentColor" stroke-width="3" opacity=".85">
-          <rect x="40" y="40" width="720" height="250"/>
-          <path d="M400 40v250"/>
-          <circle cx="400" cy="165" r="48"/>
-          <path d="M40 90a70 70 0 0170 75 70 70 0 01-70 75" transform="translate(0 0)" opacity="0"/>
-          <path d="M40 80a75 75 0 0175 75v20a75 75 0 01-75 75"/>
-          <path d="M760 80a75 75 0 00-75 75v20a75 75 0 0075 75"/>
-        </g>
-        <g fill="currentColor" opacity=".9"><circle cx="400" cy="165" r="4"/><circle cx="150" cy="165" r="3.500"/><circle cx="650" cy="165" r="3.500"/></g>
-        <g stroke="currentColor" stroke-width="5" opacity=".95"><path d="M28 135v60M772 135v60"/></g>
-        <!-- bola -->
-        <g transform="translate(520 120)">
-          <circle r="34" fill="#fff" stroke="#0A1424" stroke-width="3"/>
-          <path d="M0-15l14 10-5 16H-9l-5-16z" fill="#0A1424"/>
-          <path d="M0-15v-17M14-5l17-6M9 11l11 15M-9 11l-11 15M-14-5l-17-6" stroke="#0A1424" stroke-width="3"/>
-        </g>
-        <path d="M120 250c120-110 240-130 360-110" stroke="#FF6B1A" stroke-width="4" stroke-dasharray="3 12" stroke-linecap="round"/>
-      </svg>
+    <div>
+      <p class="tagline serif">A paixão já existe. Falta dar a ela o espaço que merece.</p>
+      <div class="cta">
+        <a class="btn" href="#intervalo">Ver a proposta para o meu perfil</a>
+        <a class="btn line" href="#projeto">Como funciona</a>
+      </div>
     </div>
-  </div>
-  <div class="statbar" style="margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))">
-    <div><b>8</b><span>Universidades</span></div>
-    <div><b>16</b><span>Equipes · 8M + 8F</span></div>
-    <div><b>32</b><span>Partidas</span></div>
-    <div><b>5</b><span>Sábados de jogo</span></div>
+    <div class="stage">
+      <figure class="ph" style="margin:0">
+        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <pattern id="net" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M0 0h16v16" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/></pattern>
+          </defs>
+          <rect width="800" height="1000" fill="#121C8F"/>
+          <g fill="url(#beam)"><path d="M120 0h110L90 640H-90z"/><path d="M420 0h110L520 640H300z"/><path d="M700 0h110L1000 640H760z"/></g>
+          <g id="heroCrowd"></g>
+          <path d="M0 640h800v360H0z" fill="#2340FF"/>
+          <g stroke="#fff" stroke-width="5" fill="none" opacity=".85"><path d="M0 740h800"/><ellipse cx="400" cy="860" rx="250" ry="62"/><path d="M400 740v230"/></g>
+          <g transform="translate(420 380)">
+            <rect x="0" y="0" width="340" height="260" fill="url(#net)"/>
+            <path d="M0 260V0h340v260" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="square"/>
+          </g>
+          <g stroke-linecap="round" stroke-linejoin="round" transform="translate(40 40)">
+            <path d="M210 640l-6 200" stroke="#8A5A3C" stroke-width="26" fill="none"/>
+            <path d="M228 612l110 14 80-52" stroke="#8A5A3C" stroke-width="26" fill="none"/>
+            <path d="M168 438l-70 52M300 432l78 24" stroke="#8A5A3C" stroke-width="22" fill="none"/>
+            <path d="M176 420h126l22 128-146 12z" fill="#FFD21F" stroke="#FFD21F" stroke-width="6"/>
+            <path d="M176 552l150-10 14 80-140 12z" fill="#0A0B1E" stroke="#0A0B1E" stroke-width="6"/>
+            <circle cx="244" cy="372" r="34" fill="#8A5A3C"/>
+            <path d="M212 360c8-34 56-38 66-2-20-14-44-14-66 2z" fill="#0A0B1E"/>
+            <text x="212" y="520" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" font-size="70" fill="#0A0B1E">10</text>
+          </g>
+          <g transform="translate(490 600)"><circle r="46" fill="#fff"/><path d="M0-20l19 14-7 22H-12l-7-22z" fill="#0A0B1E"/><path d="M0-20V-44M19-6l24-8M12 16l16 22M-12 16l-16 22M-19-6l-24-8" stroke="#0A0B1E" stroke-width="4"/></g>
+          <path d="M370 700c30-30 60-52 90-70" stroke="#FFD21F" stroke-width="6" stroke-dasharray="2 16" stroke-linecap="round" fill="none"/>
+        </svg>
+        <img src="img/hero.jpg" alt="Jogo universitário de futsal no Rio de Janeiro" onerror="this.remove()">
+      </figure>
+      <div class="badge-wrap" aria-hidden="true">
+        <svg class="badge" viewBox="0 0 200 200"><defs><path id="circ" d="M100 100m-76 0a76 76 0 1 1 152 0a76 76 0 1 1-152 0"/></defs><circle cx="100" cy="100" r="98"/><text><textPath href="#circ">PRIMEIRA EDIÇÃO · 2 NAIPES · 1 GINÁSIO ·</textPath></text></svg>
+        <b>1ª</b>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- PAIXÃO -->
-<section class="band" id="paixao">
+<div class="ticker" aria-label="8 universidades, 16 equipes, 32 partidas, 5 sábados, 1 ginásio">
+  <div class="ticker-in">
+    <span>8 universidades</span><span>16 equipes</span><span>32 partidas</span><span>5 sábados</span><span>1 ginásio</span>
+    <span>8 universidades</span><span>16 equipes</span><span>32 partidas</span><span>5 sábados</span><span>1 ginásio</span>
+  </div>
+</div>
+
+<!-- 1 PAIXÃO -->
+<section class="band on-paper" id="paixao">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 1 · A paixão</span>
-      <h2>Tem coisa que só quem vive o esporte universitário entende.</h2>
-    </div>
-    <div class="manifesto">
-      <div class="prose">
-        <p>É difícil explicar para quem nunca viveu. A ansiedade antes de entrar em quadra. O barulho da torcida. O orgulho de vestir a camisa da faculdade. A resenha depois do jogo, ganhando ou perdendo.</p>
-        <p>Tem gente que passa a semana inteira esperando por <strong>aqueles 40 minutos</strong>. Gente que trabalha, estuda, pega ônibus, chega cansada em casa, mas ainda encontra energia para treinar porque sabe que, no fim de semana, vai representar sua universidade.</p>
-        <p>E não é só sobre quem joga. É sobre os amigos que vão assistir, a turma que se junta para torcer, as bandeiras, os cantos, a rivalidade entre faculdades e as histórias que continuam sendo lembradas anos depois.</p>
-        <p class="pull" style="margin-top:8px">Não é só <span>um jogo.</span></p>
+    <div class="shirt rv"><span class="num">1</span><h2>Tem coisa que só quem vive o esporte universitário entende.</h2></div>
+    <div class="split">
+      <div class="prose rv">
+        <p class="lead">É difícil explicar para quem nunca viveu.</p>
+        <p>A ansiedade antes de entrar em quadra. O barulho da torcida. O orgulho de vestir a camisa da faculdade. A resenha depois do jogo, ganhando ou perdendo.</p>
+        <p>Tem gente que passa a semana inteira esperando por aqueles 40 minutos. Gente que trabalha, estuda, pega ônibus, chega cansada em casa, mas ainda encontra energia para treinar porque sabe que, no fim de semana, vai representar sua universidade.</p>
+        <p>E não é só sobre quem joga. É sobre os amigos que vão assistir. A turma que se junta para torcer. As bandeiras, os cantos, a rivalidade entre faculdades e as histórias que continuam sendo lembradas anos depois.</p>
+        <p class="pull">Não é só <em>um jogo.</em></p>
       </div>
-      <div class="forty">
-        <div><svg class="ico"><use href="#i-wave"/></svg><span>Antes<small>A ansiedade de entrar em quadra</small></span></div>
-        <div><svg class="ico"><use href="#i-mega"/></svg><span>Durante<small>O barulho da torcida e a camisa da faculdade</small></span></div>
-        <div><svg class="ico"><use href="#i-flag"/></svg><span>Nas arquibancadas<small>Bandeiras, cantos e rivalidades</small></span></div>
-        <div><svg class="ico"><use href="#i-heart"/></svg><span>Depois<small>A resenha, ganhando ou perdendo</small></span></div>
-      </div>
+      <aside class="board rv" aria-label="Placar ilustrativo">
+        <div class="row"><small>Atlética A</small><small>Atlética B</small></div>
+        <div class="row"><span class="sc" id="sa">3</span><span class="sc" style="color:#fff">×</span><span class="sc" id="sb">2</span></div>
+        <div class="clock" id="clock">40:00</div>
+        <small style="text-align:center">40 minutos que a semana inteira esperou</small>
+      </aside>
     </div>
-    <svg class="crowd" id="crowd" viewBox="0 0 1000 150" preserveAspectRatio="none" aria-hidden="true"></svg>
-    <p class="lead">E é justamente por acreditar nisso que queremos criar a Copa Universitária RJ.</p>
+    <div class="moments rv">
+      <div><b>Antes</b><span>A ansiedade de entrar em quadra</span></div>
+      <div><b>Durante</b><span>O barulho da torcida e a camisa da faculdade</span></div>
+      <div><b>Na arquibancada</b><span>Bandeiras, cantos e rivalidades</span></div>
+      <div><b>Depois</b><span>A resenha, ganhando ou perdendo</span></div>
+    </div>
+    <div class="mosaic">
+      <figure class="rv"><i class="tape"></i>
+        <div class="ph">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#FFD21F"/><g id="torcida"></g></svg>
+          <img src="img/torcida.jpg" alt="Torcida de uma atlética no ginásio" onerror="this.remove()">
+        </div><figcaption>A torcida</figcaption></figure>
+      <figure class="rv"><i class="tape"></i>
+        <div class="ph">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#F3F5FA"/>
+            <g stroke="#2340FF" stroke-width="4" fill="none"><rect x="30" y="60" width="340" height="380"/><path d="M30 250h340"/><circle cx="200" cy="250" r="50"/><path d="M130 60v50h140V60M130 440v-50h140v50"/></g>
+            <g stroke="#0A0B1E" stroke-width="6" stroke-linecap="round"><path d="M110 150l22 22M132 150l-22 22M270 190l22 22M292 190l-22 22M180 330l22 22M202 330l-22 22"/></g>
+            <g fill="none" stroke="#FF4D3D" stroke-width="5"><circle cx="270" cy="150" r="13"/><circle cx="130" cy="260" r="13"/><circle cx="260" cy="340" r="13"/></g>
+            <path d="M118 182c40 40 70 20 90 70M280 224c-10 40-40 60-90 90" stroke="#0A0B1E" stroke-width="4" stroke-dasharray="3 10" fill="none" stroke-linecap="round"/>
+          </svg>
+          <img src="img/quadra.jpg" alt="Equipe se preparando antes do jogo" onerror="this.remove()">
+        </div><figcaption>A preparação</figcaption></figure>
+      <figure class="rv"><i class="tape"></i>
+        <div class="ph">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#2340FF"/>
+            <g id="conf"></g>
+            <g fill="#FFD21F"><path d="M120 120h160c0 80-30 130-80 150-50-20-80-70-80-150z"/><path d="M120 140h-50c0 50 20 80 60 90M280 140h50c0 50-20 80-60 90" fill="none" stroke="#FFD21F" stroke-width="14"/><rect x="185" y="270" width="30" height="60"/><rect x="140" y="330" width="120" height="26" rx="6"/><rect x="120" y="356" width="160" height="40" rx="6" fill="#0A0B1E"/></g>
+            <text x="200" y="384" text-anchor="middle" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#FFD21F">CAMPEÃ</text>
+          </svg>
+          <img src="img/comemoracao.jpg" alt="Equipe comemorando o título" onerror="this.remove()">
+        </div><figcaption>A taça</figcaption></figure>
+    </div>
+    <p class="lead rv"><b>Quem vive o esporte universitário sabe: não é só um jogo.</b> E é justamente por acreditar nisso que queremos criar a Copa Universitária RJ.</p>
   </div>
 </section>
 
-<!-- MUNDO -->
-<section class="band alt" id="mundo">
+<!-- 2 MUNDO -->
+<section class="band on-ink" id="mundo">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 2 · Referências</span>
-      <h2>Em outros lugares do mundo, essa paixão já ganhou o espaço que merece.</h2>
-      <p class="lead">Países diferentes, esportes diferentes, realidades diferentes. Em todos, alguém entendeu que o esporte universitário tinha valor e decidiu investir nele.</p>
-    </div>
-    <div class="grid g3">
-      <article class="card">
-        <span class="flag">ESTADOS UNIDOS · NCAA</span>
-        <div class="big"><small>US$</small>900 mi</div>
-        <p>por ano em direitos de mídia e marketing ligados ao principal campeonato masculino de basquete universitário. Universidades têm torcidas apaixonadas, rivalidades históricas e campeonatos que mobilizam comunidades inteiras.</p>
-        <div class="tagrow"><span class="chip">Basquete</span><span class="chip">Mídia</span><span class="chip">Marketing</span></div>
+    <div class="shirt rv"><span class="num">2</span><h2>Em outros lugares do mundo, essa paixão já ganhou o espaço que merece.</h2></div>
+    <div class="worlds">
+      <article class="world">
+        <div class="ph">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="600" height="440" fill="#FF4D3D"/>
+            <g id="nc"></g>
+            <rect x="170" y="70" width="260" height="170" fill="#fff"/><rect x="236" y="130" width="128" height="86" fill="none" stroke="#FF4D3D" stroke-width="8"/>
+            <ellipse cx="300" cy="262" rx="62" ry="12" fill="none" stroke="#FFD21F" stroke-width="10"/>
+            <path d="M238 266l22 90M362 266l-22 90M270 272l8 92M330 272l-8 92M300 274v92" stroke="#fff" stroke-width="3"/>
+            <path d="M80 400c60-210 150-250 232-196" stroke="#0A0B1E" stroke-width="5" stroke-dasharray="2 14" stroke-linecap="round" fill="none"/>
+            <g transform="translate(300 190)"><circle r="30" fill="#FFB340" stroke="#0A0B1E" stroke-width="4"/><path d="M-30 0h60M0-30v60M-21-21c14 14 14 28 0 42M21-21c-14 14-14 28 0 42" stroke="#0A0B1E" stroke-width="3" fill="none"/></g>
+          </svg>
+          <img src="img/ncaa.jpg" alt="Jogo de basquete universitário da NCAA" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="where">Estados Unidos · NCAA</span>
+          <div class="stat"><small>US$</small><span data-count="900">900</span> mi</div>
+          <p><b>Por ano</b> em direitos de mídia e marketing ligados ao principal campeonato masculino de basquete universitário.</p>
+          <p>Nos Estados Unidos, o esporte universitário faz parte da cultura do país. Universidades têm torcidas apaixonadas, rivalidades históricas e campeonatos que mobilizam comunidades inteiras.</p>
+        </div>
       </article>
-      <article class="card">
-        <span class="flag">REINO UNIDO · BUCS</span>
-        <div class="big">+6 mil<small style="margin-left:.15em">equipes</small></div>
-        <p>A British Universities &amp; Colleges Sport organiza competições com cerca de 150 universidades e dezenas de modalidades.</p>
-        <div class="dots" id="dots" role="img" aria-label="Cerca de 150 universidades participantes"></div>
-        <span class="note">1 ponto laranja = 1 universidade (aprox. 150)</span>
+
+      <article class="world">
+        <div class="ph">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="600" height="440" fill="#121C8F"/>
+            <g id="bucsdots"></g>
+            <g transform="translate(300 220)">
+              <circle r="150" fill="#2340FF"/>
+              <g stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <g transform="translate(-70 -50)"><circle r="34"/><path d="M0-14l13 9-5 15H-8l-5-15z"/></g>
+                <g transform="translate(60 -54) rotate(-30)"><ellipse rx="40" ry="24"/><path d="M-16 0h32M-6-6v12M4-6v12"/></g>
+                <g transform="translate(-60 62)"><circle r="26" cy="-14"/><path d="M12 8l36 46"/></g>
+                <g transform="translate(70 64)"><path d="M-40 0c14-22 28 22 40 0s28 22 40 0M-40 20c14-22 28 22 40 0s28 22 40 0"/></g>
+              </g>
+            </g>
+          </svg>
+          <img src="img/bucs.jpg" alt="Competição universitária da BUCS no Reino Unido" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="where">Reino Unido · BUCS</span>
+          <div class="stat">+<span data-count="6000">6.000</span> <small style="margin-right:0">equipes</small></div>
+          <p><b>Cerca de 150 universidades</b> e dezenas de modalidades nas competições organizadas pela British Universities &amp; Colleges Sport.</p>
+          <p>No Reino Unido, o esporte universitário também é levado a sério.</p>
+        </div>
       </article>
-      <article class="card">
-        <span class="flag">JAPÃO · HAKONE EKIDEN</span>
-        <div class="big">Milhões<small style="margin-left:.15em">assistem</small></div>
-        <p>Uma corrida universitária que virou tradição nacional. Atrai emissoras, marcas esportivas e torcedores que esperam o ano inteiro por aquele momento.</p>
-        <div class="tagrow"><span class="chip">Corrida</span><span class="chip">TV</span><span class="chip">Marcas</span></div>
+
+      <article class="world">
+        <div class="ph">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="600" height="440" fill="#FFD21F"/>
+            <circle cx="410" cy="120" r="64" fill="#FF4D3D"/>
+            <path d="M-20 330L220 110l40 24 30-26 20 22 40-28L620 330z" fill="#2340FF"/>
+            <path d="M200 140l20-30 40 24 30-26 20 22 40-28 24 30-44 20-30-20-30 22-30-20z" fill="#fff"/>
+            <path d="M-20 330h640v120H-20z" fill="#0A0B1E"/>
+            <path d="M-20 372c200-30 360-30 640 0" stroke="#FFD21F" stroke-width="5" stroke-dasharray="22 16" fill="none"/>
+            <g id="runners" fill="#0A0B1E"></g>
+          </svg>
+          <img src="img/hakone.jpg" alt="Corredores da Hakone Ekiden no Japão" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="where">Japão · Hakone Ekiden</span>
+          <div class="stat">Milhões</div>
+          <p><b>de pessoas acompanham</b> estudantes representando suas universidades em uma corrida que virou tradição nacional.</p>
+          <p>A competição atrai emissoras, marcas esportivas e torcedores que esperam o ano inteiro por aquele momento.</p>
+        </div>
       </article>
     </div>
-    <div class="thread">
-      <p class="pull">O esporte universitário não precisa ser tratado como algo <span>pequeno</span> só porque é praticado por estudantes.</p>
-      <p class="lead" style="margin-top:20px">Não vamos reproduzir a estrutura desses países no Rio. Existe uma ideia por trás desses exemplos que vale a pena trazer para cá. Nesses lugares, o valor está nas pessoas que as competições movimentam, nas histórias que criam, nas instituições que fortalecem e nas comunidades que aproximam, e não só nos futuros atletas profissionais.</p>
+
+    <div class="common">
+      <div class="prose rv">
+        <p class="lead">São países diferentes, esportes diferentes e realidades diferentes. Mas existe algo em comum entre eles.</p>
+        <p>Em todos esses lugares, alguém entendeu que o esporte universitário tinha valor. E decidiu investir nele. Não apenas porque aqueles estudantes poderiam se tornar atletas profissionais, mas porque as competições movimentam pessoas, criam histórias, fortalecem instituições e aproximam comunidades.</p>
+        <p class="muted">Não estamos dizendo que vamos reproduzir a estrutura desses países no Rio de Janeiro. Estamos dizendo que existe uma ideia por trás desses exemplos que vale a pena trazer para cá.</p>
+      </div>
+      <p class="pull rv" style="align-self:center">O esporte universitário não precisa ser tratado como algo <em>pequeno</em> só porque é praticado por estudantes.</p>
     </div>
   </div>
 </section>
 
-<!-- RIO -->
-<section class="band">
+<!-- 3 RIO -->
+<section class="band on-royal rio" id="rio">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 3 · O Rio</span>
-      <h2>E por que não podemos construir algo assim no Rio?</h2>
-      <p class="lead">O Rio de Janeiro respira esporte. Temos universidades, atletas, torcidas, rivalidades e jovens que dedicam parte da vida a representar suas faculdades.</p>
-    </div>
-    <div class="grid g4">
-      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>Universidades</h3><p>Instituições com identidade, história e orgulho próprio.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-shirt"/></svg><h3>Atletas</h3><p>Estudantes que treinam depois de um dia de trabalho e estudo.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-flag"/></svg><h3>Torcidas</h3><p>Bandeiras, cantos e gente querendo fazer barulho na arquibancada.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-bolt"/></svg><h3>Rivalidades</h3><p>Aquele clássico que rende conversa a semana inteira.</p></div>
-    </div>
-    <div class="grid g2">
-      <div class="prose">
-        <p>Queremos criar uma competição que os alunos tenham orgulho de disputar. Que faça a galera querer sair de casa para assistir, levar os amigos, vestir a camisa da faculdade e fazer barulho.</p>
-        <p>Queremos que uma <strong>semifinal seja assunto durante a semana</strong>. Que uma final tenha <strong>clima de final</strong>. Que os atletas se sintam valorizados e que a torcida tenha orgulho de fazer parte daquele momento.</p>
+    <div class="shirt rv"><span class="num">3</span><h2>E por que não podemos construir algo assim no Rio?</h2></div>
+    <div class="rio-text">
+      <div class="prose rv">
+        <p class="lead">O Rio de Janeiro respira esporte. Temos universidades, atletas, torcidas, rivalidades e jovens que dedicam parte da vida a representar suas faculdades.</p>
+        <p>O que queremos é dar mais espaço para tudo isso. Criar uma competição que os alunos tenham orgulho de disputar. Que faça a galera querer sair de casa para assistir. Que dê vontade de levar os amigos, vestir a camisa da faculdade e fazer barulho na arquibancada.</p>
       </div>
-      <div class="card" style="justify-content:center">
-        <span class="eyebrow">Nosso ponto de partida</span>
-        <p style="color:var(--fg);font-size:1.3rem;line-height:1.4">Não queremos inventar essa paixão. Ela já existe. Queremos dar a ela a <b style="color:var(--accent)">estrutura</b>, a <b style="color:var(--accent)">visibilidade</b> e o <b style="color:var(--accent)">reconhecimento</b> que merece.</p>
+      <div class="rv" style="display:grid;gap:22px">
+        <p class="hook">Queremos que uma <mark>semifinal</mark> seja assunto durante a semana.</p>
+        <p class="hook">Que uma <mark>final</mark> tenha clima de final.</p>
+        <p>Que os atletas se sintam valorizados e que a torcida tenha orgulho de fazer parte daquele momento.</p>
+        <p class="serif" style="font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.15;color:var(--sun)">Não queremos inventar essa paixão. Ela já existe. Queremos dar a ela a estrutura, a visibilidade e o reconhecimento que merece.</p>
       </div>
     </div>
   </div>
+  <svg class="skyline" viewBox="0 0 1440 280" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 280V200c70-10 120-60 190-70 60-8 90 40 140 30 50-10 70-80 130-96 70-18 100 70 160 80 40 6 60-30 100-34 50-4 70 50 130 54 60 4 90-60 150-70 60-10 80 40 130 46 40 5 70-40 110-40 50 0 70 50 120 56 60 8 90-40 130-52v206z" fill="#121C8F"/>
+    <path d="M980 280v-120c0-60 50-110 110-110s100 50 100 110v120z" fill="#0A0B1E" opacity=".92"/>
+    <path d="M1090 50v-34M1074 28h32" stroke="#0A0B1E" stroke-width="8" stroke-linecap="round"/>
+    <path d="M200 280v-90c0-50 40-90 90-90s90 40 90 90v90z" fill="#0A0B1E"/>
+    <path d="M300 100c140-30 440 20 700 60" stroke="#FFD21F" stroke-width="3" stroke-dasharray="3 9" fill="none"/>
+    <path d="M0 280v-40h1440v40z" fill="#0A0B1E"/>
+  </svg>
 </section>
 
-<!-- FORMATO -->
-<section class="band alt" id="formato">
+<!-- 4 PROJETO -->
+<section class="band on-paper" id="projeto">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 4 · O projeto</span>
-      <h2>O que é a Copa Universitária RJ?</h2>
-      <p class="lead">Uma competição de futsal masculino e feminino reunindo universidades do Rio de Janeiro. A primeira edição foi pensada para começar de forma organizada e sustentável.</p>
+    <div class="shirt rv"><span class="num">4</span><h2>O que é a Copa Universitária RJ?</h2></div>
+    <p class="lead rv">Uma competição de futsal masculino e feminino reunindo universidades do Rio de Janeiro. A primeira edição foi pensada para começar de forma organizada e sustentável.</p>
+
+    <div class="numbers rv">
+      <div><b data-count="8">8</b><span>Universidades</span></div>
+      <div><b data-count="16">16</b><span>Equipes (8 masc. + 8 fem.)</span></div>
+      <div><b data-count="32">32</b><span>Partidas</span></div>
+      <div><b data-count="5">5</b><span>Sábados de competição</span></div>
+      <div><b>1</b><span>Ginásio fixo</span></div>
     </div>
 
-    <div class="court-big" aria-hidden="true">
-      <svg viewBox="0 0 800 300" fill="none">
-        <g stroke="currentColor" stroke-width="3">
-          <rect x="20" y="20" width="760" height="260"/><path d="M400 20v260"/><circle cx="400" cy="150" r="46"/>
-          <path d="M20 70a75 75 0 0175 75v10a75 75 0 01-75 75"/><path d="M780 70a75 75 0 00-75 75v10a75 75 0 0075 75"/>
-        </g>
-        <g fill="currentColor" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="900" text-anchor="middle">
-          <text x="210" y="165" font-size="84">8 + 8</text>
-          <text x="590" y="165" font-size="84">32 jogos</text>
-        </g>
-        <g fill="currentColor" font-family="DM Mono, monospace" font-size="13" text-anchor="middle" letter-spacing="2">
-          <text x="210" y="195">EQUIPES MASC. + FEM.</text><text x="590" y="195">EM CINCO SÁBADOS</text>
-        </g>
-      </svg>
+    <div class="court-fig rv" aria-hidden="true">
+      <svg viewBox="0 0 800 300" fill="none"><g stroke="currentColor" stroke-width="3"><rect x="20" y="20" width="760" height="260"/><path d="M400 20v260"/><circle cx="400" cy="150" r="46"/><path d="M20 70a75 75 0 0175 75v10a75 75 0 01-75 75"/><path d="M780 70a75 75 0 00-75 75v10a75 75 0 0075 75"/></g>
+        <g fill="currentColor" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" text-anchor="middle"><text x="210" y="165" font-size="72">GRUPOS</text><text x="590" y="165" font-size="72">FINAL</text></g>
+        <circle cx="400" cy="150" r="7" fill="#FFD21F"/></svg>
     </div>
 
-    <div class="grid g3">
-      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>8 universidades</h3><p>Participantes da primeira edição.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-users"/></svg><h3>16 equipes</h3><p>8 masculinas e 8 femininas.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-pin"/></svg><h3>1 ginásio fixo</h3><p>Um ponto de encontro para as universidades.</p></div>
-    </div>
-
-    <div class="grid g2">
-      <div class="panel chart">
+    <div class="charts">
+      <div class="panel chart rv">
         <h3>Partidas por sábado</h3>
-        <p class="note">Distribuição sugerida, a confirmar com o calendário final. Soma: 32 partidas.</p>
-        <svg viewBox="0 0 520 280" role="img" aria-label="Gráfico de barras: 8 partidas nos sábados 1 a 3, 4 nos sábados 4 e 5">
-          <g stroke="var(--line)" stroke-width="1">
-            <line x1="40" x2="510" y1="240" y2="240"/><line x1="40" x2="510" y1="150" y2="150" stroke-dasharray="3 5"/><line x1="40" x2="510" y1="60" y2="60" stroke-dasharray="3 5"/>
-          </g>
+        <p class="note">Distribuição sugerida, a confirmar no calendário oficial. Total: 32 partidas.</p>
+        <svg viewBox="0 0 520 290" role="img" aria-label="Partidas por sábado: 8, 8, 8, 4 e 4">
+          <g stroke="#D5DAEA"><line x1="40" x2="510" y1="240" y2="240" stroke="#14162B"/><line x1="40" x2="510" y1="150" y2="150" stroke-dasharray="3 5"/><line x1="40" x2="510" y1="60" y2="60" stroke-dasharray="3 5"/></g>
           <text x="30" y="244" text-anchor="end">0</text><text x="30" y="154" text-anchor="end">4</text><text x="30" y="64" text-anchor="end">8</text>
-          <!-- escala: 8 jogos = 180px (60..240); 22.5px por jogo. masculino na base, feminino acima -->
-          <g>
-            <rect x="62"  y="150" width="56" height="90" fill="var(--accent)"/><rect x="62"  y="60" width="56" height="90" fill="var(--court)"/>
-            <rect x="152" y="150" width="56" height="90" fill="var(--accent)"/><rect x="152" y="60" width="56" height="90" fill="var(--court)"/>
-            <rect x="242" y="150" width="56" height="90" fill="var(--accent)"/><rect x="242" y="60" width="56" height="90" fill="var(--court)"/>
-            <rect x="332" y="195" width="56" height="45" fill="var(--accent)"/><rect x="332" y="150" width="56" height="45" fill="var(--court)"/>
-            <rect x="422" y="195" width="56" height="45" fill="var(--accent)"/><rect x="422" y="150" width="56" height="45" fill="var(--court)"/>
-          </g>
-          <g class="val" text-anchor="middle">
-            <text class="val" x="90" y="52">8</text><text class="val" x="180" y="52">8</text><text class="val" x="270" y="52">8</text><text class="val" x="360" y="142">4</text><text class="val" x="450" y="142">4</text>
-          </g>
-          <g text-anchor="middle"><text x="90" y="262">Sáb 1</text><text x="180" y="262">Sáb 2</text><text x="270" y="262">Sáb 3</text><text x="360" y="262">Sáb 4</text><text x="450" y="262">Sáb 5</text></g>
+          <rect class="bar-m" x="62" y="150" width="56" height="90" fill="#2340FF"/><rect class="bar-f" x="62" y="60" width="56" height="90" fill="#FF4D3D"/>
+          <rect class="bar-m" x="152" y="150" width="56" height="90" fill="#2340FF"/><rect class="bar-f" x="152" y="60" width="56" height="90" fill="#FF4D3D"/>
+          <rect class="bar-m" x="242" y="150" width="56" height="90" fill="#2340FF"/><rect class="bar-f" x="242" y="60" width="56" height="90" fill="#FF4D3D"/>
+          <rect class="bar-m" x="332" y="195" width="56" height="45" fill="#2340FF"/><rect class="bar-f" x="332" y="150" width="56" height="45" fill="#FF4D3D"/>
+          <rect class="bar-m" x="422" y="195" width="56" height="45" fill="#2340FF"/><rect class="bar-f" x="422" y="150" width="56" height="45" fill="#FF4D3D"/>
+          <g text-anchor="middle"><text class="v" x="90" y="50">8</text><text class="v" x="180" y="50">8</text><text class="v" x="270" y="50">8</text><text class="v" x="360" y="140">4</text><text class="v" x="450" y="140">4</text>
+          <text x="90" y="262">Sáb 1</text><text x="180" y="262">Sáb 2</text><text x="270" y="262">Sáb 3</text><text x="360" y="262">Sáb 4</text><text x="450" y="262">Sáb 5</text></g>
         </svg>
-        <div class="legend"><span><i style="background:var(--accent)"></i>Masculino</span><span><i style="background:var(--court)"></i>Feminino</span></div>
+        <div class="legend"><span><i style="background:#2340FF"></i>Masculino</span><span><i style="background:#FF4D3D"></i>Feminino</span></div>
       </div>
-
-      <div class="panel chart">
-        <h3>Por fase da competição</h3>
-        <p class="note">Os 32 jogos divididos entre fase de grupos, semifinais e finais.</p>
-        <svg viewBox="0 0 320 220" role="img" aria-label="Rosca: 24 jogos de fase de grupos, 4 de semifinais, 4 de finais">
-          <g transform="translate(110 110) rotate(-90)" fill="none" stroke-width="30">
-            <circle r="70" stroke="var(--accent)" stroke-dasharray="329.9 439.8"/>
-            <circle r="70" stroke="var(--court)" stroke-dasharray="55 439.8" stroke-dashoffset="-329.9"/>
-            <circle r="70" stroke="var(--muted)" stroke-dasharray="54.9 439.8" stroke-dashoffset="-384.9"/>
+      <div class="panel chart rv">
+        <h3>Partidas por fase</h3>
+        <p class="note">24 na fase de grupos, 4 nas semifinais e 4 nas finais.</p>
+        <svg viewBox="0 0 340 230" role="img" aria-label="Rosca: 24 jogos de grupos, 4 de semifinais, 4 de finais">
+          <g transform="translate(110 115) rotate(-90)" fill="none" stroke-width="34">
+            <circle r="76" stroke="#2340FF" stroke-dasharray="358.2 477.5"/>
+            <circle r="76" stroke="#FFD21F" stroke-dasharray="59.7 477.5" stroke-dashoffset="-358.2"/>
+            <circle r="76" stroke="#0A0B1E" stroke-dasharray="59.6 477.5" stroke-dashoffset="-417.9"/>
           </g>
-          <text x="110" y="108" text-anchor="middle" class="val" style="font-size:30px;font-family:var(--f-display);font-weight:900">32</text>
-          <text x="110" y="126" text-anchor="middle">partidas</text>
-          <g>
-            <rect x="215" y="62" width="10" height="10" fill="var(--accent)"/><text x="231" y="71">Grupos · 24</text>
-            <rect x="215" y="92" width="10" height="10" fill="var(--court)"/><text x="231" y="101">Semifinais · 4</text>
-            <rect x="215" y="122" width="10" height="10" fill="var(--muted)"/><text x="231" y="131">Finais · 4</text>
-          </g>
+          <text x="110" y="112" text-anchor="middle" class="v" style="font-size:42px">32</text><text x="110" y="132" text-anchor="middle">partidas</text>
+          <rect x="226" y="72" width="12" height="12" rx="3" fill="#2340FF"/><text x="246" y="83">Grupos · 24</text>
+          <rect x="226" y="104" width="12" height="12" rx="3" fill="#FFD21F"/><text x="246" y="115">Semifinais · 4</text>
+          <rect x="226" y="136" width="12" height="12" rx="3" fill="#0A0B1E"/><text x="246" y="147">Finais · 4</text>
         </svg>
       </div>
     </div>
 
-    <div class="panel">
-      <h3>Como a competição se desenrola</h3>
-      <p class="note">Estrutura sugerida para cada naipe: 2 grupos de 4 equipes, semifinais cruzadas e final. Ela se repete no masculino e no feminino.</p>
+    <div class="panel rv">
+      <h3>O caminho até a final</h3>
+      <p class="note">Estrutura sugerida para cada naipe: 2 grupos de 4 equipes, semifinais cruzadas e final. Vale para o masculino e para o feminino.</p>
       <div class="scroll-x">
-      <svg class="bracket" viewBox="0 0 760 300" role="img" aria-label="Chaveamento com dois grupos, semifinais e final">
-        <text class="lab" x="10" y="16">FASE DE GRUPOS</text><text class="lab" x="300" y="16">SEMIFINAIS</text><text class="lab" x="560" y="16">FINAL</text>
-        <rect class="box" x="10" y="40" width="180" height="90" rx="4"/><text x="28" y="72" style="font-weight:600">Grupo A</text><text x="28" y="94" fill="var(--muted)" style="fill:var(--muted)">4 equipes · 6 jogos</text><text x="28" y="114" style="fill:var(--muted)">1º e 2º avançam</text>
-        <rect class="box" x="10" y="170" width="180" height="90" rx="4"/><text x="28" y="202" style="font-weight:600">Grupo B</text><text x="28" y="224" style="fill:var(--muted)">4 equipes · 6 jogos</text><text x="28" y="244" style="fill:var(--muted)">1º e 2º avançam</text>
-        <path class="ln" d="M190 70h50v20h40M190 230h50v-20h40"/>
-        <rect class="box" x="280" y="62" width="180" height="56" rx="4"/><text x="296" y="86" style="font-weight:600">Semifinal 1</text><text x="296" y="106" style="fill:var(--muted)">1º A × 2º B</text>
-        <rect class="box" x="280" y="182" width="180" height="56" rx="4"/><text x="296" y="206" style="font-weight:600">Semifinal 2</text><text x="296" y="226" style="fill:var(--muted)">1º B × 2º A</text>
-        <path class="ln" d="M460 90h50v60h40M460 210h50v-60"/>
-        <rect x="550" y="115" width="200" height="70" rx="4" fill="var(--accent)"/>
-        <text x="568" y="143" style="fill:var(--accent-ink);font-weight:700;font-size:15px">GRANDE FINAL</text><text x="568" y="166" style="fill:var(--accent-ink)">Premiação e experiência</text>
-      </svg>
+        <svg class="bracket" viewBox="0 0 760 290" role="img" aria-label="Chaveamento: dois grupos, semifinais cruzadas e final">
+          <text class="cap" x="10" y="16">FASE DE GRUPOS</text><text class="cap" x="280" y="16">SEMIFINAIS</text><text class="cap" x="550" y="16">FINAL</text>
+          <rect class="bx" x="10" y="40" width="190" height="96" rx="10"/><text x="28" y="72">Grupo A</text><text class="sm" x="28" y="94">4 equipes · 6 jogos</text><text class="sm" x="28" y="114">1º e 2º avançam</text>
+          <rect class="bx" x="10" y="166" width="190" height="96" rx="10"/><text x="28" y="198">Grupo B</text><text class="sm" x="28" y="220">4 equipes · 6 jogos</text><text class="sm" x="28" y="240">1º e 2º avançam</text>
+          <path class="ln" d="M200 88h40v18h40M200 214h40v-18h40"/>
+          <rect class="bx" x="280" y="76" width="180" height="60" rx="10"/><text x="296" y="102">Semifinal 1</text><text class="sm" x="296" y="122">1º A × 2º B</text>
+          <rect class="bx" x="280" y="166" width="180" height="60" rx="10"/><text x="296" y="192">Semifinal 2</text><text class="sm" x="296" y="212">1º B × 2º A</text>
+          <path class="ln" d="M460 106h45v45h45M460 196h45v-45"/>
+          <rect x="550" y="116" width="200" height="70" rx="10" fill="#2340FF"/>
+          <text x="570" y="146" style="fill:#FFD21F;font-weight:800;font-size:16px">GRANDE FINAL</text><text x="570" y="168" style="fill:#fff;font-size:13px">Premiação e experiência</text>
+        </svg>
       </div>
     </div>
 
-    <div class="sat">
-      <div><span>Sábado 1</span><em>8</em><span>Fase de grupos · rodada 1</span></div>
-      <div><span>Sábado 2</span><em>8</em><span>Fase de grupos · rodada 2</span></div>
-      <div><span>Sábado 3</span><em>8</em><span>Fase de grupos · rodada 3</span></div>
-      <div><span>Sábado 4</span><em>4</em><span>Semifinais</span></div>
-      <div class="last"><span>Sábado 5</span><em>4</em><span>Finais, premiação e festa</span></div>
+    <div class="tickets">
+      <div class="ticket rv"><small>Sábado 1</small><b>8</b><hr><span>Fase de grupos, rodada 1</span></div>
+      <div class="ticket rv"><small>Sábado 2</small><b>8</b><hr><span>Fase de grupos, rodada 2</span></div>
+      <div class="ticket rv"><small>Sábado 3</small><b>8</b><hr><span>Fase de grupos, rodada 3</span></div>
+      <div class="ticket rv"><small>Sábado 4</small><b>4</b><hr><span>Semifinais</span></div>
+      <div class="ticket final rv"><small>Sábado 5</small><b>4</b><hr><span>Finais, premiação e uma experiência especial para o público</span></div>
     </div>
 
-    <div class="grid g2" style="margin-top:8px">
-      <div class="card"><svg class="ico"><use href="#i-play"/></svg><h3>Mais do que o jogo</h3><p>Cobertura nas redes sociais, entrevistas, melhores momentos e conteúdos com atletas e torcidas.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-cam"/></svg><h3>Quem está dentro e fora da quadra</h3><p>A preparação dos times, os bastidores, as provocações entre faculdades e as comemorações. O esporte fica mais interessante quando a gente conhece quem está jogando.</p></div>
+    <div class="content-pair">
+      <div class="prose rv"><h3>Mais do que o apito final</h3><p>Cobertura nas redes sociais, entrevistas, melhores momentos e conteúdos com atletas e torcidas. O projeto não termina quando o árbitro apita.</p></div>
+      <div class="prose rv"><h3>Dentro e fora da quadra</h3><p>Queremos contar as histórias de quem está dentro e fora da quadra. Mostrar a preparação dos times, os bastidores, as provocações entre as faculdades e as comemorações. O esporte fica ainda mais interessante quando a gente conhece quem está jogando.</p></div>
     </div>
   </div>
 </section>
 
-<!-- PATROCÍNIO -->
-<section class="band" id="patrocinio">
+<!-- 5 APOIAR -->
+<section class="band on-white" id="apoiar">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 5 · Parceria</span>
-      <h2>Por que uma empresa deveria apoiar esse projeto?</h2>
-      <p class="lead">Patrocinar a Copa Universitária RJ não é colocar um logotipo em uma placa. É ajudar a fazer o campeonato acontecer e participar da história de quem vai disputar a primeira final. Uma empresa investe porque acredita, mas também espera resultados. Queremos oferecer os dois.</p>
+    <div class="shirt rv"><span class="num">5</span><h2>Por que uma empresa deveria apoiar esse projeto?</h2></div>
+    <div class="prose rv">
+      <p class="lead">Nenhuma competição acontece sozinha. Por trás de cada partida existe uma quadra, arbitragem, estrutura, equipe de organização, divulgação e muita gente trabalhando.</p>
+      <p>Patrocinar a Copa Universitária RJ não é simplesmente colocar um logotipo em uma placa. É ajudar a fazer o campeonato acontecer. É participar da história daquele estudante que vai disputar sua primeira final, da torcida que vai passar a semana falando do clássico, da equipe que vai levantar o troféu e guardar aquela foto para sempre.</p>
+      <p class="serif" style="font-size:1.7rem;line-height:1.15">Uma empresa investe porque acredita em um projeto, mas também porque espera resultados. Queremos oferecer os dois.</p>
     </div>
-    <div class="grid g2">
-      <article class="card"><svg class="ico"><use href="#i-users"/></svg><h3>Uma marca mais próxima do público universitário</h3><p>A universidade é a fase do primeiro estágio, do primeiro emprego, da primeira conta bancária, de novos hábitos de consumo e de decisões que acompanham a pessoa por anos. Estar presente aqui é criar relacionamento com jovens consumidores e futuros profissionais. E existe uma diferença enorme entre aparecer em um anúncio e fazer parte de algo de que as pessoas realmente gostam.</p></article>
-      <article class="card"><svg class="ico"><use href="#i-play"/></svg><h3>Visibilidade que não acaba quando o jogo termina</h3><p>Um gol bonito vira vídeo. Uma defesa vira destaque. Uma comemoração vira story. Uma rivalidade vira assunto no grupo da faculdade. Vamos produzir conteúdo antes, durante e depois, com espaço para o patrocinador nas redes do campeonato, nos materiais oficiais e, mediante acordos, nos canais das atléticas.</p></article>
-      <article class="card"><svg class="ico"><use href="#i-link"/></svg><h3>Mais do que aparecer, participar</h3><p>Queremos que as empresas conversem com o público, em ações que façam sentido para o patrocinador e sejam interessantes para quem participa.</p></article>
-      <article class="card"><svg class="ico"><use href="#i-heart"/></svg><h3>Associar a marca a algo que faz bem</h3><p>Incentivar jovens a continuar praticando atividade física, trabalhando em equipe, convivendo com pessoas diferentes e encontrando no esporte um lugar de pertencimento. Muitos treinam depois de um dia inteiro de trabalho e estudo, sem estrutura profissional.</p></article>
+    <div class="reasons">
+      <div class="reason rv"><span class="n">A</span><h3>Uma marca mais próxima do público universitário</h3><p>A universidade é uma fase em que muita coisa acontece pela primeira vez: o primeiro estágio, o primeiro emprego, a primeira conta bancária, novas amizades, novos hábitos de consumo e decisões que podem acompanhar uma pessoa por muitos anos. Estar presente aqui é criar relacionamento com jovens consumidores e futuros profissionais. Existe uma diferença enorme entre aparecer em um anúncio e fazer parte de algo de que as pessoas realmente gostam.</p></div>
+      <div class="reason rv"><span class="n">B</span><h3>Visibilidade que não acaba quando o jogo termina</h3><p>Um gol bonito vira vídeo. Uma defesa vira destaque. Uma comemoração vira story. Uma rivalidade vira assunto no grupo da faculdade. Vamos produzir conteúdo antes, durante e depois da competição, com espaço para os patrocinadores nas redes do campeonato, nos materiais oficiais e, mediante acordos, nos canais das atléticas participantes. A marca acompanha toda a história.</p></div>
+      <div class="reason rv"><span class="n">C</span><h3>Mais do que aparecer, participar</h3><p>Queremos que as empresas tenham espaço para conversar com o público. Cada uma tem uma maneira diferente de se conectar com essa comunidade, e nosso objetivo é construir ações que façam sentido para o patrocinador e sejam interessantes para quem participa.</p></div>
+      <div class="reason rv"><span class="n">D</span><h3>Associar a marca a algo que faz bem</h3><p>Apoiar o esporte universitário é incentivar jovens a continuarem praticando atividade física, trabalhando em equipe, convivendo com pessoas diferentes e encontrando no esporte um espaço de pertencimento. É ajudar quem muitas vezes treina depois de um dia inteiro de trabalho e estudo, sem qualquer estrutura profissional.</p></div>
     </div>
-
-    <div class="head" style="margin-top:24px"><h3 style="font-size:2.2rem">Cada marca, uma forma de entrar em quadra</h3></div>
-    <div class="grid g4">
-      <div class="card"><svg class="ico"><use href="#i-gift"/></svg><h3>Bebidas</h3><p>Produtos para atletas e torcedores.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>Formaturas</h3><p>Ação especial com as turmas.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-bolt"/></svg><h3>Academias</h3><p>Conteúdos sobre preparação física.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-tag"/></svg><h3>Fintechs</h3><p>Benefícios exclusivos para estudantes.</p></div>
+    <div class="ideas">
+      <div class="idea rv"><svg viewBox="0 0 48 48"><path d="M16 6h16l-2 8c6 3 8 8 8 14 0 8-6 14-14 14S10 36 10 28c0-6 2-11 8-14z"/><path d="M14 24h20"/></svg><div><h3>Bebidas</h3><p>Produtos para atletas e torcedores.</p></div></div>
+      <div class="idea rv"><svg viewBox="0 0 48 48"><path d="M4 18L24 8l20 10-20 10z"/><path d="M12 23v10c0 3 6 7 12 7s12-4 12-7V23M44 18v12"/></svg><div><h3>Formaturas</h3><p>Uma ação especial com as turmas.</p></div></div>
+      <div class="idea rv"><svg viewBox="0 0 48 48"><path d="M4 18v12M10 12v24M38 12v24M44 18v12M10 24h28"/></svg><div><h3>Academias</h3><p>Conteúdos sobre preparação física.</p></div></div>
+      <div class="idea rv"><svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="4"/><path d="M6 20h36M12 30h10"/></svg><div><h3>Fintechs</h3><p>Benefícios exclusivos para estudantes.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- ENTREGAS -->
-<section class="band alt">
+<!-- 6 ENTREGAS -->
+<section class="band on-deep" id="entregas">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 6 · Entregas</span>
-      <h2>O que podemos entregar aos patrocinadores?</h2>
-      <p class="lead">Pacotes comerciais que combinam visibilidade, relacionamento e experiências. As entregas serão definidas em contrato, considerando a cota adquirida, os espaços disponíveis e as autorizações necessárias.</p>
+    <div class="shirt rv"><span class="num">6</span><h2>O que podemos entregar aos patrocinadores?</h2></div>
+    <p class="lead rv">Pacotes comerciais que combinam visibilidade, relacionamento e experiências. As entregas serão definidas em contrato, considerando a cota adquirida, os espaços disponíveis e as autorizações necessárias.</p>
+    <div class="lineup">
+      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>1</b></div><div><h3>Presença de marca</h3><p>Logotipo em materiais oficiais, placas de quadra, backdrop de entrevistas, premiações e comunicação do evento.</p></div></div>
+      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>2</b></div><div><h3>Conteúdo digital</h3><p>Inserções em publicações, vídeos, entrevistas, melhores momentos e campanhas especiais.</p></div></div>
+      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>3</b></div><div><h3>Ativações presenciais</h3><p>Espaços para experiências, distribuição de produtos, ações promocionais e contato com os torcedores.</p></div></div>
+      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>4</b></div><div><h3>Naming rights</h3><p>Possibilidade de associar o nome de uma empresa à competição ou a uma premiação.</p></div></div>
+      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>5</b></div><div><h3>Relacionamento com universidades</h3><p>Ações em parceria com atléticas e comunidades acadêmicas.</p></div></div>
+      <div class="player rv"><div class="sh"><svg viewBox="0 0 60 64"><path d="M18 2c2 6 6 9 12 9s10-3 12-9l16 8-8 16-8-3v36H18V23l-8 3L2 10z"/></svg><b>6</b></div><div><h3>Projetos personalizados</h3><p>Campanhas criadas de acordo com o público e os objetivos comerciais de cada patrocinador.</p></div></div>
     </div>
-    <div class="grid g3">
-      <div class="card"><svg class="ico"><use href="#i-tag"/></svg><h3>Presença de marca</h3><p>Logotipo em materiais oficiais, placas de quadra, backdrop de entrevistas, premiações e comunicação do evento.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-play"/></svg><h3>Conteúdo digital</h3><p>Inserções em publicações, vídeos, entrevistas, melhores momentos e campanhas especiais.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-gift"/></svg><h3>Ativações presenciais</h3><p>Espaços para experiências, distribuição de produtos, ações promocionais e contato com os torcedores.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-trophy"/></svg><h3>Naming rights</h3><p>Possibilidade de associar o nome de uma empresa à competição ou a uma premiação.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-uni"/></svg><h3>Relacionamento com universidades</h3><p>Ações em parceria com atléticas e comunidades acadêmicas.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-star"/></svg><h3>Projetos personalizados</h3><p>Campanhas criadas de acordo com o público e os objetivos comerciais de cada patrocinador.</p></div>
-    </div>
-
-    <div class="head" style="margin-top:24px">
-      <span class="eyebrow">Jornada da marca</span>
-      <h3 style="font-size:2.2rem">A marca acompanha toda a história da competição</h3>
-    </div>
-    <div class="flow">
-      <div class="step"><span class="when">Antes</span><svg class="ico"><use href="#i-mega"/></svg><h3>Expectativa</h3><ul><li>Apresentação dos times e atletas</li><li>Preparação e bastidores</li><li>Provocações entre faculdades</li></ul></div>
-      <div class="step"><span class="when">Durante</span><svg class="ico"><use href="#i-ball"/></svg><h3>Jogo</h3><ul><li>Placas de quadra e backdrop</li><li>Ativações para a torcida</li><li>Cobertura em tempo real nas redes</li></ul></div>
-      <div class="step"><span class="when">Depois</span><svg class="ico"><use href="#i-cam"/></svg><h3>Repercussão</h3><ul><li>Melhores momentos e entrevistas</li><li>Comemorações e premiação</li><li>Relatório de entregas</li></ul></div>
+    <p class="serif rv" style="font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.15;max-width:34ch">Queremos que cada empresa consiga enxergar não apenas onde sua marca vai aparecer, mas o que ela poderá conquistar com essa presença.</p>
+    <div class="halves rv">
+      <div class="half"><small>Primeiro tempo · Antes</small><h3>Expectativa</h3><ul><li>Apresentação dos times e atletas</li><li>Preparação e bastidores</li><li>Provocações entre as faculdades</li></ul></div>
+      <div class="half"><small>Segundo tempo · Durante</small><h3>Jogo</h3><ul><li>Placas de quadra e backdrop</li><li>Ativações para a torcida</li><li>Entrevistas e conteúdo em tempo real</li></ul></div>
+      <div class="half"><small>Prorrogação · Depois</small><h3>Repercussão</h3><ul><li>Melhores momentos</li><li>Comemorações e premiação</li><li>Relatório de entregas</li></ul></div>
     </div>
   </div>
 </section>
 
-<!-- PARA VOCÊ -->
-<section class="band" id="para-voce">
+<!-- INTERVALO -->
+<section class="band on-paper" id="intervalo">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 7 · Para quem é</span>
+    <div class="rv" style="display:grid;gap:16px">
+      <p class="kicker" style="color:var(--royal)">Intervalo</p>
       <h2>O que a Copa significa para cada um</h2>
     </div>
-    <div class="tabs" role="tablist" aria-label="Escolha seu perfil">
+    <div class="tabs rv" role="tablist" aria-label="Escolha seu perfil">
       <button class="tab" role="tab" id="t-inv" aria-controls="p-inv" aria-selected="true">Investidores</button>
       <button class="tab" role="tab" id="t-atl" aria-controls="p-atl" aria-selected="false">Atléticas</button>
       <button class="tab" role="tab" id="t-uni" aria-controls="p-uni" aria-selected="false">Universidades</button>
       <button class="tab" role="tab" id="t-mar" aria-controls="p-mar" aria-selected="false">Marcas</button>
     </div>
-
     <div class="tabpanel" role="tabpanel" id="p-inv" aria-labelledby="t-inv">
-      <div><h3>Um projeto novo, com plano claro e escala controlada</h3>
-        <p class="lead">Começamos com formato enxuto para validar o modelo antes de crescer.</p></div>
-      <ul class="checks">
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Primeira edição sustentável:</b> 8 universidades, 16 equipes, 32 partidas e um ginásio fixo.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Validação antes de promessa:</b> a edição inaugural mede público, formato e resultados.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Prestação de contas:</b> relatório com entregas, resultados de comunicação e participação do público.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Caminho de crescimento:</b> mais universidades, outras modalidades e eventos maiores.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Referências reais:</b> NCAA, BUCS e Hakone Ekiden mostram que o esporte universitário gera valor.</span></li>
-      </ul>
+      <div class="prose"><h3>Um projeto novo, de escala controlada</h3><p class="lead">Começamos pequeno para validar o formato, conhecer o público e medir resultados antes de crescer.</p></div>
+      <ol>
+        <li><span><b>Primeira edição sustentável</b>8 universidades, 16 equipes, 32 partidas e um ginásio fixo.</span></li>
+        <li><span><b>Sem promessas sem dados</b>A edição inaugural mede formato, público e resultados.</span></li>
+        <li><span><b>Prestação de contas</b>Relatório com entregas, resultados de comunicação e indicadores de participação.</span></li>
+        <li><span><b>Caminho de crescimento</b>Mais universidades, outras modalidades e eventos maiores.</span></li>
+        <li><span><b>Referências reais</b>NCAA, BUCS e Hakone Ekiden mostram o valor do esporte universitário.</span></li>
+      </ol>
     </div>
-
-    <div class="tabpanel" id="p-atl" role="tabpanel" aria-labelledby="t-atl" hidden>
-      <div><h3>Sua atlética no centro da competição</h3>
-        <p class="lead">A Copa existe porque a torcida, a camisa e a rivalidade já existem.</p></div>
-      <ul class="checks">
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Palco de verdade:</b> um ginásio fixo, cinco sábados de competição e clima de final.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Visibilidade para atletas e torcida:</b> entrevistas, melhores momentos e conteúdos com quem vive a atlética.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Masculino e feminino:</b> 8 equipes de cada, com a mesma importância na competição.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Parcerias com marcas:</b> ações com patrocinadores em parceria com as atléticas, mediante acordo.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Calendário para se preparar:</b> a tradição que queremos criar é a de se organizar meses antes.</span></li>
-      </ul>
+    <div class="tabpanel" role="tabpanel" id="p-atl" aria-labelledby="t-atl" hidden>
+      <div class="prose"><h3>Sua atlética no centro da competição</h3><p class="lead">A torcida, a camisa e a rivalidade já existem. A Copa dá a elas um palco.</p></div>
+      <ol>
+        <li><span><b>Palco de verdade</b>Ginásio fixo, cinco sábados de jogos e uma final com clima de final.</span></li>
+        <li><span><b>Visibilidade para atletas e torcida</b>Entrevistas, melhores momentos e conteúdos sobre quem vive a atlética.</span></li>
+        <li><span><b>Masculino e feminino</b>8 equipes de cada naipe disputando a mesma competição.</span></li>
+        <li><span><b>Parcerias com marcas</b>Ações com patrocinadores e presença nos canais das atléticas, mediante acordos.</span></li>
+        <li><span><b>Tempo para se preparar</b>A tradição que queremos criar é a de se organizar meses antes.</span></li>
+      </ol>
     </div>
-
-    <div class="tabpanel" id="p-uni" role="tabpanel" aria-labelledby="t-uni" hidden>
-      <div><h3>Orgulho de representar sua instituição</h3>
-        <p class="lead">Competições aproximam comunidades e fortalecem instituições, como mostram os exemplos internacionais.</p></div>
-      <ul class="checks">
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Identidade e pertencimento:</b> estudantes vestem a camisa e criam histórias que duram anos.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Presença no Rio:</b> sua universidade entre as 8 da primeira edição.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Esporte e vida acadêmica:</b> incentivo à atividade física, trabalho em equipe e convivência.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Comunidade acadêmica unida:</b> alunos que querem saber quando começa o campeonato.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Cobertura de conteúdo:</b> a história da sua universidade contada dentro e fora de quadra.</span></li>
-      </ul>
+    <div class="tabpanel" role="tabpanel" id="p-uni" aria-labelledby="t-uni" hidden>
+      <div class="prose"><h3>Orgulho de representar a instituição</h3><p class="lead">Competições movimentam pessoas, criam histórias, fortalecem instituições e aproximam comunidades.</p></div>
+      <ol>
+        <li><span><b>Identidade e pertencimento</b>Estudantes vestem a camisa e criam histórias que duram anos.</span></li>
+        <li><span><b>Presença no Rio</b>Sua universidade entre as 8 da primeira edição.</span></li>
+        <li><span><b>Esporte e vida acadêmica</b>Atividade física, trabalho em equipe e convivência entre pessoas diferentes.</span></li>
+        <li><span><b>Comunidade em torno do campeonato</b>Alunos que chegam à faculdade já querendo saber quando começa a Copa.</span></li>
+        <li><span><b>Sua história contada</b>Cobertura dentro e fora de quadra, com atletas e torcidas.</span></li>
+      </ol>
     </div>
-
-    <div class="tabpanel" id="p-mar" role="tabpanel" aria-labelledby="t-mar" hidden>
-      <div><h3>Fazer parte de algo de que o público gosta</h3>
-        <p class="lead">Chegue ao jovem na fase em que ele forma hábitos e relacionamentos de consumo.</p></div>
-      <ul class="checks">
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Público universitário:</b> primeiro estágio, primeiro emprego, primeira conta bancária.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Presença antes, durante e depois:</b> placas, backdrop, conteúdo digital e materiais oficiais.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Ativações sob medida:</b> bebidas, formaturas, academias, fintechs e outras ideias.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Naming rights e projetos personalizados:</b> conforme a cota e os objetivos comerciais.</span></li>
-        <li><svg class="ico"><use href="#i-check"/></svg><span><b>Relatório pós-evento:</b> entregas realizadas, resultados de comunicação e participação do público.</span></li>
-      </ul>
+    <div class="tabpanel" role="tabpanel" id="p-mar" aria-labelledby="t-mar" hidden>
+      <div class="prose"><h3>Fazer parte de algo de que as pessoas gostam</h3><p class="lead">Chegue ao jovem na fase em que ele forma relacionamentos e hábitos de consumo.</p></div>
+      <ol>
+        <li><span><b>Público universitário</b>Primeiro estágio, primeiro emprego, primeira conta bancária.</span></li>
+        <li><span><b>Antes, durante e depois</b>Placas, backdrop, materiais oficiais e conteúdo digital durante toda a competição.</span></li>
+        <li><span><b>Ativações sob medida</b>Bebidas, formaturas, academias, fintechs e outras ideias.</span></li>
+        <li><span><b>Naming rights e projetos personalizados</b>Conforme a cota adquirida e os objetivos comerciais.</span></li>
+        <li><span><b>Relatório pós-evento</b>Entregas realizadas, resultados de comunicação e participação do público.</span></li>
+      </ol>
     </div>
   </div>
 </section>
 
-<!-- TRANSPARÊNCIA -->
-<section class="band alt">
+<!-- 7 PEQUENO -->
+<section class="band on-white" id="pequeno">
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 8 · Transparência</span>
-      <h2>Estamos começando pequeno. E fazemos questão de dizer isso.</h2>
-      <p class="lead">Não vamos prometer ginásios lotados ou milhões de visualizações sem dados para sustentar. Estamos construindo um projeto do zero.</p>
+    <div class="shirt rv"><span class="num">7</span><h2>Estamos começando pequeno. E fazemos questão de dizer isso.</h2></div>
+    <div class="vs rv" aria-label="Zero promessas sem dados contra três coisas que vamos validar">
+      <div class="side"><div class="big" style="color:var(--coral)">0</div><small>Promessas sem dados</small></div>
+      <span class="x">×</span>
+      <div class="side"><div class="big" style="color:var(--royal)">3</div><small>Coisas que vamos validar</small></div>
     </div>
-    <div class="grid g3">
-      <div class="card"><svg class="ico"><use href="#i-seed"/></svg><h3>Validar o formato</h3><p>A primeira edição testa a estrutura da competição.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-users"/></svg><h3>Conhecer o público</h3><p>Entender quem vai, quem acompanha e o que engaja.</p></div>
-      <div class="card"><svg class="ico"><use href="#i-chart"/></svg><h3>Medir resultados</h3><p>Mostrar que há espaço para uma competição organizada e contínua.</p></div>
+    <div class="prose rv">
+      <p class="lead">Não vamos prometer ginásios lotados ou milhões de visualizações sem ter dados para sustentar essas promessas. Estamos construindo um projeto do zero.</p>
+      <p>Nossa primeira edição será uma oportunidade de <b>validar o formato</b>, <b>conhecer melhor o público</b>, <b>medir os resultados</b> e mostrar que existe espaço para uma competição universitária com organização e continuidade.</p>
     </div>
-    <div class="panel">
-      <h3>O relatório que cada patrocinador recebe</h3>
-      <div class="grid g3">
-        <div style="display:flex;gap:12px"><svg class="ico" style="color:var(--accent)"><use href="#i-doc"/></svg><span>Entregas realizadas, conforme o contrato</span></div>
-        <div style="display:flex;gap:12px"><svg class="ico" style="color:var(--accent)"><use href="#i-play"/></svg><span>Resultados de comunicação disponíveis</span></div>
-        <div style="display:flex;gap:12px"><svg class="ico" style="color:var(--accent)"><use href="#i-users"/></svg><span>Indicadores de participação do público</span></div>
-      </div>
-      <p class="note">Queremos que as empresas tenham motivos concretos para continuar conosco nas próximas edições.</p>
+    <div class="report rv">
+      <div><b>Entregas</b><span>O que foi realizado, conforme o contrato.</span></div>
+      <div><b>Comunicação</b><span>Os resultados de comunicação disponíveis.</span></div>
+      <div><b>Público</b><span>Os indicadores de participação.</span></div>
+    </div>
+    <p class="serif rv" style="font-size:1.7rem;line-height:1.15">Os patrocinadores recebem um relatório com tudo isso. Queremos que tenham motivos concretos para continuar conosco nas próximas edições.</p>
+  </div>
+</section>
+
+<!-- 8 SONHO -->
+<section class="band on-deep" id="visao">
+  <div class="wrap">
+    <div class="shirt rv"><span class="num">8</span><h2>Nosso sonho vai além de uma primeira edição.</h2></div>
+    <div class="dream rv">
+      <p>Os alunos chegando à faculdade e já querendo saber quando começa o campeonato.</p>
+      <p>As atléticas se preparando meses antes.</p>
+      <p>As torcidas organizando suas festas.</p>
+      <p>As finais reunindo estudantes de diferentes instituições.</p>
+      <p>As marcas criando campanhas e ações especiais para aquele período do ano.</p>
+    </div>
+    <div class="road rv">
+      <div class="stop"><b>Com a primeira bola rolando</b><p>Oito universidades. Dezesseis equipes.</p></div>
+      <div class="stop"><b>No calendário</b><p>Uma competição que faz parte do ano das universidades do Rio.</p></div>
+      <div class="stop"><b>Maior</b><p>Talvez mais modalidades, mais universidades e eventos ainda maiores.</p></div>
+      <div class="stop"><b>Tradição</b><p>O tipo de tradição que queremos começar a construir.</p></div>
     </div>
   </div>
 </section>
 
-<!-- VISÃO -->
-<section class="band" id="visao">
+<!-- 9 CONVITE -->
+<section class="band on-royal final" id="convite">
+  <svg class="ball" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#fff"/><path d="M50 28l19 14-7 22H38l-7-22z" fill="#0A0B1E"/><path d="M50 28V6M69 42l22-7M62 64l14 19M38 64L24 83M31 42L9 35" stroke="#0A0B1E" stroke-width="3"/></svg>
   <div class="wrap">
-    <div class="head">
-      <span class="eyebrow">Capítulo 9 · Visão</span>
-      <h2>Nosso sonho vai além de uma primeira edição.</h2>
-      <p class="lead">Imagine uma competição que faça parte do calendário das universidades do Rio. Alunos chegando à faculdade e já querendo saber quando começa o campeonato.</p>
+    <div class="shirt rv"><span class="num">9</span><p class="tag" style="color:var(--sun)">Um convite</p></div>
+    <h2 class="huge rv">Faça parte <span>dessa história.</span></h2>
+    <div class="prose rv">
+      <p class="lead">A gente ainda não sabe quem vai ganhar a primeira Copa Universitária RJ. Não sabe qual jogador vai marcar o gol mais bonito. Qual goleiro vai decidir uma semifinal. Ou qual torcida vai fazer mais barulho.</p>
+      <p>Mas sabemos o que queremos construir. Um campeonato que os atletas queiram disputar. Que os estudantes queiram acompanhar. Que as universidades tenham orgulho de participar. E que as empresas tenham orgulho de apoiar.</p>
     </div>
-    <div class="road">
-      <div><b>1ª edição</b><p>8 universidades, 16 equipes, a primeira bola rolando e as primeiras marcas a bordo.</p></div>
-      <div><b>Consolidação</b><p>Atléticas se preparando meses antes e torcidas organizando suas festas.</p></div>
-      <div><b>Crescimento</b><p>Mais universidades, outras modalidades e eventos ainda maiores.</p></div>
-      <div><b>Tradição</b><p>Finais reunindo estudantes de várias instituições e marcas criando campanhas para o período.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- CONVITE -->
-<section class="band final" id="convite">
-  <div class="wrap">
-    <span class="eyebrow">Capítulo 10 · Convite</span>
-    <h2 style="max-width:14ch">Um convite para fazer parte dessa história.</h2>
-    <div class="prose" style="color:#E4EDF9">
-      <p>A gente ainda não sabe quem vai ganhar a primeira Copa Universitária RJ. Não sabe qual jogador vai marcar o gol mais bonito, qual goleiro vai decidir uma semifinal ou qual torcida vai fazer mais barulho.</p>
-      <p>Mas sabemos o que queremos construir: um campeonato que os atletas queiram disputar, que os estudantes queiram acompanhar, que as universidades tenham orgulho de participar e que as empresas tenham orgulho de apoiar.</p>
-    </div>
-    <p class="pull" style="max-width:20ch">Sua marca pode ser só mais uma. Ou pode ser uma das que <span>ajudaram essa competição a nascer.</span></p>
-    <p class="lead">A gente quer construir algo que dure. E quer fazer isso com quem acredita que o esporte universitário merece mais.</p>
-    <div class="cta-row">
-      <a class="btn" href="#para-voce">Rever a proposta <svg class="ico" viewBox="0 0 24 24" style="width:1.2em;height:1.2em"><use href="#i-arrow"/></svg></a>
-      <a class="btn ghost" href="#topo">Voltar ao topo</a>
-    </div>
+    <p class="pull rv" style="max-width:20ch;font-size:clamp(1.9rem,4.6vw,3.8rem)">Sua marca pode ser apenas mais uma. Ou pode ser uma das que <em style="color:var(--sun)">ajudaram essa competição a nascer.</em></p>
+    <p class="lead rv">A gente quer construir algo que dure. E quer fazer isso com quem acredita que o esporte universitário merece mais.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#intervalo">Rever a proposta</a><a class="btn line" href="#topo">Voltar ao início</a></div>
   </div>
 </section>
 </main>
-
-<footer>
-  <div><span><b>COPA UNIVERSITÁRIA RJ</b></span><span>A paixão já existe. Falta dar a ela o espaço que merece.</span></div>
-</footer>
+<footer><div><b>Copa Universitária RJ</b><span class="serif" style="font-size:1.3rem">A paixão já existe. Falta dar a ela o espaço que merece.</span></div></footer>
 
 <script>
 (function(){
-  /* torcida: silhuetas geradas */
-  var c=document.getElementById('crowd'),ns='http://www.w3.org/2000/svg',s=7;
-  function rnd(){s=(s*16807)%2147483647;return s/2147483647}
-  var out='';
-  for(var row=0;row<3;row++){
-    for(var x=(row%2)*12;x<1000;x+=26){
-      var h=70+row*26+rnd()*14, y=h; 
-      out+='<circle cx="'+(x+rnd()*6)+'" cy="'+(y-26)+'" r="8" fill="currentColor" opacity="'+(0.45+row*0.25)+'"/>'+
-           '<path d="M'+(x-11)+' '+(y+90)+'v-48a11 11 0 0122 0v48z" fill="currentColor" opacity="'+(0.45+row*0.25)+'"/>';
-      if(rnd()>.9) out+='<path d="M'+(x+9)+' '+(y+10)+'l-2-48" stroke="var(--accent)" stroke-width="2.500"/><path d="M'+(x+7)+' '+(y-38)+'l22 6-22 8z" fill="var(--accent)"/>';
-    }
+  var NS='http://www.w3.org/2000/svg',seed=11;
+  function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+  function mk(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e}
+  function put(id,nodes){var g=document.getElementById(id);if(!g)return;nodes.forEach(function(n){g.appendChild(n)})}
+  var n=[],r,x,y,c;
+
+  /* torcida de fundo do herói */
+  for(r=0;r<3;r++)for(x=-10+r*16;x<830;x+=46){
+    y=430+r*34+rnd()*8;c=r===0?'#0c1470':r===1?'#0a1156':'#080d3f';
+    n.push(mk('circle',{cx:x,cy:y-30,r:13,fill:c}));
+    n.push(mk('path',{d:'M'+(x-19)+' '+(y+60)+'v-40a19 19 0 0138 0v40z',fill:c}));
+    if(rnd()>.8)n.push(mk('path',{d:'M'+(x+14)+' '+(y+4)+'l12-50',stroke:'#FFD21F','stroke-width':6,'stroke-linecap':'round'}));
   }
-  c.innerHTML=out;
-  /* pontos BUCS */
-  var d=document.getElementById('dots'),o='';
-  for(var i=0;i<150;i++)o+='<i></i>';
-  d.innerHTML=o;
+  put('heroCrowd',n);
+
+  /* torcida com bandeiras */
+  n=[];
+  for(r=0;r<4;r++)for(x=-10+(r%2)*28;x<430;x+=56){
+    y=250+r*62+rnd()*8;c=['#2340FF','#0A0B1E','#FF4D3D','#121C8F'][(r+Math.floor(x/56)+4)%4];
+    n.push(mk('circle',{cx:x,cy:y-34,r:18,fill:c}));
+    n.push(mk('path',{d:'M'+(x-28)+' '+(y+90)+'v-52a28 28 0 0156 0v52z',fill:c}));
+    if(rnd()>.55){var a=rnd()>.5?1:-1;n.push(mk('path',{d:'M'+(x+a*20)+' '+(y+4)+'l'+(a*10)+' -80',stroke:c,'stroke-width':9,'stroke-linecap':'round'}));}
+    if(rnd()>.88)n.push(mk('path',{d:'M'+(x+6)+' '+(y-70)+'v-70l56 20-56 24',fill:'#FF4D3D'}));
+  }
+  put('torcida',n);
+
+  /* confete */
+  n=[];var cs=['#FFD21F','#FF4D3D','#fff','#0A0B1E'];
+  for(var i=0;i<46;i++){var cx=rnd()*400,cy=rnd()*300;n.push(mk('rect',{x:cx,y:cy,width:8+rnd()*8,height:14+rnd()*10,fill:cs[i%4],transform:'rotate('+Math.round(rnd()*180)+' '+cx+' '+cy+')'}));}
+  put('conf',n);
+
+  /* arquibancada NCAA */
+  n=[];
+  for(r=0;r<2;r++)for(x=0;x<620;x+=40){y=360+r*38;n.push(mk('circle',{cx:x,cy:y,r:11,fill:'#B3221A'}));n.push(mk('path',{d:'M'+(x-16)+' '+(y+60)+'v-34a16 16 0 0132 0v34z',fill:'#B3221A'}));}
+  put('nc',n);
+
+  /* 150 pontos: universidades da BUCS */
+  n=[];
+  for(var j=0;j<150;j++){n.push(mk('circle',{cx:24+(j%25)*23.5,cy:34+Math.floor(j/25)*64+((j%25)%2)*8+rnd()*6,r:5,fill:'#FFD21F',opacity:.9}));}
+  put('bucsdots',n);
+
+  /* corredores da Hakone Ekiden com tasuki */
+  n=[];
+  [[110,0],[200,18],[300,6],[420,22],[520,10]].forEach(function(p){
+    var px=p[0],py=346+p[1];
+    n.push(mk('circle',{cx:px,cy:py-18,r:9}));
+    n.push(mk('path',{d:'M'+(px-8)+' '+(py-6)+'l18 0 6 24-14 2-10-14z'}));
+    n.push(mk('path',{d:'M'+(px-4)+' '+(py+18)+'l-10 22M'+(px+8)+' '+(py+20)+'l16 12',stroke:'#0A0B1E','stroke-width':6,'stroke-linecap':'round',fill:'none'}));
+    n.push(mk('path',{d:'M'+(px-8)+' '+(py-6)+'l22 24',stroke:'#FF4D3D','stroke-width':4,fill:'none'}));
+  });
+  put('runners',n);
+
+  /* placar ilustrativo */
+  var clock=document.getElementById('clock'),sa=document.getElementById('sa'),sb=document.getElementById('sb'),t=2400;
+  if(clock&&!matchMedia('(prefers-reduced-motion: reduce)').matches){setInterval(function(){
+    t=t<=0?2400:t-7;
+    var m=Math.floor(t/60),s=t%60;clock.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    var el=2400-t;sa.textContent=Math.min(Math.floor(el/700),9)+(el<700?0:0);sb.textContent=Math.floor(el/950);
+  },180)}
+
+  /* contadores: o valor final já está no HTML */
+  if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting)return;io.unobserve(e.target);
+      var el=e.target,end=+el.dataset.count,st=performance.now(),dur=1400,loc=end>=1000;
+      (function f(now){var p=Math.min(1,(now-st)/dur),v=Math.round(end*(1-Math.pow(1-p,3)));el.textContent=loc?v.toLocaleString('pt-BR'):v;if(p<1)requestAnimationFrame(f)})(st);
+    })},{threshold:.6});
+    [].forEach.call(document.querySelectorAll('[data-count]'),function(el){io.observe(el)});
+  }
+
   /* abas */
   var tabs=[].slice.call(document.querySelectorAll('.tab'));
-  function pick(t){tabs.forEach(function(b){var on=b===t;b.setAttribute('aria-selected',on);document.getElementById(b.getAttribute('aria-controls')).hidden=!on})}
-  tabs.forEach(function(t,i){t.addEventListener('click',function(){pick(t)});
-    t.addEventListener('keydown',function(e){var n=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(n){var x=tabs[(i+n+tabs.length)%tabs.length];x.focus();pick(x)}})});
-  /* progresso */
-  var p=document.getElementById('progress');
-  function prog(){var h=document.documentElement.scrollHeight-innerHeight;p.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%'}
+  function pick(tb){tabs.forEach(function(b){var on=b===tb;b.setAttribute('aria-selected',on);document.getElementById(b.getAttribute('aria-controls')).hidden=!on})}
+  tabs.forEach(function(tb,i){tb.addEventListener('click',function(){pick(tb)});
+    tb.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){var nx=tabs[(i+d+tabs.length)%tabs.length];nx.focus();pick(nx)}})});
+
+  /* progresso de leitura */
+  var bar=document.getElementById('bar');
+  function prog(){var h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%'}
   addEventListener('scroll',prog,{passive:true});prog();
-  /* tema */
-  var r=document.documentElement;
-  try{var sv=localStorage.getItem('copa-theme');if(sv)r.setAttribute('data-theme',sv)}catch(e){}
-  document.getElementById('theme').addEventListener('click',function(){
-    var cur=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
-    var nx=cur==='dark'?'light':'dark';r.setAttribute('data-theme',nx);
-    try{localStorage.setItem('copa-theme',nx)}catch(e){}
-  });
 })();
 </script>
