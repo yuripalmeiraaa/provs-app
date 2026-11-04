@@ -275,6 +275,32 @@ footer{background:var(--ink);color:#fff;padding:32px max(16px,env(safe-area-inse
 footer div{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transform:uppercase}
 
+
+/* galeria + modo de edição */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:clamp(16px,2.4vw,28px)}
+.gal figure{margin:0;min-width:0}
+.gal .ph{aspect-ratio:4/3;border:8px solid #fff;box-shadow:0 14px 28px rgba(10,11,30,.16)}
+.gal figcaption{font:700 .8rem var(--f-display);font-stretch:110%;text-transform:uppercase;letter-spacing:.14em;margin-top:10px;min-height:1.4em}
+.gal-empty{border:3px dashed var(--royal);border-radius:20px;padding:36px;text-align:center;color:var(--muted-paper)}
+.ph .usr{z-index:1}
+.ph-ui{position:absolute;left:0;right:0;bottom:0;z-index:5;display:none;gap:6px;flex-wrap:wrap;justify-content:center;padding:10px;background:linear-gradient(transparent,rgba(10,11,30,.85))}
+body.editing .ph-ui{display:flex}
+.ph-ui button,.editbar button{font:800 .74rem/1 var(--f-display);font-stretch:110%;text-transform:uppercase;letter-spacing:.06em;padding:10px 14px;border-radius:99px;border:0;background:var(--sun);color:var(--ink);cursor:pointer}
+.ph-ui button.sec,.editbar button.sec{background:#fff}
+.ph-ui button.dng{background:var(--coral);color:#fff}
+body.editing [data-ed]{outline:2px dashed transparent;outline-offset:4px;cursor:text;transition:outline-color .15s}
+body.editing [data-ed]:hover{outline-color:var(--sun)}
+body.editing [data-ed]:focus{outline:2px solid var(--sun);background:rgba(255,210,31,.14)}
+.editfab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;display:none}
+.editfab.on{display:block}
+.editfab button{font:800 .85rem/1 var(--f-display);font-stretch:112%;text-transform:uppercase;letter-spacing:.06em;padding:15px 20px;border-radius:99px;border:0;background:var(--sun);color:var(--ink);cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.editbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--ink);color:#fff;display:none;align-items:center;gap:10px;flex-wrap:wrap;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:3px solid var(--sun)}
+body.editing .editbar{display:flex}
+body.editing .editfab{display:none}
+.editbar .hint{flex:1 1 260px;font-size:.85rem;line-height:1.35;color:#c9d0ff}
+.editbar .st{font:800 .72rem var(--f-display);font-stretch:110%;letter-spacing:.14em;text-transform:uppercase;color:var(--sun);min-width:90px}
+body.editing{padding-bottom:90px}
+
 /* movimento ao rolar (só onde há suporte; senão tudo já aparece) */
 @supports (animation-timeline:view()){
   .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
@@ -344,7 +370,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
           <g transform="translate(490 600)"><circle r="46" fill="#fff"/><path d="M0-20l19 14-7 22H-12l-7-22z" fill="#0A0B1E"/><path d="M0-20V-44M19-6l24-8M12 16l16 22M-12 16l-16 22M-19-6l-24-8" stroke="#0A0B1E" stroke-width="4"/></g>
           <path d="M370 700c30-30 60-52 90-70" stroke="#FFD21F" stroke-width="6" stroke-dasharray="2 16" stroke-linecap="round" fill="none"/>
         </svg>
-        <img src="img/hero.jpg" alt="Jogo universitário de futsal no Rio de Janeiro" onerror="this.remove()">
+        <span hidden data-slot="hero" data-alt="Jogo universitário de futsal no Rio de Janeiro"></span>
       </figure>
       <div class="badge-wrap" aria-hidden="true">
         <svg class="badge" viewBox="0 0 200 200"><defs><path id="circ" d="M100 100m-76 0a76 76 0 1 1 152 0a76 76 0 1 1-152 0"/></defs><circle cx="100" cy="100" r="98"/><text><textPath href="#circ">PRIMEIRA EDIÇÃO · 2 NAIPES · 1 GINÁSIO ·</textPath></text></svg>
@@ -390,7 +416,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
           <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#FFD21F"/><g id="torcida"></g></svg>
-          <img src="img/torcida.jpg" alt="Torcida de uma atlética no ginásio" onerror="this.remove()">
+          <span hidden data-slot="torcida" data-alt="Torcida de uma atlética no ginásio"></span>
         </div><figcaption>A torcida</figcaption></figure>
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
@@ -400,7 +426,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
             <g fill="none" stroke="#FF4D3D" stroke-width="5"><circle cx="270" cy="150" r="13"/><circle cx="130" cy="260" r="13"/><circle cx="260" cy="340" r="13"/></g>
             <path d="M118 182c40 40 70 20 90 70M280 224c-10 40-40 60-90 90" stroke="#0A0B1E" stroke-width="4" stroke-dasharray="3 10" fill="none" stroke-linecap="round"/>
           </svg>
-          <img src="img/quadra.jpg" alt="Equipe se preparando antes do jogo" onerror="this.remove()">
+          <span hidden data-slot="quadra" data-alt="Equipe se preparando antes do jogo"></span>
         </div><figcaption>A preparação</figcaption></figure>
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
@@ -409,7 +435,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
             <g fill="#FFD21F"><path d="M120 120h160c0 80-30 130-80 150-50-20-80-70-80-150z"/><path d="M120 140h-50c0 50 20 80 60 90M280 140h50c0 50-20 80-60 90" fill="none" stroke="#FFD21F" stroke-width="14"/><rect x="185" y="270" width="30" height="60"/><rect x="140" y="330" width="120" height="26" rx="6"/><rect x="120" y="356" width="160" height="40" rx="6" fill="#0A0B1E"/></g>
             <text x="200" y="384" text-anchor="middle" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#FFD21F">CAMPEÃ</text>
           </svg>
-          <img src="img/comemoracao.jpg" alt="Equipe comemorando o título" onerror="this.remove()">
+          <span hidden data-slot="comemoracao" data-alt="Equipe comemorando o título"></span>
         </div><figcaption>A taça</figcaption></figure>
     </div>
     <p class="lead rv"><b>Quem vive o esporte universitário sabe: não é só um jogo.</b> E é justamente por acreditar nisso que queremos criar a Copa Universitária RJ.</p>
@@ -432,7 +458,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
             <path d="M80 400c60-210 150-250 232-196" stroke="#0A0B1E" stroke-width="5" stroke-dasharray="2 14" stroke-linecap="round" fill="none"/>
             <g transform="translate(300 190)"><circle r="30" fill="#FFB340" stroke="#0A0B1E" stroke-width="4"/><path d="M-30 0h60M0-30v60M-21-21c14 14 14 28 0 42M21-21c-14 14-14 28 0 42" stroke="#0A0B1E" stroke-width="3" fill="none"/></g>
           </svg>
-          <img src="img/ncaa.jpg" alt="Jogo de basquete universitário da NCAA" onerror="this.remove()">
+          <span hidden data-slot="ncaa" data-alt="Jogo de basquete universitário da NCAA"></span>
         </div>
         <div class="body">
           <span class="where">Estados Unidos · NCAA</span>
@@ -457,7 +483,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
               </g>
             </g>
           </svg>
-          <img src="img/bucs.jpg" alt="Competição universitária da BUCS no Reino Unido" onerror="this.remove()">
+          <span hidden data-slot="bucs" data-alt="Competição universitária da BUCS no Reino Unido"></span>
         </div>
         <div class="body">
           <span class="where">Reino Unido · BUCS</span>
@@ -478,7 +504,7 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
             <path d="M-20 372c200-30 360-30 640 0" stroke="#FFD21F" stroke-width="5" stroke-dasharray="22 16" fill="none"/>
             <g id="runners" fill="#0A0B1E"></g>
           </svg>
-          <img src="img/hakone.jpg" alt="Corredores da Hakone Ekiden no Japão" onerror="this.remove()">
+          <span hidden data-slot="hakone" data-alt="Corredores da Hakone Ekiden no Japão"></span>
         </div>
         <div class="body">
           <span class="where">Japão · Hakone Ekiden</span>
@@ -525,6 +551,15 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
     <path d="M300 100c140-30 440 20 700 60" stroke="#FFD21F" stroke-width="3" stroke-dasharray="3 9" fill="none"/>
     <path d="M0 280v-40h1440v40z" fill="#0A0B1E"/>
   </svg>
+</section>
+
+<!-- GALERIA (preenchida pelo modo de edição) -->
+<section class="band on-paper" id="galeria" hidden>
+  <div class="wrap">
+    <div class="shirt rv"><span class="num">★</span><h2 data-keep>Dentro e fora da quadra</h2></div>
+    <div class="gal" id="galGrid"></div>
+    <div id="galAdd" hidden><button class="btn" type="button" id="galBtn">Adicionar fotos</button></div>
+  </div>
 </section>
 
 <!-- 4 PROJETO -->
@@ -774,6 +809,13 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
   </div>
 </section>
 </main>
+<div class="editfab" id="editFab"><button type="button" id="editOn">Editar página</button></div>
+<div class="editbar" id="editBar" role="region" aria-label="Modo de edição">
+  <span class="st" id="edStatus">Pronto</span>
+  <span class="hint">Clique em qualquer texto para editar. Nas fotos, use os botões que aparecem sobre elas. Tudo é salvo sozinho.</span>
+  <button class="sec" type="button" id="edReset">Restaurar textos originais</button>
+  <button type="button" id="editOff">Concluir edição</button>
+</div>
 <footer><div><b>Copa Universitária RJ</b><span class="serif" style="font-size:1.3rem">A paixão já existe. Falta dar a ela o espaço que merece.</span></div></footer>
 
 <script>
@@ -858,5 +900,145 @@ footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transfor
   var bar=document.getElementById('bar');
   function prog(){var h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(h>0?Math.min(100,scrollY/h*100):0)+'%'}
   addEventListener('scroll',prog,{passive:true});prog();
+})();
+</script>
+
+<script>
+/* Edição de textos e fotos: guardada no banco da página, só quem edita enxerga os controles */
+(async function(){
+  if(!window.claude||!claude.use)return;
+  var db=null,user=null,assets=null;
+  try{db=await claude.use('db')}catch(e){}
+  if(!db)return;
+  try{user=await claude.use('user')}catch(e){}
+  var canEdit=false;try{canEdit=user?await user.canEdit():false}catch(e){}
+  if(canEdit){try{assets=await claude.use('assets')}catch(e){}}
+
+  var ref=db.doc('site/content'),state={texts:{},photos:{},gallery:[]},editing=false;
+  var ALLOW={B:1,STRONG:1,EM:1,I:1,MARK:1,BR:1},CLS={rj:1};
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+  function walk(n){var o='';for(var c=n.firstChild;c;c=c.nextSibling){
+    if(c.nodeType===3)o+=esc(c.nodeValue);
+    else if(c.nodeType===1){var tg=c.tagName;
+      if(tg==='BR'){o+='<br>';continue}
+      if(ALLOW[tg]){var cl=(c.getAttribute('class')||'').split(' ').filter(function(x){return CLS[x]}).join(' ');
+        o+='<'+tg.toLowerCase()+(cl?' class="'+cl+'"':'')+'>'+walk(c)+'</'+tg.toLowerCase()+'>'}
+      else o+=walk(c)}}
+    return o}
+  function clean(h){var t=document.createElement('template');t.innerHTML=h;return walk(t.content).replace(/(<br>)+$/,'').replace(/ /g,' ')}
+  function hash(t){var h=5381;t=t.trim();for(var i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return String(h)}
+
+  /* textos editáveis */
+  var SEL='.kicker,.tagline,h1 .ln>span,h2,h3,p,figcaption,.moments b,.moments span,.numbers span,.ticket small,.ticket span,.report b,.report span,.stop b,.where,.board small,.vs small,.half small,.tabpanel li>span';
+  var els=[].filter.call(document.querySelectorAll(SEL),function(e){
+    return !e.closest('.ticker,svg,.tabs,.editbar,.gal')&&!e.querySelector(SEL)&&e.textContent.trim()});
+  els.forEach(function(e,i){e.setAttribute('data-ed','e'+i);e._def=e.innerHTML;e._h=hash(e.textContent)});
+
+  function applyTexts(){els.forEach(function(e){
+    if(document.activeElement===e)return;
+    var v=state.texts[e.getAttribute('data-ed')];
+    var want=(v&&v.h===e._h&&typeof v.t==='string')?clean(v.t):e._def;
+    if(e.innerHTML!==want)e.innerHTML=want})}
+
+  /* fotos nos espaços fixos */
+  var POS=['50% 50%','50% 15%','50% 88%'],POSN=['Centro','Topo','Base'];
+  var slots=[].map.call(document.querySelectorAll('[data-slot]'),function(sp){return{key:sp.dataset.slot,alt:sp.dataset.alt||'',ph:sp.parentElement}});
+  function setImg(ph,item,alt){
+    var im=ph.querySelector('img.usr');
+    if(!item||!item.id){if(im)im.remove();return}
+    if(!im){im=document.createElement('img');im.className='usr';im.loading='lazy';ph.appendChild(im)}
+    var src='/_blob/'+encodeURIComponent(item.id);if(im.getAttribute('src')!==src)im.src=src;
+    im.alt=alt||'';im.style.objectPosition=POS.indexOf(item.pos)>=0?item.pos:POS[0];
+    im.onerror=function(){im.remove()}}
+  function applyPhotos(){slots.forEach(function(sl){setImg(sl.ph,state.photos[sl.key],sl.alt);refreshUI(sl.ph)})}
+
+  /* galeria */
+  var sec=document.getElementById('galeria'),grid=document.getElementById('galGrid'),addBox=document.getElementById('galAdd');
+  function renderGallery(){
+    if(editing&&grid.contains(document.activeElement))return;
+    grid.innerHTML='';
+    state.gallery.forEach(function(g,i){
+      var f=document.createElement('figure'),ph=document.createElement('div');ph.className='ph';
+      var cap=document.createElement('figcaption');cap.textContent=g.cap||'';
+      f.appendChild(ph);f.appendChild(cap);grid.appendChild(f);
+      setImg(ph,g,g.cap||'Foto da Copa Universitária RJ');
+      cap.contentEditable=editing?'true':'false';cap.dataset.i=i;
+      if(editing){cap.setAttribute('data-placeholder','Legenda');ph.appendChild(galUI(i,ph));
+        cap.addEventListener('input',function(){state.gallery[i].cap=cap.textContent;save()});
+        cap.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();cap.blur()}})}});
+    if(editing&&!state.gallery.length){var em=document.createElement('div');em.className='gal-empty';em.textContent='Ainda não há fotos aqui. Use o botão abaixo para adicionar fotos dos jogos.';grid.appendChild(em)}
+    sec.hidden=!(state.gallery.length||editing);addBox.hidden=!(editing&&assets)}
+
+  /* salvar */
+  var st=document.getElementById('edStatus'),timer=null,saving=false,dirty=false;
+  function status(t){if(st)st.textContent=t}
+  function save(){dirty=true;status('Salvando…');clearTimeout(timer);timer=setTimeout(flush,700)}
+  async function flush(){
+    if(saving||!dirty)return;saving=true;dirty=false;
+    try{await ref.set(JSON.parse(JSON.stringify(state)));status(dirty?'Salvando…':'Salvo')}
+    catch(e){status('Não salvou');dirty=false}
+    saving=false;if(dirty)flush()}
+
+  /* envio de foto */
+  async function shrink(file){
+    try{var bmp=await createImageBitmap(file),m=1800,k=Math.min(1,m/Math.max(bmp.width,bmp.height));
+      var c=document.createElement('canvas');c.width=Math.round(bmp.width*k);c.height=Math.round(bmp.height*k);
+      c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+      return await new Promise(function(r){c.toBlob(function(b){r(b||file)},'image/jpeg',.86)})}
+    catch(e){return file}}
+  async function upload(file){
+    status('Enviando foto…');
+    try{var up=await assets.upload(await shrink(file));return up.id}
+    catch(e){var m={too_large:'Foto grande demais',unsupported_type:'Formato não aceito',quota_or_state:'Sem espaço para fotos',rate_limited:'Muitos envios, aguarde'};
+      status(m[e&&e.code]||'Falha no envio');return null}}
+  function pick(multi,cb){var i=document.createElement('input');i.type='file';i.accept='image/*';i.multiple=!!multi;
+    i.onchange=function(){if(i.files&&i.files.length)cb([].slice.call(i.files))};i.click()}
+
+  /* controles sobre as fotos */
+  function btn(t,cls,fn){var b=document.createElement('button');b.type='button';b.textContent=t;if(cls)b.className=cls;b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();fn()});return b}
+  function slotUI(ph,key){var ui=ph.querySelector(':scope>.ph-ui');if(!ui){ui=document.createElement('div');ui.className='ph-ui';ph.appendChild(ui)}
+    var it=state.photos[key];ui.innerHTML='';
+    ui.appendChild(btn(it?'Trocar foto':'Adicionar foto','',function(){pick(false,async function(f){var id=await upload(f[0]);if(!id)return;state.photos[key]={id:id,pos:it&&it.pos||POS[0]};applyPhotos();save()})}));
+    if(it){ui.appendChild(btn('Posição: '+POSN[Math.max(0,POS.indexOf(it.pos))],'sec',function(){it.pos=POS[(POS.indexOf(it.pos)+1)%POS.length];applyPhotos();save()}));
+      ui.appendChild(btn('Remover','dng',function(){delete state.photos[key];applyPhotos();save()}))}
+    return ui}
+  function refreshUI(ph){if(!editing||!assets)return;var sl=slots.filter(function(x){return x.ph===ph})[0];if(sl)slotUI(ph,sl.key)}
+  function galUI(i,ph){var g=state.gallery[i],ui=document.createElement('div');ui.className='ph-ui';
+    ui.appendChild(btn('Posição: '+POSN[Math.max(0,POS.indexOf(g.pos))],'sec',function(){g.pos=POS[(POS.indexOf(g.pos)+1)%POS.length];renderGallery();save()}));
+    ui.appendChild(btn('Remover','dng',function(){state.gallery.splice(i,1);renderGallery();save()}));return ui}
+  document.getElementById('galBtn').addEventListener('click',function(){pick(true,async function(files){
+    for(var i=0;i<files.length;i++){var id=await upload(files[i]);if(id){state.gallery.push({id:id,cap:'',pos:POS[0]});renderGallery()}}
+    save()})});
+
+  /* ligar e desligar edição */
+  function onInput(e){var el=e.currentTarget,k=el.getAttribute('data-ed'),h=clean(el.innerHTML);
+    if(h===clean(el._def))delete state.texts[k];else state.texts[k]={t:h,h:el._h};save()}
+  function onKey(e){if(e.key==='Enter'){e.preventDefault();document.execCommand('insertLineBreak')}}
+  function onPaste(e){e.preventDefault();document.execCommand('insertText',false,(e.clipboardData||window.clipboardData).getData('text/plain'))}
+  function setEditing(on){editing=on;document.body.classList.toggle('editing',on);
+    els.forEach(function(e){e.contentEditable=on?'true':'false';e.spellcheck=on;
+      var f=on?'addEventListener':'removeEventListener';e[f]('input',onInput);e[f]('keydown',onKey);e[f]('paste',onPaste)});
+    if(!on){[].forEach.call(document.querySelectorAll('.ph-ui'),function(u){u.remove()});flush()}
+    else slots.forEach(function(sl){if(assets)slotUI(sl.ph,sl.key)});
+    renderGallery();status('Pronto')}
+  document.addEventListener('click',function(e){if(editing&&e.target.closest('a[href]')&&!e.target.closest('.editbar'))e.preventDefault()},true);
+
+  var fab=document.getElementById('editFab');
+  if(canEdit){fab.classList.add('on');
+    document.getElementById('editOn').addEventListener('click',function(){setEditing(true)});
+    document.getElementById('editOff').addEventListener('click',function(){setEditing(false)});
+    var rb=document.getElementById('edReset'),rt=null;
+    rb.addEventListener('click',function(){
+      if(!rt){rb.textContent='Confirmar: apagar edições de texto';rt=setTimeout(function(){rb.textContent='Restaurar textos originais';rt=null},4000);return}
+      clearTimeout(rt);rt=null;rb.textContent='Restaurar textos originais';state.texts={};
+      els.forEach(function(e){e.innerHTML=e._def});save()})}
+
+  /* ler do banco: vale para todo mundo que abre a página */
+  var seen=false;
+  ref.onSnapshot(function(snap){
+    if(snap.metadata.hasPendingWrites&&seen)return;seen=true;
+    var d=snap.exists?snap.data():{};
+    state={texts:(d&&d.texts)||{},photos:(d&&d.photos)||{},gallery:Array.isArray(d&&d.gallery)?d.gallery.slice():[]};
+    applyTexts();applyPhotos();renderGallery()},function(){});
 })();
 </script>
