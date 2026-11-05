@@ -118,11 +118,11 @@ const visibleAt=(L,t)=>L.visible&&t>=L.start-1e-6&&t<=L.end+1e-6;
 function layerDefaults(type){
   const L={id:'',name:'',type,start:0,end:5,visible:true,locked:false,noFill:false,depth:1,blend:'source-over',maskDir:'none',
     props:{x:0,y:0,w:300,h:300,rot:0,scale:1,opacity:1,radius:0,fill:'#7c5cff',stroke:'#ffffff',strokeW:0,reveal:1,mask:1,zoom:1,panX:0,panY:0},
-    tracks:{},tok:{fill:'',stroke:'',grad:''},grad:{mode:'none',color:'#000000',angle:90},
+    tracks:{},tok:{fill:'',stroke:'',grad:'',tone:''},grad:{mode:'none',color:'#000000',angle:90},
     fx:{in:{type:'none',dur:.7,delay:0,ease:'outExpo',dist:60},out:{type:'none',dur:.5,ease:'inCubic',dist:60}}};
   if(type==='text')Object.assign(L,{text:'Seu texto',font:FONTS[0][0],fontRole:'',size:96,weight:800,align:'center',ls:0,lh:1.18,maxW:0,split:'none',stagger:.06});
   if(type==='image')Object.assign(L,{asset:null,fit:'cover',jitter:0});
-  if(type==='icon')Object.assign(L,{icon:'dollar',lw:2.2});
+  if(type==='icon')Object.assign(L,{icon:'money',istyle:'duotone',toneColor:'#ffc857'});
   return L;
 }
 function deepFill(t,d){
@@ -194,58 +194,21 @@ function safeInsets(w=project.w,h=project.h){
 const safeBox=(w=project.w,h=project.h)=>{const s=safeInsets(w,h);return{x0:s.l,y0:s.t,x1:w-s.r,y1:h-s.b};};
 
 
-/* ============================ biblioteca de ícones (traço vetorial, 24×24) ============================ */
-const CIRC='M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z';
-const GLYPHS={
- bill:{label:'Dinheiro (nota)',paths:['M2 6h20v12H2z','M12 9a3 3 0 1 0 0 6 3 3 0 1 0 0-6z','M5.5 9.5h.01','M18.5 14.5h.01']},
- coins:{label:'Moedas',paths:['M4 6.5C4 5.1 7.6 4 12 4s8 1.1 8 2.5S16.4 9 12 9 4 7.9 4 6.5z','M4 6.5v5C4 12.9 7.6 14 12 14s8-1.1 8-2.5v-5','M4 11.5v5C4 17.9 7.6 19 12 19s8-1.1 8-2.5v-5']},
- dollar:{label:'Cifrão',paths:['M12 2v20','M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6']},
- moneybag:{label:'Saco de dinheiro',paths:['M9 2.5h6l-1.6 3.5h-2.8z','M10.6 6C6 8 4 11.5 4 15.5 4 19 6.5 21.5 12 21.5s8-2.5 8-6c0-4-2-7.5-6.6-9.5','M12 10.5v8','M14.3 12h-2.3a1.6 1.6 0 0 0 0 3.2h.2a1.6 1.6 0 0 1 0 3.3H9.7']},
- wallet:{label:'Carteira',paths:['M3 6a2 2 0 0 1 2-2h13v4','M3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3','M21 9h-4a3 3 0 0 0 0 6h4z','M17 12h.01']},
- card:{label:'Cartão',paths:['M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z','M2 10h20','M6 15h4']},
- factory:{label:'Fábrica',paths:['M3 21V11l6 4v-4l6 4V6h6v15z','M17 10h2','M17 14h2','M6 18h2','M11 18h2','M18 2.5c0 1.2 1.5 1.2 1.5 2.5']},
- bottle:{label:'Garrafa',paths:['M10 2h4','M10.5 2v4.5c0 1-2 2-2 4V20a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V10.5c0-2-2-3-2-4V2','M8.5 14h7']},
- cup:{label:'Copo',paths:['M6 3h12l-1.4 17.2a1 1 0 0 1-1 .8H8.4a1 1 0 0 1-1-.8z','M6.5 9h11']},
- cocktail:{label:'Drinque',paths:['M3 4h18l-9 10z','M12 14v7','M8 21h8','M16 4l2.5-2.5']},
- cart:{label:'Carrinho',paths:['M9 21a1 1 0 1 0 0 .01','M20 21a1 1 0 1 0 0 .01','M1 2h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 7H6']},
- gift:{label:'Presente',paths:['M20 12v10H4V12','M2 7h20v5H2z','M12 22V7','M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z','M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z']},
- clock:{label:'Relógio',paths:[CIRC,'M12 7v5l3.5 2']},
- lightbulb:{label:'Ideia',paths:['M9 18h6','M10 21.5h4','M12 2.5a6.5 6.5 0 0 0-3.6 11.9c.7.5 1.1 1.3 1.1 2.1v1.5h5v-1.5c0-.8.4-1.6 1.1-2.1A6.5 6.5 0 0 0 12 2.5z']},
- trendup:{label:'Gráfico subindo',paths:['M23 6l-9.5 9.5-5-5L1 18','M17 6h6v6']},
- trenddown:{label:'Gráfico caindo',paths:['M23 18l-9.5-9.5-5 5L1 6','M17 18h6v-6']},
- target:{label:'Alvo',paths:[CIRC,'M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z','M12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2z']},
- alert:{label:'Alerta',paths:['M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z','M12 9v4','M12 17h.01']},
- question:{label:'Dúvida',paths:[CIRC,'M9.1 9.2a3 3 0 0 1 5.8 1c0 2-3 2.6-3 4.3','M12 17.5h.01']},
- x:{label:'X (errado)',paths:['M18 6L6 18','M6 6l12 12']},
- xcircle:{label:'X em círculo',paths:[CIRC,'M15 9l-6 6','M9 9l6 6']},
- check:{label:'Certo',paths:['M20 6L9 17l-5-5']},
- checkcircle:{label:'Certo em círculo',paths:[CIRC,'M8 12.5l3 3 5-6']},
- lock:{label:'Cadeado',paths:['M5 11h14v10H5z','M8 11V7a4 4 0 0 1 8 0v4','M12 15v2']},
- user:{label:'Pessoa',paths:['M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z','M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2']},
- heart:{label:'Coração',paths:['M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z']},
- star:{label:'Estrela',paths:['M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8l-6.2 3.3L7 14.2 2 9.3l6.9-1z']},
- zap:{label:'Raio',paths:['M13 2L3 14h9l-1 8 10-12h-9z']},
- mail:{label:'E-mail',paths:['M3 5h18v14H3z','M21 6l-9 7-9-7']},
- file:{label:'Documento',paths:['M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z','M14 2v6h6','M8 13h8','M8 17h8']},
- sad:{label:'Triste',paths:[CIRC,'M16 16s-1.5-2-4-2-4 2-4 2','M9 9.5h.01','M15 9.5h.01']},
- smile:{label:'Feliz',paths:[CIRC,'M8 14s1.5 2 4 2 4-2 4-2','M9 9.5h.01','M15 9.5h.01']},
- arrowr:{label:'Seta',paths:['M4 12h16','M13 5l7 7-7 7']}
-};
-const glyphCache={};
-function glyphLen(d){try{const s=document.createElementNS('http://www.w3.org/2000/svg','path');s.setAttribute('d',d);return Math.max(.05,s.getTotalLength());}catch(e){return 60;}}
-function glyphPaths(name){
-  if(!glyphCache[name]){const g=GLYPHS[name]||GLYPHS.x;glyphCache[name]=g.paths.map(d=>({p:new Path2D(d),len:glyphLen(d)}));}
-  return glyphCache[name];
-}
-/* ícone: traço vetorial na cor da camada; "reveal" (0→1) desenha o traço */
+/* ============================ ícones (dados em glyphs.js) ============================ */
+const ICON_ALIAS={bill:'money',dollar:'currency-dollar',moneybag:'hand-coins',card:'credit-card',bottle:'beer-bottle',cup:'pint-glass',cocktail:'martini',cart:'shopping-cart',trendup:'chart-line-up',trenddown:'chart-line-down',alert:'warning',xcircle:'x-circle',checkcircle:'check-circle',zap:'lightning',mail:'envelope',file:'file-text',sad:'smiley-sad',smile:'smiley',arrowr:'arrow-right'};
+const glyphOf=n=>GLYPHS[n]||GLYPHS[ICON_ALIAS[n]]||GLYPHS.x;
+/* estilos: duotone (2 cores), solid (preenchido), line (linha grossa). "reveal" 0→1 revela com uma varredura circular */
 function drawIcon(c,L,t,w,h){
-  const p=clamp(evalProp(L,'reveal',t),0,1);
-  c.save();c.scale(w/24,h/24);c.translate(-12,-12);
-  c.strokeStyle=fillOf(L,t);c.lineWidth=L.lw||2.2;c.lineCap='round';c.lineJoin='round';
-  for(const sp of glyphPaths(L.icon)){
-    if(p>=.999)c.setLineDash([]);else{const d=sp.len+1;c.setLineDash([d,d]);c.lineDashOffset=d*(1-p);}
-    c.stroke(sp.p);
-  }
+  const g=glyphOf(L.icon),st=L.istyle||'duotone',p=clamp(evalProp(L,'reveal',t),0,1),main=fillOf(L,t);
+  if(p<=.001)return;
+  const P=k=>(g._p||(g._p={}))[k]||(g._p[k]=new Path2D(g[k]));
+  c.save();c.scale(w/256,h/256);c.translate(-128,-128);
+  if(p<.999){c.beginPath();c.moveTo(128,128);c.arc(128,128,260,-Math.PI/2,-Math.PI/2+Math.PI*2*p);c.closePath();c.clip();}
+  if(st==='duotone'){
+    const tk=L.tok.tone,tone=tk==='custom'?L.toneColor:tk&&project.brand[tk]?project.brand[tk]:main;
+    c.save();c.fillStyle=tone;if(!tk)c.globalAlpha*=.3;c.fill(P('t'));c.restore();
+    c.fillStyle=main;c.fill(P('m'));
+  }else{c.fillStyle=main;c.fill(P(st==='solid'?'f':'b'));}
   c.restore();
 }
 

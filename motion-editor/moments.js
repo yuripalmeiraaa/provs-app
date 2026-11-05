@@ -4,19 +4,24 @@ Object.assign(ICONS,{
  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'
 });
 const IC=(id,name,icon,x,y,size,o={})=>{
-  const L=makeLayer('icon',{id,name,icon,lw:o.lw||2.2,start:o.start||0,end:o.end||project.duration,depth:o.depth??1,tok:{fill:o.fill||'text'},
+  const L=makeLayer('icon',{id,name,icon,istyle:o.istyle||'duotone',start:o.start||0,end:o.end||project.duration,depth:o.depth??1,tok:{fill:o.fill||'text',tone:o.tone||''},
     props:{x,y,w:size,h:size,opacity:o.opacity??1},fx:{in:o.inn||{},out:o.out||{}}});
   project.layers.push(L);return L;
 };
-const svgOf=name=>`<svg viewBox="0 0 24 24">${(GLYPHS[name]||GLYPHS.x).paths.map(d=>`<path d="${d}"/>`).join('')}</svg>`;
+const svgOf=name=>{const g=glyphOf(name);return `<svg viewBox="0 0 256 256"><path d="${g.t}" opacity=".3"/><path d="${g.m}"/></svg>`;};
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
 /* seletor de ícones */
 let pickCb=null;
-function openIconPicker(cb){
-  pickCb=cb;
-  $('#iconGrid').innerHTML=Object.entries(GLYPHS).map(([k,g])=>`<button class="icon-cell" data-ic="${k}" title="${g.label}">${svgOf(k)}<span>${g.label}</span></button>`).join('');
-  $('#iconModal').hidden=false;
+function renderIconGrid(q=''){
+  const f=norm(q.trim());
+  $('#iconGrid').innerHTML=Object.entries(GLYPHS).filter(([k,g])=>!f||norm(g.label).includes(f)||k.includes(f)).map(([k,g])=>`<button class="icon-cell" data-ic="${k}" title="${g.label}">${svgOf(k)}<span>${g.label}</span></button>`).join('')||'<p class="hint">Nenhum ícone encontrado.</p>';
 }
+function openIconPicker(cb){
+  pickCb=cb;$('#iconSearch').value='';renderIconGrid();
+  $('#iconModal').hidden=false;$('#iconSearch').focus();
+}
+$('#iconSearch').addEventListener('input',e=>renderIconGrid(e.target.value));
 $('#iconGrid').addEventListener('click',e=>{const b=e.target.closest('[data-ic]');if(!b)return;$('#iconModal').hidden=true;const f=pickCb;pickCb=null;f&&f(b.dataset.ic);});
 $('#iconClose').onclick=()=>{$('#iconModal').hidden=true;pickCb=null;};
 
@@ -41,7 +46,7 @@ function momentLayout(n,W,H){
 }
 /* sequência: cada item aparece num instante (ícone se desenha → X/✓ carimba → legenda) */
 function insertSeq(o){
-  const n=o.items.length,gap=o.gap,t0=o.start,mk=o.mark!=='none',markDelay=(o.effect==='draw'?.95:.6);
+  const n=o.items.length,gap=o.gap,t0=o.start,mk=o.mark!=='none',markDelay=(o.effect==='draw'?.85:.6);
   const end=r3(t0+(n-1)*gap+markDelay+(mk?.5:0)+(o.hold??1.8));
   ensureDuration(end);
   const Lay=momentLayout(n,project.w,project.h),pre=o.idp||('m'+uid()),out={type:'fade',dur:.35,ease:'inQuad'};
@@ -49,11 +54,11 @@ function insertSeq(o){
     const g=Lay[i],st=r3(t0+i*gap),nm=`${o.name||'Momento'} ${i+1}`;
     if(o.card)SH(`${pre}_${i}_card`,`${nm} · Cartão`,'rect',g.cx,g.cy,g.cardW,g.cardH,{fill:'secondary',radius:36,opacity:.95,start:st,end,inn:{type:'pop',dur:.45,ease:'outBack'},out});
     const inn=o.effect==='pop'?{type:'pop',dur:.45,ease:'outBack'}:o.effect==='rise'?{type:'rise',dur:.5,ease:'outExpo',dist:g.size*.35}:{type:'fade',dur:.12};
-    const ic=IC(`${pre}_${i}_icon`,`${nm} · Ícone`,it.icon,g.ix,g.iy,g.size,{fill:'text',start:st,end,inn,out});
-    if(o.effect==='draw')K(ic,'reveal',[[st+.05,0,'inOutCubic'],[st+.9,1]]);
+    const ic=IC(`${pre}_${i}_icon`,`${nm} · Ícone`,it.icon,g.ix,g.iy,g.size,{fill:'text',tone:'accent',start:st,end,inn,out});
+    if(o.effect==='draw')K(ic,'reveal',[[st+.05,0,'inOutCubic'],[st+.8,1]]);
     if(mk){
       const bad=o.mark==='x',d=st+markDelay;
-      const m=IC(`${pre}_${i}_mark`,`${nm} · ${bad?'X':'Certo'}`,bad?'x':'check',g.ix,g.iy,g.size*.92,{fill:bad?'danger':'success',lw:3.4,start:st,end,inn:{type:'pop',dur:.36,delay:markDelay,ease:'outBack'},out});
+      const m=IC(`${pre}_${i}_mark`,`${nm} · ${bad?'X':'Certo'}`,bad?'x':'check',g.ix,g.iy,g.size*1.02,{fill:bad?'danger':'success',istyle:'line',start:st,end,inn:{type:'pop',dur:.36,delay:markDelay,ease:'outBack'},out});
       if(bad)K(m,'rot',[[d,0,'inOutSine'],[d+.1,-7,'inOutSine'],[d+.2,6,'inOutSine'],[d+.3,-3,'inOutSine'],[d+.4,0,'linear']]);
     }
     if(it.text)TX(`${pre}_${i}_txt`,`${nm} · Texto`,it.text,{x:g.tx,y:g.ty,ax:g.tax,ay:g.tay,size:g.tsize,weight:800,align:g.talign,maxW:g.tmaxW,lh:1.1,role:'head',fill:'text',start:st,end,inn:{type:'rise',dur:.5,delay:.25,ease:'outExpo',dist:24},out});
@@ -80,8 +85,8 @@ function insertRain(o){
 }
 
 /* formulário "Momentos prontos" */
-let mom={kind:'seq',mark:'x',effect:'draw',gap:1.4,card:true,fill:'success',count:10,mode:'rain',icon:'bill',dur:2,start:0,
-  items:[{icon:'bill',text:'Sem dinheiro'},{icon:'factory',text:'Sem fábrica'},{icon:'cocktail',text:'Não sei fazer a bebida'}]};
+let mom={kind:'seq',mark:'x',effect:'draw',gap:1.4,card:true,fill:'success',count:10,mode:'rain',icon:'money',dur:2,start:0,
+  items:[{icon:'money',text:'Sem dinheiro'},{icon:'factory',text:'Sem fábrica'},{icon:'martini',text:'Não sei fazer a bebida'}]};
 const FILL_OPTS=[['text','Texto'],['accent','Destaque'],['primary','Principal'],['success','Acerto (verde)'],['danger','Erro (vermelho)']];
 function openMoment(){mom.start=r2(time);renderMoment();$('#momentModal').hidden=false;}
 function renderMoment(){
@@ -92,7 +97,7 @@ function renderMoment(){
   ${seq?`${mom.items.map((it,i)=>`<div class="mitem"><button class="icon-cell" data-pick="${i}" title="Trocar ícone">${svgOf(it.icon)}</button><input type="text" data-mt="${i}" value="${esc(it.text)}" placeholder="Legenda (opcional)"><button class="kfb" data-mdel="${i}" title="Remover">✕</button></div>`).join('')}
     ${mom.items.length<4?'<button class="btn" data-madd style="margin:4px 0 8px">+ Adicionar item</button>':''}
     <div class="mrow"><span>Marca sobre o ícone</span><select data-m="mark">${optHTML([['x','X vermelho (errado)'],['check','✓ verde (certo)'],['none','Nenhuma']],mom.mark)}</select></div>
-    <div class="mrow"><span>Entrada do ícone</span><select data-m="effect">${optHTML([['draw','Desenhar o traço'],['pop','Pop'],['rise','Subir']],mom.effect)}</select></div>
+    <div class="mrow"><span>Entrada do ícone</span><select data-m="effect">${optHTML([['draw','Varredura (revela girando)'],['pop','Pop'],['rise','Subir']],mom.effect)}</select></div>
     <div class="mrow"><span>Intervalo entre itens (s)</span><input type="number" data-m="gap" step="0.1" min="0.4" value="${mom.gap}"></div>
     <label class="chk"><input type="checkbox" data-m="card" ${mom.card?'checked':''}> Cartão atrás (melhora a leitura sobre o vídeo)</label>`
   :`<div class="mrow"><span>Ícone</span><button class="icon-cell" data-pick="r" style="flex-direction:row;justify-content:flex-start;gap:8px">${svgOf(mom.icon)}<span>${GLYPHS[mom.icon].label}</span></button></div>
@@ -115,7 +120,7 @@ mbox.addEventListener('input',e=>{
 mbox.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   if(b.dataset.mclose!==undefined){$('#momentModal').hidden=true;return;}
-  if(b.dataset.madd!==undefined){mom.items.push({icon:'dollar',text:''});renderMoment();return;}
+  if(b.dataset.madd!==undefined){mom.items.push({icon:'currency-dollar',text:''});renderMoment();return;}
   if(b.dataset.mdel!==undefined){if(mom.items.length>1){mom.items.splice(+b.dataset.mdel,1);renderMoment();}return;}
   if(b.dataset.pick!==undefined){const p=b.dataset.pick;$('#momentModal').hidden=true;openIconPicker(k=>{if(p==='r')mom.icon=k;else mom.items[+p].icon=k;$('#momentModal').hidden=false;renderMoment();});return;}
   if(b.dataset.mgo!==undefined){
@@ -132,7 +137,7 @@ mbox.addEventListener('click',e=>{
 function buildProblems(W,H,o){
   project.name='Problemas: dinheiro, fábrica, bebida — EXEMPLO';project.duration=7.5;
   setBrand({bg:'#101114',secondary:'#1f232b',primary:'#ffc857',accent:'#ffc857',text:'#f4f1ea',muted:'#a29e93'});
-  insertSeq({items:[{icon:'bill',text:'Sem dinheiro'},{icon:'factory',text:'Sem fábrica'},{icon:'cocktail',text:'Não sei fazer a bebida'}],mark:'x',effect:'draw',gap:1.6,card:true,start:.6,idp:'prob',name:'Problema'});
+  insertSeq({items:[{icon:'money',text:'Sem dinheiro'},{icon:'factory',text:'Sem fábrica'},{icon:'martini',text:'Não sei fazer a bebida'}],mark:'x',effect:'draw',gap:1.6,card:true,start:.6,idp:'prob',name:'Problema'});
 }
 COMPOSITIONS.problems=[buildProblems,'1920x1080'];
 $('#tplSel').insertAdjacentHTML('afterbegin','');

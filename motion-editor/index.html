@@ -131,7 +131,8 @@ details[open]>summary{color:var(--text)}
 .icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-height:58vh;overflow:auto;margin-top:12px}
 .icon-cell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--text)}
 .icon-cell:hover{border-color:var(--accent)}
-.icon-cell svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-cell svg{width:38px;height:38px;fill:currentColor}
+#iconSearch{width:100%;margin-top:12px}
 .mrow{display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:center;margin:6px 0}
 .mitem{display:grid;grid-template-columns:52px 1fr 30px;gap:8px;align-items:center;margin:6px 0}
 .mitem .icon-cell{padding:6px}
@@ -217,13 +218,14 @@ details[open]>summary{color:var(--text)}
 <div id="libModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Biblioteca de projetos</b>
   <div class="btnrow" style="justify-content:center;margin:12px 0 0"><button class="btn" id="libSave">Salvar projeto atual</button><button class="btn" id="libSaveAs">Salvar como cópia</button></div>
   <div id="libList"></div><button class="btn" id="libClose">Fechar</button></div></div>
-<div id="iconModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Escolha um ícone</b><div id="iconGrid" class="icon-grid"></div><button class="btn" id="iconClose" style="margin-top:12px">Cancelar</button></div></div>
+<div id="iconModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Escolha um ícone</b><input type="text" id="iconSearch" placeholder="Buscar: dinheiro, fábrica, bebida, certo…"><div id="iconGrid" class="icon-grid"></div><button class="btn" id="iconClose" style="margin-top:12px">Cancelar</button></div></div>
 <div id="momentModal" class="mbox-wrap" hidden><div class="mbox wide" id="momentBox" style="text-align:left"></div></div>
 <div id="toast"></div>
 <input type="file" id="fileImg" accept="image/*" hidden>
 <input type="file" id="fileFont" accept=".ttf,.otf,.woff,.woff2" hidden>
 <input type="file" id="fileJson" accept=".json,application/json" hidden>
 
+<script src="glyphs.js"></script>
 <script src="engine.js"></script>
 <script src="ui.js"></script>
 <script src="compositions.js"></script>

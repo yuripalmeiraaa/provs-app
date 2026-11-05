@@ -143,7 +143,9 @@ function buildInspector(){
       +numRow('Ângulo °','grad.angle',L.grad.angle,{step:5})+colRow('2ª cor','grad.color',L.grad.color)+selRow('2ª cor da marca','tok.grad',BRAND_TOKENS,L.tok.grad);
   }
   if(L.type==='rect'||isImg)A+=propRow('radius',L);
-  if(isIcon)A+=numRow('Espessura da linha','lw',L.lw,{step:.1,min:.5,max:6})+propRow('reveal',L,'Traçar (desenhar)')+`<button class="btn" data-act="pickicon" style="width:100%;justify-content:center;margin-top:6px">Trocar ícone…</button>`;
+  if(isIcon)A+=selRow('Estilo','istyle',[['duotone','Bicolor'],['solid','Sólido'],['line','Linha grossa']],L.istyle)
+    +(L.istyle==='duotone'?selRow('Cor 2 (tom)','tok.tone',[['','Automática (mais clara)'],['custom','Cor própria'],...BRAND_TOKENS.slice(1)],L.tok.tone)+(L.tok.tone==='custom'?colRow('Cor 2 própria','toneColor',L.toneColor):''):'')
+    +propRow('reveal',L,'Revelar (varredura)')+`<button class="btn" data-act="pickicon" style="width:100%;justify-content:center;margin-top:6px">Trocar ícone…</button>`;
   if(!isImg&&!isIcon)A+=propRow('strokeW',L)+colRow('Cor contorno','props.stroke',L.props.stroke)+selRow('Contorno da marca','tok.stroke',BRAND_TOKENS,L.tok.stroke);
   if(isShape)A+=`<label class="chk"><input type="checkbox" data-f="noFill" ${L.noFill?'checked':''}> Sem preenchimento (só contorno)</label>`;
   if(isImg)A+=selRow('Enquadramento','fit',[['cover','Preencher (recortar)'],['contain','Conter (sem corte)']],L.fit)+propRow('zoom',L)+propRow('panX',L)+propRow('panY',L)+numRow('Tremor de grão (px)','jitter',L.jitter,{step:1,min:0})
@@ -234,7 +236,8 @@ ins.addEventListener('change',e=>{
   }
   if(t.dataset.scnLen){retimeScene(t.dataset.scnLen,parseFloat(t.value)||1);commit();refreshAll();return;}
   commit();
-  if(t.dataset.f==='split'||t.dataset.f==='maskDir'||t.dataset.f==='grad.mode')refreshInspector();
+  if(t.dataset.f==='istyle'||t.dataset.f==='tok.tone')buildInspector();
+  else if(t.dataset.f==='split'||t.dataset.f==='maskDir'||t.dataset.f==='grad.mode')refreshInspector();
 });
 ins.addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b)return; const L=sel();

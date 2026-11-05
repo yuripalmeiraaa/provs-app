@@ -6,7 +6,7 @@ App de check-in verificado para torcedores
 Abra `motion-editor/index.html` no navegador (sem build, sem dependências). Para exportar vídeo e usar
 fontes próprias, use o Chrome/Edge atual.
 
-Arquivos: `engine.js` (modelo, easing, renderização), `ui.js` (inspetor, palco, timeline, arquivos),
+Arquivos: `glyphs.js` (ícones), `engine.js` (modelo, easing, renderização), `ui.js` (inspetor, palco, timeline, arquivos),
 `compositions.js` (modelos e composições de exemplo), `boot.js` (inicialização).
 
 ### Composições de exemplo (menu **Modelos**)
@@ -20,8 +20,9 @@ Arquivos: `engine.js` (modelo, easing, renderização), `ui.js` (inspetor, palco
 - Botão **Momentos prontos** (menu à esquerda): cria, no ponto onde está o playhead, uma **sequência de itens**
   (ícone que se desenha → **X vermelho** ou **✓ verde** → legenda) ou uma **chuva/explosão de ícones** (ex.: dinheiro).
   Cada parte vira uma camada separada e editável; o layout se adapta a 16:9, 9:16 e 1:1.
-- **Biblioteca de ícones** (dinheiro, moedas, fábrica, garrafa, copo, drinque, carrinho, gráfico, alerta, X, ✓…):
-  botão **$** em *Adicionar*; no inspetor, *Trocar ícone*, espessura da linha e *Traçar* (desenho do traço).
+- **Biblioteca com 122 ícones profissionais** ([Phosphor Icons](https://phosphoricons.com), MIT — ver `THIRD_PARTY_LICENSES.md`):
+  dinheiro, moedas, fábrica, bebidas, loja, gráficos, certo/errado, emoções… Botão **$** em *Adicionar* (com busca).
+  No inspetor: *Estilo* (**Bicolor**, **Sólido** ou **Linha grossa**), *Cor 2 (tom)*, *Trocar ícone* e *Revelar (varredura)*.
 - Modelo **★ Problemas: dinheiro, fábrica, bebida**: exemplo com a frase "não tenho dinheiro, fábrica e nem sei fazer uma bebida".
 - Para usar **por cima do seu vídeo** em outro editor: *Projeto → Fundo do vídeo* → **Verde (chroma key)** (aplique o
   efeito chroma key no CapCut/Premiere/DaVinci) ou **Transparente** (PNG e WebM com alpha; a leitura do alpha em WebM
