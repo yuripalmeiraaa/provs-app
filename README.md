@@ -1,7 +1,12 @@
 # provs-app
 App de check-in verificado para torcedores
 
-## MotionLab (editor de Motion Design)
+## Motion Simples (comece por aqui)
+Abra `motion-simples/index.html`. Escolha o tipo (ícones com X/✓, chuva de ícone, texto), escreva as legendas e
+clique em **Baixar com fundo transparente** (ou **verde**, plano B com chroma key) para usar no CapCut.
+É um arquivo único, sem timeline nem camadas.
+
+## MotionLab (editor completo de Motion Design)
 
 Abra `motion-editor/index.html` no navegador (sem build, sem dependências). Para exportar vídeo e usar
 fontes próprias, use o Chrome/Edge atual.
