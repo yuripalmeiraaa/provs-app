@@ -37,7 +37,7 @@ function fitStage(){
   viewScale=Math.max(.05,Math.min(aw/project.w,ah/project.h));
   const f=$('#frame');f.style.width=Math.round(project.w*viewScale)+'px';f.style.height=Math.round(project.h*viewScale)+'px';
 }
-function applySize(){cv.width=ov.width=project.w;cv.height=ov.height=project.h;fitStage();}
+function applySize(){cv.width=ov.width=project.w;cv.height=ov.height=project.h;$('#frame').classList.toggle('transp',project.bgMode==='transparent');fitStage();}
 new ResizeObserver(()=>{if(project){fitStage();draw();}}).observe($('#viewport'));
 
 /* ============================ histórico & persistência ============================ */
@@ -111,6 +111,7 @@ function buildInspector(){
     el.innerHTML=`<h3>Projeto</h3>
     <div class="prow nokf"><span ${LBL}>Formato</span><select data-p="size">${SIZES.map(s=>`<option value="${s[0]}x${s[1]}" ${`${s[0]}x${s[1]}`===cur?'selected':''}>${s[2]}</option>`).join('')}${known?'':`<option selected>${cur}</option>`}</select></div>
     <div class="prow nokf"><span ${LBL}>Duração (s)</span><input type="number" data-p="duration" min="1" max="180" step="0.5" value="${project.duration}"></div>
+    <div class="prow nokf"><span ${LBL}>Fundo do vídeo</span><select data-p="bgMode">${optHTML([['color','Cor da marca'],['chroma','Verde (chroma key)'],['transparent','Transparente (PNG e WebM)']],project.bgMode)}</select></div>
     <div class="prow nokf"><span ${LBL}>FPS</span><select data-p="fps">${[24,30,60].map(f=>`<option ${f===project.fps?'selected':''}>${f}</option>`).join('')}</select></div>
     <p class="hint">Ao trocar o formato, o layout de cada camada é guardado por formato (9:16, 16:9, 1:1) — não é apenas esticado. Ative <b>Margens</b> no player para ver a área segura.</p>
     ${sec('Identidade visual',`<p class="hint" style="margin:0 0 8px">Camadas vinculadas a uma cor ou fonte da marca mudam junto.</p>
@@ -132,7 +133,7 @@ function buildInspector(){
     ${selKF&&selKF.lid==='camera'&&(L.tracks[selKF.k]||[]).includes(selKF.kf)?kfSection(L):''}`;
     refreshInspector();el.scrollTop=st;return;
   }
-  const isText=L.type==='text',isImg=L.type==='image',isShape=!isText&&!isImg;
+  const isText=L.type==='text',isImg=L.type==='image',isIcon=L.type==='icon',isShape=!isText&&!isImg&&!isIcon;
   let T=['x','y',...(isText?[]:['w','h']),'rot','scale','opacity'].map(k=>propRow(k,L)).join('')
     +numRow('Profundidade (câmera)','depth',L.depth,{step:.1,min:0})+selRow('Mistura','blend',BLENDS,L.blend);
   let A='';
@@ -142,7 +143,8 @@ function buildInspector(){
       +numRow('Ângulo °','grad.angle',L.grad.angle,{step:5})+colRow('2ª cor','grad.color',L.grad.color)+selRow('2ª cor da marca','tok.grad',BRAND_TOKENS,L.tok.grad);
   }
   if(L.type==='rect'||isImg)A+=propRow('radius',L);
-  if(!isImg)A+=propRow('strokeW',L)+colRow('Cor contorno','props.stroke',L.props.stroke)+selRow('Contorno da marca','tok.stroke',BRAND_TOKENS,L.tok.stroke);
+  if(isIcon)A+=numRow('Espessura da linha','lw',L.lw,{step:.1,min:.5,max:6})+propRow('reveal',L,'Traçar (desenhar)')+`<button class="btn" data-act="pickicon" style="width:100%;justify-content:center;margin-top:6px">Trocar ícone…</button>`;
+  if(!isImg&&!isIcon)A+=propRow('strokeW',L)+colRow('Cor contorno','props.stroke',L.props.stroke)+selRow('Contorno da marca','tok.stroke',BRAND_TOKENS,L.tok.stroke);
   if(isShape)A+=`<label class="chk"><input type="checkbox" data-f="noFill" ${L.noFill?'checked':''}> Sem preenchimento (só contorno)</label>`;
   if(isImg)A+=selRow('Enquadramento','fit',[['cover','Preencher (recortar)'],['contain','Conter (sem corte)']],L.fit)+propRow('zoom',L)+propRow('panX',L)+propRow('panY',L)+numRow('Tremor de grão (px)','jitter',L.jitter,{step:1,min:0})
     +`<button class="btn" data-act="replace" style="width:100%;justify-content:center;margin-top:6px">Substituir mídia…</button>`;
@@ -223,6 +225,7 @@ ins.addEventListener('change',e=>{
   if(t.dataset.p){
     const p=t.dataset.p;
     if(p==='fps')project.fps=parseInt(t.value);
+    else if(p==='bgMode')project.bgMode=t.value;
     else if(p==='duration'){const nd=clamp(parseFloat(t.value)||5,1,180),od=project.duration;
       project.layers.forEach(l=>{l.end=l.end>=od-1e-6?nd:Math.min(l.end,nd);l.start=Math.min(l.start,nd-.1);});
       project.duration=nd;project.camera.end=nd;if(project.scenes.length){const last=project.scenes[project.scenes.length-1];last.end=Math.max(last.start+.5,nd);}time=Math.min(time,nd);}
@@ -255,6 +258,7 @@ ins.addEventListener('pointerdown',e=>{
 function doAct(a){
   const L=sel(); if(!L||(L.type==='camera'&&a!=='delkf'))return;
   if(a==='replace'){replaceTarget=L.id;$('#fileImg').click();return;}
+  if(a==='pickicon'){openIconPicker(k=>{L.icon=k;commit();buildInspector();draw();});return;}
   const arr=project.layers,i=arr.indexOf(L);
   if(a==='up'&&i<arr.length-1){[arr[i],arr[i+1]]=[arr[i+1],arr[i]];}
   else if(a==='down'&&i>0){[arr[i],arr[i-1]]=[arr[i-1],arr[i]];}
@@ -572,6 +576,7 @@ $('#presets').addEventListener('click',e=>{
 let replaceTarget=null;
 function addLayer(type){
   if(type==='image'){replaceTarget=null;$('#fileImg').click();return;}
+  if(type==='icon'){openIconPicker(k=>{const L=makeLayer('icon',{icon:k,name:GLYPHS[k].label});project.layers.push(L);selId=L.id;selKF=null;commit();buildInspector();buildTimeline();draw();});return;}
   const defs={rect:{props:{w:360,h:220,radius:16}},ellipse:{props:{w:260,h:260,fill:'#22d3ee'}},triangle:{props:{w:260,h:240,fill:'#ffc857'}},star:{props:{w:260,h:260,fill:'#ff5d73'}},text:{}};
   const L=makeLayer(type,JSON.parse(JSON.stringify(defs[type])));
   project.layers.push(L);selId=L.id;selKF=null;commit();buildInspector();buildTimeline();draw();

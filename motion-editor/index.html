@@ -127,7 +127,15 @@ details[open]>summary{color:var(--text)}
 .lib-row{display:flex;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);text-align:left}
 .lib-row>div{flex:1;min-width:0}.lib-row small{color:var(--mute)}
 #libList{max-height:300px;overflow:auto;margin:10px 0}
-.mbox.wide{width:560px}
+.mbox.wide{width:560px;max-width:96vw}
+.icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-height:58vh;overflow:auto;margin-top:12px}
+.icon-cell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--text)}
+.icon-cell:hover{border-color:var(--accent)}
+.icon-cell svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mrow{display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:center;margin:6px 0}
+.mitem{display:grid;grid-template-columns:52px 1fr 30px;gap:8px;align-items:center;margin:6px 0}
+.mitem .icon-cell{padding:6px}
+#frame.transp{background:repeating-conic-gradient(#2c2c2c 0 25%,#3b3b3b 0 50%) 0 0/24px 24px}
 #modal,.mbox-wrap{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:50}.mbox-wrap[hidden]{display:none}</style>
 </head>
 <body>
@@ -166,7 +174,9 @@ details[open]>summary{color:var(--text)}
       <button class="ib" data-add="star" data-icon="star" title="Estrela"></button>
       <button class="ib" data-add="text" data-icon="type" title="Texto"></button>
       <button class="ib" data-add="image" data-icon="image" title="Imagem"></button>
+      <button class="ib" data-add="icon" data-icon="dollar" title="Ícone (dinheiro, fábrica, X…)"></button>
     </div>
+    <button class="btn primary" id="btnMoment" style="width:100%;justify-content:center;margin-top:10px"><span data-icon="zap"></span>Momentos prontos</button>
     <h3 style="margin-top:18px">Animações</h3>
     <div class="pset-opts">
       <label>Duração<input type="number" id="psDur" value="0.6" min="0.1" step="0.1"></label>
@@ -207,6 +217,8 @@ details[open]>summary{color:var(--text)}
 <div id="libModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Biblioteca de projetos</b>
   <div class="btnrow" style="justify-content:center;margin:12px 0 0"><button class="btn" id="libSave">Salvar projeto atual</button><button class="btn" id="libSaveAs">Salvar como cópia</button></div>
   <div id="libList"></div><button class="btn" id="libClose">Fechar</button></div></div>
+<div id="iconModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Escolha um ícone</b><div id="iconGrid" class="icon-grid"></div><button class="btn" id="iconClose" style="margin-top:12px">Cancelar</button></div></div>
+<div id="momentModal" class="mbox-wrap" hidden><div class="mbox wide" id="momentBox" style="text-align:left"></div></div>
 <div id="toast"></div>
 <input type="file" id="fileImg" accept="image/*" hidden>
 <input type="file" id="fileFont" accept=".ttf,.otf,.woff,.woff2" hidden>
@@ -215,6 +227,7 @@ details[open]>summary{color:var(--text)}
 <script src="engine.js"></script>
 <script src="ui.js"></script>
 <script src="compositions.js"></script>
+<script src="moments.js"></script>
 <script src="boot.js"></script>
 </body>
 </html>

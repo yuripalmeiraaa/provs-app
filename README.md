@@ -15,6 +15,18 @@ Arquivos: `engine.js` (modelo, easing, renderização), `ui.js` (inspetor, palco
   Todo texto de conteúdo é um **campo entre colchetes** para preencher; nada é inventado.
 - Ambas têm layouts próprios para **16:9, 9:16 e 1:1** (troque em *Projeto → Formato*).
 
+
+### Gráficos sobre a sua fala (ícones, X, dinheiro aparecendo)
+- Botão **Momentos prontos** (menu à esquerda): cria, no ponto onde está o playhead, uma **sequência de itens**
+  (ícone que se desenha → **X vermelho** ou **✓ verde** → legenda) ou uma **chuva/explosão de ícones** (ex.: dinheiro).
+  Cada parte vira uma camada separada e editável; o layout se adapta a 16:9, 9:16 e 1:1.
+- **Biblioteca de ícones** (dinheiro, moedas, fábrica, garrafa, copo, drinque, carrinho, gráfico, alerta, X, ✓…):
+  botão **$** em *Adicionar*; no inspetor, *Trocar ícone*, espessura da linha e *Traçar* (desenho do traço).
+- Modelo **★ Problemas: dinheiro, fábrica, bebida**: exemplo com a frase "não tenho dinheiro, fábrica e nem sei fazer uma bebida".
+- Para usar **por cima do seu vídeo** em outro editor: *Projeto → Fundo do vídeo* → **Verde (chroma key)** (aplique o
+  efeito chroma key no CapCut/Premiere/DaVinci) ou **Transparente** (PNG e WebM com alpha; a leitura do alpha em WebM
+  depende do programa de edição).
+
 ### Como personalizar (tudo pela interface)
 - **Texto e mídia:** selecione a camada → inspetor (texto, fonte, tamanho, peso, alinhamento, espaçamento, quebra automática).
   Imagens: *Substituir mídia* mantém enquadramento, zoom e animações.
