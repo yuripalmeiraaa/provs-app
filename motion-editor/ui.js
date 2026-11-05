@@ -648,7 +648,14 @@ $('#projName').addEventListener('input',e=>{project.name=e.target.value;});
 $('#projName').addEventListener('change',()=>commit());
 
 /* ============================ arquivos & exportação ============================ */
-function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}
+/* salvar arquivo: na página publicada do Claude usa o recurso "downloads" (o visitante confirma); fora dela, download normal */
+async function download(blob,name){
+  try{
+    const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
+    if(dl){try{await dl.save({filename:name,data:blob});}catch(e){if(!e||e.code!=='declined')toast('Não foi possível salvar: '+((e&&e.message)||'erro'));}return;}
+  }catch(e){}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
 const slug=s=>String(s||'motion').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'motion';
 $('#btnSave').onclick=()=>{download(new Blob([JSON.stringify({app:'motionlab',version:2,project,assets:usedAssets()})],{type:'application/json'}),slug(project.name)+'.json');};
 $('#btnOpen').onclick=()=>$('#fileJson').click();
