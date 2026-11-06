@@ -3,7 +3,7 @@ App de check-in verificado para torcedores
 
 ## Motion Simples (comece por aqui)
 Abra `motion-simples/index.html`. Escolha o tipo (ícones com X/✓, chuva de ícone, texto), escreva as legendas e
-clique em **Baixar com fundo transparente** (ou **verde**, plano B com chroma key) para usar no CapCut.
+use as **figurinhas coloridas** (110 ícones: dinheiro, fábrica, drinque, ❌, ✅…) e clique em **Baixar com fundo transparente** (ou **verde**, plano B com chroma key) para usar no CapCut.
 É um arquivo único, sem timeline nem camadas.
 Novo: **Palavras no ritmo da fala** (estilo "vídeo narrado fora da caixa": palavras em tipografias mistas, destaque em script rosa,
 adesivos/ícones, fundo de caderno opcional e sincronia com o áudio da narração — por distribuição automática ou marcando no toque).
