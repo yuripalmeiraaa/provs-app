@@ -282,6 +282,14 @@ footer div{max-width:1180px;margin:auto;display:flex;justify-content:space-betwe
 footer b{font:900 italic 1.2rem var(--f-display);font-stretch:125%;text-transform:uppercase}
 
 
+
+.vids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:760px}
+.vid{margin:0;display:flex;flex-direction:column;gap:10px}
+.vid video{width:100%;aspect-ratio:9/16;object-fit:cover;background:var(--ink);border-radius:16px;display:block}
+.vid figcaption{font:700 .74rem var(--f-display);font-stretch:110%;text-transform:uppercase;letter-spacing:.14em}
+.wide-photo{margin:0}
+.wide-photo .ph{aspect-ratio:16/10;width:100%}
+
 /* galeria + modo de edição */
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:clamp(16px,2.4vw,28px)}
 .gal figure{margin:0;min-width:0}
@@ -348,34 +356,7 @@ body.editing{padding-bottom:90px}
     </div>
     <div class="stage">
       <figure class="ph" style="margin:0">
-        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <defs>
-            <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
-            <pattern id="net" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M0 0h16v16" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/></pattern>
-          </defs>
-          <rect width="800" height="1000" fill="#011E48"/>
-          <g fill="url(#beam)"><path d="M120 0h110L90 640H-90z"/><path d="M420 0h110L520 640H300z"/><path d="M700 0h110L1000 640H760z"/></g>
-          <g id="heroCrowd"></g>
-          <path d="M0 640h800v360H0z" fill="#012657"/>
-          <g stroke="#fff" stroke-width="5" fill="none" opacity=".85"><path d="M0 740h800"/><ellipse cx="400" cy="860" rx="250" ry="62"/><path d="M400 740v230"/></g>
-          <g transform="translate(420 380)">
-            <rect x="0" y="0" width="340" height="260" fill="url(#net)"/>
-            <path d="M0 260V0h340v260" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="square"/>
-          </g>
-          <g stroke-linecap="round" stroke-linejoin="round" transform="translate(40 40)">
-            <path d="M210 640l-6 200" stroke="#8A5A3C" stroke-width="26" fill="none"/>
-            <path d="M228 612l110 14 80-52" stroke="#8A5A3C" stroke-width="26" fill="none"/>
-            <path d="M168 438l-70 52M300 432l78 24" stroke="#8A5A3C" stroke-width="22" fill="none"/>
-            <path d="M176 420h126l22 128-146 12z" fill="#E3262B" stroke="#E3262B" stroke-width="6"/>
-            <path d="M176 552l150-10 14 80-140 12z" fill="#011A3F" stroke="#011A3F" stroke-width="6"/>
-            <circle cx="244" cy="372" r="34" fill="#8A5A3C"/>
-            <path d="M212 360c8-34 56-38 66-2-20-14-44-14-66 2z" fill="#011A3F"/>
-            <text x="212" y="520" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" font-size="70" fill="#011A3F">10</text>
-          </g>
-          <g transform="translate(490 600)"><circle r="46" fill="#fff"/><path d="M0-20l19 14-7 22H-12l-7-22z" fill="#011A3F"/><path d="M0-20V-44M19-6l24-8M12 16l16 22M-12 16l-16 22M-19-6l-24-8" stroke="#011A3F" stroke-width="4"/></g>
-          <path d="M370 700c30-30 60-52 90-70" stroke="#E3262B" stroke-width="6" stroke-dasharray="2 16" stroke-linecap="round" fill="none"/>
-        </svg>
-        <span hidden data-slot="hero" data-alt="Jogo universitário de futsal no Rio de Janeiro"></span>
+        <img src="media/torcida-pompons.jpg" alt="Líderes de torcida diante da arquibancada em jogo universitário no Rio de Janeiro" loading="lazy" style="object-position:50% 42%"><span hidden data-slot="hero" data-alt="Jogo universitário de futsal no Rio de Janeiro"></span>
       </figure>
       <div class="badge-wrap" aria-hidden="true">
         <svg class="badge" viewBox="0 0 200 200"><defs><path id="circ" d="M100 100m-76 0a76 76 0 1 1 152 0a76 76 0 1 1-152 0"/></defs><circle cx="100" cy="100" r="98"/><text><textPath href="#circ">PRIMEIRA EDIÇÃO · 2 NAIPES · 1 GINÁSIO ·</textPath></text></svg>
@@ -420,32 +401,31 @@ body.editing{padding-bottom:90px}
     <div class="mosaic">
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#E3262B"/><g id="torcida"></g></svg>
-          <span hidden data-slot="torcida" data-alt="Torcida de uma atlética no ginásio"></span>
+          <img src="media/bateria.jpg" alt="Torcedora tocando pandeiro na bateria de uma atlética" loading="lazy" style="object-position:50% 40%"><span hidden data-slot="torcida" data-alt="Torcida de uma atlética no ginásio"></span>
         </div><figcaption>A torcida</figcaption></figure>
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#F1F4F9"/>
-            <g stroke="#012657" stroke-width="4" fill="none"><rect x="30" y="60" width="340" height="380"/><path d="M30 250h340"/><circle cx="200" cy="250" r="50"/><path d="M130 60v50h140V60M130 440v-50h140v50"/></g>
-            <g stroke="#011A3F" stroke-width="6" stroke-linecap="round"><path d="M110 150l22 22M132 150l-22 22M270 190l22 22M292 190l-22 22M180 330l22 22M202 330l-22 22"/></g>
-            <g fill="none" stroke="#FC3435" stroke-width="5"><circle cx="270" cy="150" r="13"/><circle cx="130" cy="260" r="13"/><circle cx="260" cy="340" r="13"/></g>
-            <path d="M118 182c40 40 70 20 90 70M280 224c-10 40-40 60-90 90" stroke="#011A3F" stroke-width="4" stroke-dasharray="3 10" fill="none" stroke-linecap="round"/>
-          </svg>
-          <span hidden data-slot="quadra" data-alt="Equipe se preparando antes do jogo"></span>
+          <img src="media/natacao-largada.jpg" alt="Nadadores universitários na largada de uma prova de costas" loading="lazy" style="object-position:30% 50%"><span hidden data-slot="quadra" data-alt="Equipe se preparando antes do jogo"></span>
         </div><figcaption>A preparação</figcaption></figure>
       <figure class="rv"><i class="tape"></i>
         <div class="ph">
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="#012657"/>
-            <g id="conf"></g>
-            <g fill="#E3262B"><path d="M120 120h160c0 80-30 130-80 150-50-20-80-70-80-150z"/><path d="M120 140h-50c0 50 20 80 60 90M280 140h50c0 50-20 80-60 90" fill="none" stroke="#E3262B" stroke-width="14"/><rect x="185" y="270" width="30" height="60"/><rect x="140" y="330" width="120" height="26" rx="6"/><rect x="120" y="356" width="160" height="40" rx="6" fill="#011A3F"/></g>
-            <text x="200" y="384" text-anchor="middle" font-family="Archivo,Impact,sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#E3262B">CAMPEÃ</text>
-          </svg>
-          <span hidden data-slot="comemoracao" data-alt="Equipe comemorando o título"></span>
-        </div><figcaption>A taça</figcaption></figure>
+          <img src="media/basquete.jpg" alt="Dois jogadores de basquete universitário disputando a bola" loading="lazy" style="object-position:50% 40%"><span hidden data-slot="comemoracao" data-alt="Equipe comemorando o título"></span>
+        </div><figcaption>A disputa</figcaption></figure>
     </div>
     <p class="lead"><b>Quem vive o esporte universitário sabe: não é só um jogo.</b> E é justamente por acreditar nisso que queremos criar a Liga Atlética Universitária (LAU).</p>
   </div>
 </section>
+
+<section class="band on-white" id="imagens"><div class="wrap">
+    <div class="shirt rv"><h2>O esporte universitário do Rio, em imagens.</h2></div>
+    <div class="split">
+      <div class="vids rv">
+        <figure class="vid"><video controls playsinline preload="metadata" poster="media/video-1.jpg" src="media/video-1.mp4" aria-label="Vídeo: jogadores de uma atlética comemorando juntos"></video><figcaption>A união do time</figcaption></figure>
+        <figure class="vid"><video controls playsinline preload="metadata" poster="media/video-2.jpg" src="media/video-2.mp4" aria-label="Vídeo: bola parada no gramado antes do jogo"></video><figcaption>Antes da bola rolar</figcaption></figure>
+      </div>
+      <figure class="wide-photo rv"><div class="ph"><img src="media/natacao-borboleta.jpg" alt="Nadadora universitária na prova de nado borboleta" loading="lazy"></div></figure>
+    </div>
+  </div></section>
 
 <!-- 2 MUNDO -->
 <section class="band on-ink" id="mundo">
