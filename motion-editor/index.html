@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MotionLab – Editor de Motion Design</title>
+<style>
+:root{
+  --bg:#0e1015;--panel:#161922;--panel2:#1c202b;--line:#2a2f3c;--text:#e8ebf2;--mute:#8d96a9;
+  --accent:#7c5cff;--accent2:#22d3ee;--danger:#ff5d73;--key:#ffc857;--radius:8px;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:13px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow:auto;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+svg{flex:none;display:block}
+#app{display:grid;height:100vh;min-width:1000px;min-height:640px;
+  grid-template-columns:216px minmax(0,1fr) 292px;grid-template-rows:48px minmax(0,1fr) 264px;
+  grid-template-areas:"top top top" "left stage insp" "tl tl tl"}
+header#top{grid-area:top;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--panel);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;letter-spacing:.2px;margin-right:8px}
+.logo{width:20px;height:20px;border-radius:6px;background:conic-gradient(from 200deg,var(--accent),var(--accent2),var(--key),var(--accent))}
+.sp{flex:1}
+.btn,.ib,select,input[type=number],input[type=text],textarea{background:var(--panel2);border:1px solid var(--line);border-radius:6px;color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;white-space:nowrap}
+.btn:hover,.ib:hover{border-color:#44495a;background:#232838}
+.btn.primary{background:var(--accent);border-color:var(--accent);font-weight:600}
+.btn.primary:hover{background:#8d70ff}
+.ib{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0}
+.ib.active{background:var(--accent);border-color:var(--accent)}
+.ib:disabled{opacity:.35;cursor:default}
+select{padding:5px 6px}
+input[type=number],input[type=text]{padding:5px 6px;width:100%;min-width:0}
+input[type=color]{width:100%;height:28px;padding:2px;background:var(--panel2);border:1px solid var(--line);border-radius:6px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:-1px}
+textarea{width:100%;resize:vertical;min-height:58px;padding:6px}
+aside{background:var(--panel);overflow:auto}
+#left{grid-area:left;border-right:1px solid var(--line);padding:12px}
+#inspector{grid-area:insp;border-left:1px solid var(--line);padding:12px}
+h3{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--mute)}
+h4{margin:14px 0 6px;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--mute)}
+.add-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.add-grid .ib{width:100%;height:36px}
+.pset-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.pset-opts label{display:flex;flex-direction:column;gap:2px;font-size:11px;color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);font-size:12px}
+.chip:hover{border-color:var(--accent);color:#fff}
+.chip.in{border-left:3px solid var(--accent2)}
+.chip.out{border-left:3px solid var(--danger)}
+.chip.loop{border-left:3px solid var(--key)}
+.chip.text{border-left:3px solid var(--accent)}
+.hint{color:var(--mute);font-size:12px;margin:10px 0 0}
+kbd{background:var(--panel2);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 4px;font-size:11px}
+/* stage */
+#stage{grid-area:stage;display:flex;flex-direction:column;min-width:0;min-height:0;background:#0a0b0f}
+#viewport{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#frame{position:relative;box-shadow:0 10px 50px #000a,0 0 0 1px #ffffff14;background:#000}
+#frame canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#ov{touch-action:none}
+#transport{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--panel);border-top:1px solid var(--line)}
+#scrub{flex:1;accent-color:var(--accent)}
+#timeLbl{font-variant-numeric:tabular-nums;min-width:128px;text-align:right;color:var(--mute)}
+#timeLbl b{color:var(--text);font-weight:600}
+/* inspector */
+.prow{display:grid;grid-template-columns:112px 1fr 26px;gap:6px;align-items:center;margin-bottom:5px}
+.prow.nokf{grid-template-columns:112px 1fr}
+.plabel{color:var(--mute);cursor:ew-resize;user-select:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kfb{width:24px;height:24px;border:1px solid var(--line);background:var(--panel2);border-radius:5px;padding:0;color:var(--mute);font-size:11px}
+.kfb.has{color:var(--key);border-color:#6b5a2a}
+.kfb.on{background:var(--key);color:#2a2000;border-color:var(--key)}
+.btnrow{display:flex;gap:6px;margin-top:6px}
+.btnrow .ib{flex:1;width:auto}
+.btnrow .danger:hover{border-color:var(--danger);color:var(--danger)}
+.kfsec{margin-top:14px;padding:10px;border:1px solid #6b5a2a;border-radius:var(--radius);background:#2a240f55}
+.kfsec h4{margin-top:0;color:var(--key)}
+label.chk{display:flex;gap:6px;align-items:center;margin:6px 0;color:var(--text)}
+/* timeline */
+#timeline{grid-area:tl;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--line);min-height:0}
+.tl-head{display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid var(--line);color:var(--mute)}
+.tl-head input[type=range]{accent-color:var(--accent);width:140px}
+#tlScroll{flex:1;overflow:auto;position:relative;min-height:0}
+.tl-inner{position:relative;min-height:100%}
+.tl-row{display:flex;height:30px;border-bottom:1px solid #20242f}
+.tl-row.sel{background:#7c5cff14}
+.tl-row.sub{height:24px;background:#0000002a}
+.tl-label{position:sticky;left:0;z-index:5;flex:none;width:190px;display:flex;align-items:center;gap:4px;padding:0 6px;background:var(--panel);border-right:1px solid var(--line);overflow:hidden;cursor:pointer}
+.tl-row.sel .tl-label{background:#1e1b33}
+.tl-row.sub .tl-label{padding-left:30px;color:var(--mute);font-size:12px;background:#12141b}
+.tl-label .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tl-label .mini{width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border:0;background:none;color:var(--mute);padding:0;border-radius:4px}
+.tl-label .mini:hover{background:#ffffff14;color:var(--text)}
+.tl-label .mini.off{opacity:.4}
+.tl-track{position:relative;flex:none;cursor:text;background-image:repeating-linear-gradient(90deg,#ffffff0d 0 1px,transparent 1px var(--grid,20px))}
+.tl-ruler{height:26px;position:sticky;top:0;z-index:6;background:var(--panel)}
+.tl-ruler .tl-label{cursor:default;color:var(--mute);background:var(--panel)}
+.tick{position:absolute;top:0;bottom:0;padding:4px 0 0 4px;border-left:1px solid #ffffff30;font-size:10px;color:var(--mute);pointer-events:none;font-variant-numeric:tabular-nums}
+.tl-bar{position:absolute;top:5px;bottom:5px;border-radius:6px;cursor:grab;border:1px solid #ffffff40;min-width:6px}
+.tl-bar.locked{cursor:not-allowed;filter:grayscale(.6)}
+.tl-bar.hidden{opacity:.35}
+.bh{position:absolute;top:0;bottom:0;width:7px;cursor:ew-resize}
+.bh.l{left:0}.bh.r{right:0}
+.bh:hover{background:#ffffff55}
+.mk{position:absolute;top:50%;width:6px;height:6px;background:#ffffffcc;transform:translate(-50%,-50%) rotate(45deg);pointer-events:none}
+.kfd{position:absolute;top:50%;width:11px;height:11px;background:var(--key);transform:translate(-50%,-50%) rotate(45deg);border:1px solid #000a;cursor:grab;z-index:2}
+.kfd.sel{background:#fff;outline:2px solid var(--accent)}
+#playhead{position:absolute;top:0;bottom:0;width:0;z-index:4;pointer-events:none}
+#playhead::before{content:"";position:absolute;left:-1px;top:0;bottom:0;width:2px;background:var(--danger)}
+#playhead::after{content:"";position:absolute;left:-6px;top:0;width:12px;height:12px;background:var(--danger);clip-path:polygon(0 0,100% 0,50% 100%)}
+/* modal & toast */
+#modal{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:50}
+#modal[hidden]{display:none}
+.mbox{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;width:340px;text-align:center}
+.pbar{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden;margin:14px 0}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:#222736;border:1px solid var(--line);padding:8px 14px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+details{border-top:1px solid var(--line);padding:6px 0;margin-top:8px}
+details>summary{cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:var(--mute);padding:4px 0 8px;user-select:none}
+details[open]>summary{color:var(--text)}
+#projName{width:250px;background:transparent;border-color:transparent;font-weight:600}
+#projName:hover,#projName:focus{background:var(--panel2);border-color:var(--line)}
+.tl-row.scn{height:22px;background:#0000002a}
+.scn-b{position:absolute;top:2px;bottom:2px;border-radius:4px;padding:0 8px;font-size:11px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;background:color-mix(in srgb,var(--c) 55%,#0e1015);border-left:3px solid var(--c);cursor:pointer}
+.tl-row.cam .tl-label{color:var(--accent2)}
+.lib-row{display:flex;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);text-align:left}
+.lib-row>div{flex:1;min-width:0}.lib-row small{color:var(--mute)}
+#libList{max-height:300px;overflow:auto;margin:10px 0}
+.mbox.wide{width:560px;max-width:96vw}
+.icon-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-height:58vh;overflow:auto;margin-top:12px}
+.icon-cell{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;font-size:11px;color:var(--text)}
+.icon-cell:hover{border-color:var(--accent)}
+.icon-cell svg{width:38px;height:38px;fill:currentColor}
+#iconSearch{width:100%;margin-top:12px}
+.mrow{display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:center;margin:6px 0}
+.mitem{display:grid;grid-template-columns:52px 1fr 30px;gap:8px;align-items:center;margin:6px 0}
+.mitem .icon-cell{padding:6px}
+#frame.transp{background:repeating-conic-gradient(#2c2c2c 0 25%,#3b3b3b 0 50%) 0 0/24px 24px}
+#modal,.mbox-wrap{position:fixed;inset:0;background:#000b;display:flex;align-items:center;justify-content:center;z-index:50}.mbox-wrap[hidden]{display:none}</style>
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <div class="brand"><span class="logo"></span>MotionLab</div>
+    <input type="text" id="projName" title="Nome do projeto" placeholder="Nome do projeto">
+    <select id="tplSel" title="Modelos">
+      <option value="">Modelos…</option>
+      <option value="cine">★ Teaser cinematográfico (exemplo)</option>
+      <option value="sales">★ Vídeo de vendas (exemplo)</option>
+      <option value="title">Título animado</option>
+      <option value="lower">Lower third</option>
+      <option value="logo">Logo reveal</option>
+      <option value="count">Contagem 3-2-1</option>
+      <option value="blank">Projeto em branco</option>
+    </select>
+    <button class="btn" id="btnGen" title="Gera uma composição animada aleatória"><span data-icon="shuffle"></span>Gerar aleatório</button>
+    <span class="sp"></span>
+    <button class="ib" id="btnUndo" data-icon="undo" title="Desfazer (Ctrl+Z)"></button>
+    <button class="ib" id="btnRedo" data-icon="redo" title="Refazer (Ctrl+Shift+Z)"></button>
+    <button class="btn" id="btnLib" title="Biblioteca de projetos"><span data-icon="folder"></span>Projetos</button>
+    <button class="btn" id="btnOpen" title="Abrir projeto (.json)"><span data-icon="upload"></span>Abrir</button>
+    <button class="btn" id="btnSave" title="Salvar projeto (.json)"><span data-icon="download"></span>Salvar</button>
+    <button class="btn" id="btnPng" title="Exportar frame atual em PNG"><span data-icon="image"></span>PNG</button>
+    <select id="expFmt" title="Formato do vídeo"></select>
+    <button class="btn primary" id="btnExport" title="Gravar a animação em vídeo"><span data-icon="film"></span>Exportar vídeo</button>
+  </header>
+
+  <aside id="left">
+    <h3>Adicionar</h3>
+    <div class="add-grid">
+      <button class="ib" data-add="rect" data-icon="square" title="Retângulo"></button>
+      <button class="ib" data-add="ellipse" data-icon="circle" title="Elipse"></button>
+      <button class="ib" data-add="triangle" data-icon="triangle" title="Triângulo"></button>
+      <button class="ib" data-add="star" data-icon="star" title="Estrela"></button>
+      <button class="ib" data-add="text" data-icon="type" title="Texto"></button>
+      <button class="ib" data-add="image" data-icon="image" title="Imagem"></button>
+      <button class="ib" data-add="icon" data-icon="dollar" title="Ícone (dinheiro, fábrica, X…)"></button>
+    </div>
+    <button class="btn primary" id="btnMoment" style="width:100%;justify-content:center;margin-top:10px"><span data-icon="zap"></span>Momentos prontos</button>
+    <h3 style="margin-top:18px">Animações</h3>
+    <div class="pset-opts">
+      <label>Duração<input type="number" id="psDur" value="0.6" min="0.1" step="0.1"></label>
+      <label>Ancorar em<select id="psAnchor"><option value="layer">Início/fim da camada</option><option value="head">Playhead</option></select></label>
+    </div>
+    <div id="presets"></div>
+    <p class="hint">Selecione uma camada e clique numa animação. Depois ajuste os <b style="color:var(--key)">◆ keyframes</b> na linha do tempo.</p>
+    <p class="hint"><kbd>Espaço</kbd> play · <kbd>Del</kbd> excluir · <kbd>Ctrl</kbd>+<kbd>D</kbd> duplicar · <kbd>,</kbd> <kbd>.</kbd> quadro a quadro · <kbd>K</kbd> keyframe</p>
+  </aside>
+
+  <main id="stage">
+    <div id="viewport"><div id="frame"><canvas id="cv"></canvas><canvas id="ov"></canvas></div></div>
+    <div id="transport">
+      <button class="ib" id="btnStart" data-icon="skipback" title="Ir ao início (Home)"></button>
+      <button class="ib" id="btnPlay" data-icon="play" title="Play/Pause (Espaço)"></button>
+      <button class="ib" id="btnSafe" data-icon="safe" title="Mostrar margens seguras"></button>
+      <button class="ib active" id="btnLoop" data-icon="repeat" title="Repetir"></button>
+      <input type="range" id="scrub" min="0" max="1" step="any" value="0">
+      <span id="timeLbl"></span>
+    </div>
+  </main>
+
+  <aside id="inspector"></aside>
+
+  <section id="timeline">
+    <div class="tl-head">
+      <b style="color:var(--text)">Linha do tempo</b>
+      <span class="sp"></span>
+      <span>Zoom</span><input type="range" id="tlZoom" min="30" max="500" value="120">
+      <button class="btn" id="btnFit">Ajustar</button>
+    </div>
+    <div id="tlScroll"></div>
+  </section>
+</div>
+
+<div id="modal" hidden><div class="mbox"><b>Gravando vídeo…</b><div class="pbar"><i id="pbarI"></i></div>
+  <p class="hint" style="margin:0 0 12px">Mantenha esta aba visível até terminar.</p><button class="btn" id="btnCancelExp">Cancelar</button></div></div>
+<div id="libModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Biblioteca de projetos</b>
+  <div class="btnrow" style="justify-content:center;margin:12px 0 0"><button class="btn" id="libSave">Salvar projeto atual</button><button class="btn" id="libSaveAs">Salvar como cópia</button></div>
+  <div id="libList"></div><button class="btn" id="libClose">Fechar</button></div></div>
+<div id="iconModal" class="mbox-wrap" hidden><div class="mbox wide"><b>Escolha um ícone</b><input type="text" id="iconSearch" placeholder="Buscar: dinheiro, fábrica, bebida, certo…"><div id="iconGrid" class="icon-grid"></div><button class="btn" id="iconClose" style="margin-top:12px">Cancelar</button></div></div>
+<div id="momentModal" class="mbox-wrap" hidden><div class="mbox wide" id="momentBox" style="text-align:left"></div></div>
+<div id="toast"></div>
+<input type="file" id="fileImg" accept="image/*" hidden>
+<input type="file" id="fileFont" accept=".ttf,.otf,.woff,.woff2" hidden>
+<input type="file" id="fileJson" accept=".json,application/json" hidden>
+
+<script src="glyphs.js"></script>
+<script src="engine.js"></script>
+<script src="ui.js"></script>
+<script src="compositions.js"></script>
+<script src="moments.js"></script>
+<script src="boot.js"></script>
+</body>
+</html>
